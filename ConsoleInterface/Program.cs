@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ConsoleInterface
 {
@@ -76,9 +78,9 @@ namespace ConsoleInterface
             }
         }
 
-        static void drawArena(int arenaSize)
+        static void drawArena(int arenaSize, int startColumn=50, int startRow=5)
         {
-            int squareSize = 10, startColumn = 50, startRow = 5;
+            int squareSize = 10;
             uploadParametrs(arenaSize, ref squareSize);
             for(int i=0; i<arenaSize; i++)
             {
@@ -163,17 +165,6 @@ namespace ConsoleInterface
             Console.BackgroundColor = ConsoleColor.Black;
         }
 
-        static void drawMiniSquares(MiniSquare[] points, int[] tab, int color)
-        {
-            Console.BackgroundColor = (ConsoleColor)color;
-            for (int i=0; i<tab.Length; i++)
-            {
-                Console.SetCursorPosition(points[tab[i]].column, points[tab[i]].row);
-                Console.Write(" ");
-            }
-            Console.BackgroundColor = ConsoleColor.Black;
-        }
-
         static void drawSymbolSize10(int startColumn, int startRow, int symbolValue, int colorNumber)
         {
             MiniSquare[] points = new MiniSquare[100];
@@ -181,50 +172,78 @@ namespace ConsoleInterface
                 for(int j=0; j<10; j++)
                     points[i*10+j] = new MiniSquare(startColumn+j, startRow+i);
 
-            //int[] tabCross = {0,11,22,33,44,55,66,77,88,99,90,81,72,63,54,45,36,27,18,9};
-            //int[] tabCircle = {1,2,3,4,5,6,7,8,10,20,30,40,50,60,70,80,91,92,93,94,95,96,97,98,19,29,39,49,59,69,79,89 };
-            //drawMiniSquares(points, tabCross, colorNumber);
-            //drawMiniSquares(points, tabCircle, colorNumber);
+            Console.BackgroundColor = (ConsoleColor)colorNumber;
             if (symbolValue == 1)
             {
                 int[] tabCross = { 0, 11, 22, 33, 44, 55, 66, 77, 88, 99, 90, 81, 72, 63, 54, 45, 36, 27, 18, 9 };
+                for (int i = 0; i < tabCross.Length; i++)
+                {
+                    Console.SetCursorPosition(points[tabCross[i]].column, points[tabCross[i]].row);
+                    Console.Write(" ");
+                }
             }
             else if(symbolValue == 0)
             {
                 int[] tabCircle = { 1, 2, 3, 4, 5, 6, 7, 8, 10, 20, 30, 40, 50, 60, 70, 80, 91, 92, 93, 94, 95, 96, 97, 98, 19, 29, 39, 49, 59, 69, 79, 89 };
+                for (int i = 0; i < tabCircle.Length; i++)
+                {
+                    Console.SetCursorPosition(points[tabCircle[i]].column, points[tabCircle[i]].row);
+                    Console.Write(" ");
+                }
             }
             else
             {
                 errorOccurred("Podano zla wartosc symbolu. Wcisnij dowolny przycisk zeby zakonczyc program.\n");
             }
+            Console.BackgroundColor = ConsoleColor.Black;
         }
 
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
             Console.WindowHeight = 50;
             Console.WindowWidth = 100;
 
-            //drawArena(5);
+            drawArena(3); //12, 5, 3
 
-            drawSquare(3, 3, 3, 15); // 12, 7, 3 size square
-            drawSymbolSize1(4, 4, 0, 12);
-            drawSquare(10, 10, 7, 15);
-            drawSymbolSize5(11, 11, 0, 9);
-            drawSymbolSize5(11, 11, 1,12);
-            /*Console.SetCursorPosition(11, 11);
-            Console.Write("12345");
-            for(int i = 0; i < 5; i++)
+            int w = 62, k = 17, ss = 12;
+
+            ConsoleKey key;
+            do
             {
-                Console.SetCursorPosition(11, 11+i);
-                Console.Write(i+1);
-            }*/
-            drawSquare(30, 30, 12, 15);
-            drawSymbolSize10(31, 31, 0, 12);
+                while (!Console.KeyAvailable)
+                {
+                    // Do something, but don't read key here
+                    drawSquare(w, k, 12, 12);
+                    System.Threading.Thread.Sleep(250);
+                    drawSquare(w, k, 12, 15);
+                    System.Threading.Thread.Sleep(250);
+                }
 
+                // Key is available - read it
+                key = Console.ReadKey(true).Key;
 
-            //Console.WriteLine("║ ═");
-            //Console.Write("╔═╗ ╝ ╚");
+                if (key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4)
+                {
+                    w -= ss;
+                }
+                else if (key == ConsoleKey.RightArrow || key == ConsoleKey.D || key == ConsoleKey.NumPad6)
+                {
+                    w += ss;
+                }
+                else if (key == ConsoleKey.UpArrow || key == ConsoleKey.W || key == ConsoleKey.NumPad8)
+                {
+                    k -= ss;
+                }
+                else if (key == ConsoleKey.DownArrow || key == ConsoleKey.S || key == ConsoleKey.NumPad2)
+                {
+                    k += ss;
+                }
 
+            } while (key != ConsoleKey.Escape);
+
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine(ConsoleKey.LeftArrow.ToString());
 
             for (int i=0; i<10; i++)
                 Console.WriteLine();
