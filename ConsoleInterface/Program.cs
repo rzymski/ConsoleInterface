@@ -72,7 +72,7 @@ namespace ConsoleInterface
                 squareSize = 12;
             else if (arenaSize == 5)
                 squareSize = 7;
-            else if (arenaSize == 12)
+            else if (arenaSize == 13)
                 squareSize = 3;
             else
             {
@@ -206,9 +206,16 @@ namespace ConsoleInterface
             Console.WindowHeight = 50;
             Console.WindowWidth = 100;
 
-            drawArena(3); //12, 5, 3
 
-            int w = 62, k = 17, ss = 12;
+
+            drawArena(13);
+            int w = 68, k = 23, ss = 3;
+
+            /*drawArena(5);
+            int w = 64, k = 19, ss = 7;*/
+
+            /*drawArena(3); //12, 5, 3
+            int w = 62, k = 17, ss = 12;*/
             int v = 0, cv = 15;
 
             ConsoleKey key;
@@ -217,9 +224,9 @@ namespace ConsoleInterface
                 while (!Console.KeyAvailable)
                 {
                     // Do something, but don't read key here
-                    drawSquare(w, k, 12, 12);
+                    drawSquare(w, k, ss, 12);
                     System.Threading.Thread.Sleep(250);
-                    drawSquare(w, k, 12, 15);
+                    drawSquare(w, k, ss, 15);
                     System.Threading.Thread.Sleep(250);
                 }
                 // Key is available - read it
@@ -231,7 +238,9 @@ namespace ConsoleInterface
                         cv = 12;
                     else
                         cv = 9;
-                    drawSymbolSize10(w+1, k+1, v, cv);
+                    //drawSymbolSize10(w+1, k+1, v, cv);
+                    //drawSymbolSize5(w+1, k+1, v, cv);
+                    drawSymbolSize1(w + 1, k + 1, v, cv);
                 }
                 else if (key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4)
                 {
