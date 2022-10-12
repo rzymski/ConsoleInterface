@@ -1,36 +1,66 @@
 ﻿using System;
+using System.Drawing;
 
 namespace ConsoleInterface
 {
+    public class MiniSquare
+    {
+        public int column { get; set; }
+        public int row { get; set; }
+        public int colorNumber { get; set; }
+        public MiniSquare()
+        {
+            column = 0;
+            row = 0;
+            colorNumber = 0;
+        }
+        public MiniSquare(int column, int row, int colorNumbeer)
+        {
+            this.column = column;
+            this.row = row;
+            this.colorNumber = colorNumbeer;
+        }
+    }
+
     class Program
     {
-        static void drawSquare(int startColumn, int startRow, int sizeSquare, int colorNumber)
+        static void drawRectangle(int startColumn, int startRow, int height, int width, int colorNumber)
         {
             Console.ForegroundColor = (ConsoleColor)colorNumber;
             Console.SetCursorPosition(startColumn, startRow);
             Console.Write("╔");
-            for (int i = 0; i < sizeSquare-2; i++)
+            for (int i = 0; i < width - 2; i++)
                 Console.Write("═");
             Console.Write("╗");
-            Console.SetCursorPosition(startColumn, startRow+1);
-            for (int i = 0; i < sizeSquare - 2; i++)
+            Console.SetCursorPosition(startColumn, startRow + 1);
+            for (int i = 0; i < height - 2; i++)
             {
                 Console.SetCursorPosition(startColumn, startRow + i + 1);
                 Console.Write("║");
-                Console.SetCursorPosition(startColumn+sizeSquare-1, startRow+i+1);
+                Console.SetCursorPosition(startColumn + width - 1, startRow + i + 1);
                 Console.Write("║");
             }
-            Console.SetCursorPosition(startColumn, startRow + sizeSquare-1);
+            Console.SetCursorPosition(startColumn, startRow + height - 1);
             Console.Write("╚");
-            for (int i = 0; i < sizeSquare - 2; i++)
+            for (int i = 0; i < width - 2; i++)
                 Console.Write("═");
             Console.Write("╝");
         }
 
+        static void drawSquare(int startColumn, int startRow, int sizeSquare, int colorNumber)
+        {
+            drawRectangle(startColumn, startRow, sizeSquare, sizeSquare, colorNumber);
+        }
+
         static void errorOccurred(string communicat)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.Clear();
-            Console.WriteLine("Wystapil blad:\n" + communicat);
+            Console.SetCursorPosition(40,25);
+            Console.WriteLine("Wystapil blad:");
+            Console.SetCursorPosition(40, 26);
+            Console.WriteLine(communicat);
             Console.ReadKey();
             Environment.Exit(-1);
         }
@@ -45,7 +75,7 @@ namespace ConsoleInterface
                 squareSize = 3;
             else
             {
-                errorOccurred("Podano niewlasciwa wartosc arenaSize\nWcisnij dowolny przycisk zeby zakonczyc program.\n");
+                errorOccurred("Podano niewlasciwa wartosc arenaSize. Wcisnij dowolny przycisk zeby zakonczyc program.\n");
             }
         }
 
@@ -76,65 +106,116 @@ namespace ConsoleInterface
             Console.ForegroundColor = (ConsoleColor)colorNumber;
             if (symbolValue == 1)
             {
-                /*Console.SetCursorPosition(startColumn, startRow);
                 Console.BackgroundColor = (ConsoleColor)colorNumber;
-                Console.Write("\\   /");
-                Console.SetCursorPosition(startColumn, startRow + 1);
-                Console.Write(" \\ / ");
-                Console.SetCursorPosition(startColumn, startRow + 2);
-                Console.Write("  X  ");
-                Console.SetCursorPosition(startColumn, startRow + 3);
-                Console.Write(" / \\ ");
-                Console.SetCursorPosition(startColumn, startRow + 4);
-                Console.Write("/   \\");
-                Console.BackgroundColor = ConsoleColor.Black;*/
                 Console.SetCursorPosition(startColumn, startRow);
-                Console.BackgroundColor = (ConsoleColor)colorNumber;
-                Console.Write("\\");
-                Console.SetCursorPosition(startColumn+1, startRow + 1);
-                Console.Write("\\");
-                Console.SetCursorPosition(startColumn+2, startRow + 2);
-                Console.Write("X");
-                Console.SetCursorPosition(startColumn+1, startRow + 3);
-                Console.Write("/");
-                Console.SetCursorPosition(startColumn, startRow + 4);
-                Console.Write("/");
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn+1, startRow+1);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn+2, startRow+2);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn+1, startRow+3);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn, startRow+4);
+                Console.Write(" ");
                 Console.SetCursorPosition(startColumn+4, startRow);
-                Console.Write("/");
+                Console.Write(" ");
                 Console.SetCursorPosition(startColumn+3, startRow+1);
-                Console.Write("/");
-                Console.SetCursorPosition(startColumn+3, startRow + 3);
-                Console.Write("\\");
-                Console.SetCursorPosition(startColumn+4, startRow + 4);
-                Console.Write("\\");
-                Console.BackgroundColor = ConsoleColor.Black;
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn+3, startRow+3);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn+4, startRow+4);
+                Console.Write(" ");
             }
+            else if(symbolValue == 0)
+            {
+                Console.BackgroundColor = (ConsoleColor)colorNumber;
+                Console.SetCursorPosition(startColumn, startRow+1);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn, startRow+2);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn, startRow+3);
+                Console.Write(" ");
+
+                Console.SetCursorPosition(startColumn+4, startRow + 1);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn+4, startRow + 2);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn+4, startRow + 3);
+                Console.Write(" ");
+
+
+                Console.SetCursorPosition(startColumn+1, startRow);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn+2, startRow);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn+3, startRow);
+                Console.Write(" ");
+
+                Console.SetCursorPosition(startColumn+1, startRow+4);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn+2, startRow+4);
+                Console.Write(" ");
+                Console.SetCursorPosition(startColumn+3, startRow+4);
+                Console.Write(" ");
+
+            }
+            else
+            {
+                errorOccurred("Podano zla wartosc symbolu. Wcisnij dowolny przycisk zeby zakonczyc program.\n");
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+
+        static void drawMiniSquares(MiniSquare[] points, int[] tab, int color)
+        {
+            for(int i=0; i<tab.Length; i++)
+            {
+                points[tab[i]].colorNumber = color;
+                Console.BackgroundColor = (ConsoleColor)points[tab[i]].colorNumber;
+                Console.SetCursorPosition(points[tab[i]].column, points[tab[i]].row);
+                Console.Write(" ");
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+
+        static void drawSymbolSize10(int startColumn, int startRow, int symbolValue, int colorNumber)
+        {
+            MiniSquare[] points = new MiniSquare[100];
+            for(int i=0; i<10; i++)
+                for(int j=0; j<10; j++)
+                    points[i*10+j] = new MiniSquare(startColumn+j, startRow+i, 0);
+
+            int[] tabCircle = {0,11,22,33,44,55,66,77,88,99,90,81,72,63,54,45,36,27,18,9};
+            drawMiniSquares(points, tabCircle, colorNumber);
+            /*points[0].colorNumber = 9;
+            points[9].colorNumber = 9;
+            points[99].colorNumber = 9;
+            for (int i = 0; i < 100; i++)
+                drawMiniSquare(points[i]);*/
         }
 
         static void Main(string[] args)
         {
             Console.WindowHeight = 50;
-            Console.WindowWidth = 150;
+            Console.WindowWidth = 100;
 
-            //drawArena(12);
+            //drawArena(5);
+
             drawSquare(3, 3, 3, 15); // 12, 7, 3 size square
             drawSymbolSize1(4, 4, 0, 12);
             drawSquare(10, 10, 7, 15);
-            drawSymbolSize5(11, 11, 1, 12);
+            drawSymbolSize5(11, 11, 0, 9);
+            drawSymbolSize5(11, 11, 1,12);
+            /*Console.SetCursorPosition(11, 11);
+            Console.Write("12345");
+            for(int i = 0; i < 5; i++)
+            {
+                Console.SetCursorPosition(11, 11+i);
+                Console.Write(i+1);
+            }*/
             drawSquare(30, 30, 12, 15);
+            drawSymbolSize10(31, 31, 0, 12);
 
-            /*drawSquare(10, 0, 10, 1);
-            drawSquare(20, 0, 10, 2);
-            drawSquare(30, 0, 10, 3);
-            drawSquare(10, 10, 10, 4);
-            drawSquare(20, 10, 10, 5);
-            drawSquare(30, 10, 10, 6);
-            drawSquare(10, 20, 10, 7);
-            drawSquare(20, 20, 10, 8);
-            drawSquare(30, 20, 10, 9);*/
-
-            //Console.SetCursorPosition(10, 10);
-            //drawFrame();
 
             //Console.WriteLine("║ ═");
             //Console.Write("╔═╗ ╝ ╚");
