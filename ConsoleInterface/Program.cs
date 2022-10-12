@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -207,6 +209,7 @@ namespace ConsoleInterface
             drawArena(3); //12, 5, 3
 
             int w = 62, k = 17, ss = 12;
+            int v = 0, cv = 15;
 
             ConsoleKey key;
             do
@@ -219,11 +222,18 @@ namespace ConsoleInterface
                     drawSquare(w, k, 12, 15);
                     System.Threading.Thread.Sleep(250);
                 }
-
                 // Key is available - read it
                 key = Console.ReadKey(true).Key;
-
-                if (key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4)
+                if (key == ConsoleKey.Enter || key == ConsoleKey.Spacebar)
+                {
+                    v = (v + 1) % 2;
+                    if (v == 1)
+                        cv = 12;
+                    else
+                        cv = 9;
+                    drawSymbolSize10(w+1, k+1, v, cv);
+                }
+                else if (key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4)
                 {
                     w -= ss;
                 }
