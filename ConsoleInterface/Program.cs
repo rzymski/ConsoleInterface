@@ -7,18 +7,15 @@ namespace ConsoleInterface
     {
         public int column { get; set; }
         public int row { get; set; }
-        public int colorNumber { get; set; }
         public MiniSquare()
         {
             column = 0;
             row = 0;
-            colorNumber = 0;
         }
-        public MiniSquare(int column, int row, int colorNumbeer)
+        public MiniSquare(int column, int row)
         {
             this.column = column;
             this.row = row;
-            this.colorNumber = colorNumbeer;
         }
     }
 
@@ -168,10 +165,9 @@ namespace ConsoleInterface
 
         static void drawMiniSquares(MiniSquare[] points, int[] tab, int color)
         {
-            for(int i=0; i<tab.Length; i++)
+            Console.BackgroundColor = (ConsoleColor)color;
+            for (int i=0; i<tab.Length; i++)
             {
-                points[tab[i]].colorNumber = color;
-                Console.BackgroundColor = (ConsoleColor)points[tab[i]].colorNumber;
                 Console.SetCursorPosition(points[tab[i]].column, points[tab[i]].row);
                 Console.Write(" ");
             }
@@ -183,15 +179,24 @@ namespace ConsoleInterface
             MiniSquare[] points = new MiniSquare[100];
             for(int i=0; i<10; i++)
                 for(int j=0; j<10; j++)
-                    points[i*10+j] = new MiniSquare(startColumn+j, startRow+i, 0);
+                    points[i*10+j] = new MiniSquare(startColumn+j, startRow+i);
 
-            int[] tabCircle = {0,11,22,33,44,55,66,77,88,99,90,81,72,63,54,45,36,27,18,9};
-            drawMiniSquares(points, tabCircle, colorNumber);
-            /*points[0].colorNumber = 9;
-            points[9].colorNumber = 9;
-            points[99].colorNumber = 9;
-            for (int i = 0; i < 100; i++)
-                drawMiniSquare(points[i]);*/
+            //int[] tabCross = {0,11,22,33,44,55,66,77,88,99,90,81,72,63,54,45,36,27,18,9};
+            //int[] tabCircle = {1,2,3,4,5,6,7,8,10,20,30,40,50,60,70,80,91,92,93,94,95,96,97,98,19,29,39,49,59,69,79,89 };
+            //drawMiniSquares(points, tabCross, colorNumber);
+            //drawMiniSquares(points, tabCircle, colorNumber);
+            if (symbolValue == 1)
+            {
+                int[] tabCross = { 0, 11, 22, 33, 44, 55, 66, 77, 88, 99, 90, 81, 72, 63, 54, 45, 36, 27, 18, 9 };
+            }
+            else if(symbolValue == 0)
+            {
+                int[] tabCircle = { 1, 2, 3, 4, 5, 6, 7, 8, 10, 20, 30, 40, 50, 60, 70, 80, 91, 92, 93, 94, 95, 96, 97, 98, 19, 29, 39, 49, 59, 69, 79, 89 };
+            }
+            else
+            {
+                errorOccurred("Podano zla wartosc symbolu. Wcisnij dowolny przycisk zeby zakonczyc program.\n");
+            }
         }
 
         static void Main(string[] args)
