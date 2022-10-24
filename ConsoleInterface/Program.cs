@@ -221,9 +221,15 @@ namespace ConsoleInterface
         private int symbolValue;
         private int colorValue;
 
+        private int currentPositionRow;
+        private int currentPositionColumn;
+        private int chessSize;
+        private int[] board;
+        private int moveCount;
 
         private void initializeParameters(int option)
         {
+            this.option = option;
             symbolValue = 1; //krzyz
             colorValue = 12; //czerwony
             switch (option)
@@ -233,32 +239,102 @@ namespace ConsoleInterface
                     startRow = 68;
                     startColumn = 23;
                     squareSize = 3;
+                    chessSize = 13;
+                    currentPositionRow = 7;
+                    currentPositionColumn = 7;
                     break;
                 case 2:
                     Draw.drawArena(5);
                     startRow = 64;
                     startColumn = 19;
                     squareSize = 7;
+                    chessSize = 5;
+                    currentPositionRow = 3;
+                    currentPositionColumn = 3;
                     break;
                 case 3:
                     Draw.drawArena(3);
                     startRow = 62;
                     startColumn = 17;
                     squareSize = 12;
+                    chessSize = 3;
+                    currentPositionRow = 2;
+                    currentPositionColumn = 2;
                     break;
             }
+            board = new int[chessSize*chessSize];
+            for(int i=0; i<board.Length; i++)
+                board[i] = 0; //0 to pustka, 1 krzyzyk 2 kolko
+            moveCount = 0;
         }
 
         public CircleAndCross(int option)
         {
-            this.option = option;
             initializeParameters(option);
+        }
+
+        private int checkNeighborhood(int[] board, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin ,int currentInRow)
+        {
+            //if(cur) //rekurencyjne sprawddzanie na wszystkie strony
+            return 0;
+        }
+        private int checkIfEndGame(int[] board, int moveCount, int chessSize, int currentPositionColumn, int currentPositionRow)
+        {
+            if(moveCount == board.Length)
+                return -1; //remis
+
+            int howMuchToWin = 0;
+            if (chessSize == 3)
+                howMuchToWin = 3;
+            else if (chessSize == 5)
+                howMuchToWin = 4;
+            else if (chessSize == 13)
+                howMuchToWin = 5;
+
+            int indexBoard = (currentPositionRow - 1) * chessSize + currentPositionColumn - 1;
+            int winner = checkNeighborhood(board, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin, 1);
+            return winner;
+        }
+
+        private bool availableDrawSymbol(int currentPositionColumn, int currentPositionRow, int chessSize, int symbolValue)
+        {
+            int indexBoard = (currentPositionRow-1)*chessSize + currentPositionColumn - 1;
+            if (board[indexBoard] == 0)
+            {
+                board[indexBoard] = symbolValue;
+                return true;
+            }
+            return false;
+        }
+        private bool availableMove(ref int currentPositionRow, ref int currentPositionColumn, int chessSize, string key)
+        {
+            if ((key == "A" || key == "LeftArrow" || key == "NumPad4") && currentPositionColumn > 1)
+            {
+                currentPositionColumn -= 1;
+            }
+            else if ((key == "W" || key == "UpArrow" || key == "NumPad8") && currentPositionRow > 1)
+            {
+                currentPositionRow -= 1;
+            }
+            else if ((key == "S" || key == "DownArrow" || key == "NumPad2") && currentPositionRow < chessSize)
+            {
+                currentPositionRow += 1;
+            }
+            else if ((key == "D" || key == "RightArrow" || key == "NumPad6") && currentPositionColumn < chessSize)
+            {
+                currentPositionColumn += 1;
+            }
+            else
+                return false;
+            return true;
         }
         public void gameplay()
         {
             ConsoleKey key;
             do
             {
+                //Console.SetCursorPosition(0, 0);
+                //Console.WriteLine("row: " +currentPositionRow + "  column: " + currentPositionColumn);
                 while (!Console.KeyAvailable)
                 {
                     Draw.drawSquare(startRow, startColumn, squareSize, colorValue); //12 = red
@@ -270,26 +346,31 @@ namespace ConsoleInterface
                 key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.Enter || key == ConsoleKey.Spacebar)
                 {
-                    Draw.drawSymbol(option, startRow + 1, startColumn + 1, symbolValue, colorValue);
-                    if (symbolValue == 0)
-                        colorValue = 12; //zmiana koloru na czerwony
-                    else
-                        colorValue = 9; //zmiana koloru na niebieski
-                    symbolValue = (symbolValue + 1) % 2; //zmiana symbolu
+                    if(availableDrawSymbol(currentPositionColumn, currentPositionRow, chessSize, symbolValue))
+                    {
+                        Draw.drawSymbol(option, startRow + 1, startColumn + 1, symbolValue, colorValue);
+                        moveCount++;
+                        checkIfEndGame(board, moveCount, chessSize, currentPositionColumn, currentPositionRow);
+                        if (symbolValue == 0)
+                            colorValue = 12; //zmiana koloru na czerwony
+                        else
+                            colorValue = 9; //zmiana koloru na niebieski
+                        symbolValue = (symbolValue + 1) % 2; //zmiana symbolu
+                    }
                 }
-                else if (key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4)
+                else if ((key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4) && availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
                     startRow -= squareSize;
                 }
-                else if (key == ConsoleKey.RightArrow || key == ConsoleKey.D || key == ConsoleKey.NumPad6)
+                else if ((key == ConsoleKey.RightArrow || key == ConsoleKey.D || key == ConsoleKey.NumPad6) && availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
                     startRow += squareSize;
                 }
-                else if (key == ConsoleKey.UpArrow || key == ConsoleKey.W || key == ConsoleKey.NumPad8)
+                else if ((key == ConsoleKey.UpArrow || key == ConsoleKey.W || key == ConsoleKey.NumPad8) && availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
                     startColumn -= squareSize;
                 }
-                else if (key == ConsoleKey.DownArrow || key == ConsoleKey.S || key == ConsoleKey.NumPad2)
+                else if ((key == ConsoleKey.DownArrow || key == ConsoleKey.S || key == ConsoleKey.NumPad2) && availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
                     startColumn += squareSize;
                 }
