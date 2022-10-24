@@ -383,12 +383,11 @@ namespace ConsoleInterface
     class CircleAndCross
     {
         private int option;
-        private int startRow;
         private int startColumn;
+        private int startRow;
         private int squareSize;
         private int symbolValue;
         private int colorValue;
-
         private int currentPositionRow;
         private int currentPositionColumn;
         private int chessSize;
@@ -396,36 +395,40 @@ namespace ConsoleInterface
         private int moveCount;
         private int wayToWin;
         private int winner;
+        private int startArenaRow;
+        private int startArenaColumn;
 
-        private void initializeParameters(int option)
+        private void initializeParameters(int option, int startArenaRow, int startArenaColumn)
         {
             this.option = option;
+            this.startArenaRow = startArenaRow;
+            this.startArenaColumn = startArenaColumn;
             symbolValue = 1; //krzyz
             colorValue = 12; //czerwony
             switch (option)
             {
                 case 1:
-                    Draw.drawArena(13);
-                    startRow = 68;
-                    startColumn = 23;
+                    Draw.drawArena(13, startArenaColumn, startArenaRow);
+                    startColumn = startArenaColumn + 18;//68;
+                    startRow = startArenaRow + 18;//23;
                     squareSize = 3;
                     chessSize = 13;
                     currentPositionRow = 7;
                     currentPositionColumn = 7;
                     break;
                 case 2:
-                    Draw.drawArena(5);
-                    startRow = 64;
-                    startColumn = 19;
+                    Draw.drawArena(5, startArenaColumn, startArenaRow);
+                    startColumn = startArenaColumn + 14;//64;
+                    startRow = startArenaRow + 14;//19;
                     squareSize = 7;
                     chessSize = 5;
                     currentPositionRow = 3;
                     currentPositionColumn = 3;
                     break;
                 case 3:
-                    Draw.drawArena(3);
-                    startRow = 62;
-                    startColumn = 17;
+                    Draw.drawArena(3, startArenaColumn, startArenaRow);
+                    startColumn = startArenaColumn + 12;//62;
+                    startRow = startArenaRow + 12;//17;
                     squareSize = 12;
                     chessSize = 3;
                     currentPositionRow = 2;
@@ -441,9 +444,9 @@ namespace ConsoleInterface
             winner = 0;
         }
 
-        public CircleAndCross(int option)
+        public CircleAndCross(int option, int startArenaRow = 10, int startArenaColumn = 50)
         {
-            initializeParameters(option);
+            initializeParameters(option, startArenaRow, startArenaColumn);
         }
 
         public void gameplay()
@@ -455,9 +458,9 @@ namespace ConsoleInterface
                 //Console.WriteLine("row: " +currentPositionRow + "  column: " + currentPositionColumn);
                 while (!Console.KeyAvailable)
                 {
-                    Draw.drawSquare(startRow, startColumn, squareSize, colorValue); //12 = red
+                    Draw.drawSquare(startColumn, startRow, squareSize, colorValue); //12 = red
                     System.Threading.Thread.Sleep(250);
-                    Draw.drawSquare(startRow, startColumn, squareSize, 15); //15 = white
+                    Draw.drawSquare(startColumn, startRow, squareSize, 15); //15 = white
                     System.Threading.Thread.Sleep(250);
                 }
                 // Key is available - read it
@@ -466,7 +469,7 @@ namespace ConsoleInterface
                 {
                     if(Check.availableDrawSymbol(board2D, currentPositionColumn, currentPositionRow, chessSize, symbolValue))
                     {
-                        Draw.drawSymbol(option, startRow + 1, startColumn + 1, symbolValue, colorValue);
+                        Draw.drawSymbol(option, startColumn + 1, startRow + 1, symbolValue, colorValue);
                         moveCount++;
                         wayToWin = Check.checkIfEndGame(board2D, moveCount, chessSize, currentPositionColumn, currentPositionRow);
                         if (wayToWin != 0)
@@ -485,19 +488,19 @@ namespace ConsoleInterface
                 }
                 else if ((key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4) && Check.availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
-                    startRow -= squareSize;
+                    startColumn -= squareSize;
                 }
                 else if ((key == ConsoleKey.RightArrow || key == ConsoleKey.D || key == ConsoleKey.NumPad6) && Check.availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
-                    startRow += squareSize;
+                    startColumn += squareSize;
                 }
                 else if ((key == ConsoleKey.UpArrow || key == ConsoleKey.W || key == ConsoleKey.NumPad8) && Check.availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
-                    startColumn -= squareSize;
+                    startRow -= squareSize;
                 }
                 else if ((key == ConsoleKey.DownArrow || key == ConsoleKey.S || key == ConsoleKey.NumPad2) && Check.availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
-                    startColumn += squareSize;
+                    startRow += squareSize;
                 }
             } while (key != ConsoleKey.Escape);
             //After escape set cursor at 0,0 and print "leftArrow"
@@ -522,9 +525,25 @@ namespace ConsoleInterface
     {
         static void Main(string[] args)
         {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Red;
+            string title = @"                                                          /\                                                        /\ 
+              __                                          \/                                                        \/
+ __  ___   __/ /_      __       __  ___   ______          __         __  ___  ______     ________  ____    ____  ________  ____    ____  __  ___ 
+|  |/  /  /  __  \    |  |__   |  |/  /  /  __  \        |  |       |  |/  / |   _  \   |       /  \   \  /   / |       /  \   \  /   / |  |/  / 
+|  '  /  |  |  |  |  _|   _/   |  '  /  |  |  |  |       |  |       |  '  /  |  |_)  |  `---/  /    \   \/   /  `---/  /    \   \/   /  |  '  /  
+|    <   |  |  |  | /_   |     |    <   |  |  |  |       |  |       |    <   |      /      /  /      \_    _/      /  /      \_    _/   |    <   
+|  .  \  |  `--'  |   |  `----.|  .  \  |  `--'  |       |  |       |  .  \  |  |\  \     /  /----.    |  |       /  /----.    |  |     |  .  \  
+|__|\__\  \______/    |_______||__|\__\  \______/        |__|       |__|\__\ |__| \__\   /________|    |__|      /________|    |__|     |__|\__\ 
+                                                                                                                                                  ";
+            Console.WriteLine(title);
+            //Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+
+
             Console.CursorVisible = false;
-            Console.WindowHeight = 50;
-            Console.WindowWidth = 100;
+            Console.WindowHeight = 70;
+            Console.WindowWidth = 150;
 
             CircleAndCross c = new CircleAndCross(2);
             c.gameplay();
