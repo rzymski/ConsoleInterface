@@ -275,7 +275,43 @@ namespace ConsoleInterface
 
         private int checkNeighborhood(int[] board, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin ,int currentInRow)
         {
-            //if(cur) //rekurencyjne sprawddzanie na wszystkie strony
+            //zle myslenie bo +1 daje nowy wiersz czasami zamiast nowej kolumny i beda przeskoki
+            /*int indexBoard = (currentPositionRow - 1) * chessSize + currentPositionColumn - 1;
+            if (howMuchToWin == currentInRow)
+                return board[indexBoard];
+            if(indexBoard+1 < board.Length && board[indexBoard] == board[indexBoard]) // prawo
+            {
+                checkNeighborhood(board, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin, currentInRow+1);
+            }
+            if (indexBoard-1 >= 0 && board[indexBoard] == board[indexBoard]) // lewo
+            {
+                checkNeighborhood(board, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin, currentInRow + 1);
+            }
+            if (indexBoard+chessSize < board.Length && board[indexBoard] == board[indexBoard + chessSize]) // dol
+            {
+                checkNeighborhood(board, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin, currentInRow + 1);
+            }
+            if (indexBoard-chessSize >= 0 && board[indexBoard] == board[indexBoard - chessSize]) // gora
+            {
+                checkNeighborhood(board, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin, currentInRow + 1);
+            }
+            if (indexBoard-chessSize-1 >= 0 && board[indexBoard] == board[indexBoard - chessSize - 1]) // gora-lewo
+            {
+                checkNeighborhood(board, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin, currentInRow + 1);
+            }
+            if (indexBoard-chessSize+1 >= 0 && board[indexBoard] == board[indexBoard - chessSize + 1]) // gora-prawo
+            {
+                checkNeighborhood(board, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin, currentInRow + 1);
+            }
+            if (indexBoard+chessSize-1 < board.Length && board[indexBoard] == board[indexBoard + chessSize - 1]) // dol-lewo
+            {
+                checkNeighborhood(board, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin, currentInRow + 1);
+            }
+            if (indexBoard+chessSize+1 < board.Length && board[indexBoard] == board[indexBoard + chessSize + 1]) // dol-prawo
+            {
+                checkNeighborhood(board, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin, currentInRow + 1);
+            }*/
+            //rekurencyjne sprawddzanie na wszystkie strony
             return 0;
         }
         private int checkIfEndGame(int[] board, int moveCount, int chessSize, int currentPositionColumn, int currentPositionRow)
