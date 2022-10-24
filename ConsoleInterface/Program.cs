@@ -392,9 +392,10 @@ namespace ConsoleInterface
         private int currentPositionRow;
         private int currentPositionColumn;
         private int chessSize;
-        //private int[] board;
         private int[,] board2D;
         private int moveCount;
+        private int wayToWin;
+        private int winner;
 
         private void initializeParameters(int option)
         {
@@ -431,14 +432,13 @@ namespace ConsoleInterface
                     currentPositionColumn = 2;
                     break;
             }
-            /*board = new int[chessSize*chessSize];
-            for(int i=0; i<board.Length; i++)
-                board[i] = -1;*/ //-1 to pustka, 1 krzyzyk 0 kolko
             board2D = new int[chessSize, chessSize];
             for (int i = 0; i < chessSize; i++)
                 for (int j = 0; j < chessSize; j++)
                     board2D[i, j] = -1;
             moveCount = 0;
+            wayToWin = 0;
+            winner = 0;
         }
 
         public CircleAndCross(int option)
@@ -468,11 +468,12 @@ namespace ConsoleInterface
                     {
                         Draw.drawSymbol(option, startRow + 1, startColumn + 1, symbolValue, colorValue);
                         moveCount++;
-                        int winner = Check.checkIfEndGame(board2D, moveCount, chessSize, currentPositionColumn, currentPositionRow);
-                        if (winner != 0)
+                        wayToWin = Check.checkIfEndGame(board2D, moveCount, chessSize, currentPositionColumn, currentPositionRow);
+                        if (wayToWin != 0)
                         {
-                            Console.SetCursorPosition(0, 0);
-                            Console.WriteLine("zwyciezca: " + winner);
+                            if (wayToWin > 0)
+                                winner = board2D[currentPositionRow-1, currentPositionColumn-1];
+                            break;
                         }
 
                         if (symbolValue == 0) // 0 to kolko
@@ -502,6 +503,18 @@ namespace ConsoleInterface
             //After escape set cursor at 0,0 and print "leftArrow"
             Console.SetCursorPosition(0, 0);
             Console.WriteLine(ConsoleKey.LeftArrow.ToString());
+
+            /*Console.SetCursorPosition(0, 5);
+            Console.WriteLine("zwyciezca: " + winner + " sposob zwycieztwa: " + wayToWin);
+            Console.WriteLine("Tablica");
+            for (int i = 0; i < chessSize; i++)
+            {
+                for (int j = 0; j < chessSize; j++)
+                {
+                    Console.Write(board2D[i, j]+" ");
+                }
+                Console.WriteLine();
+            }*/
         }
     }
 
@@ -513,7 +526,7 @@ namespace ConsoleInterface
             Console.WindowHeight = 50;
             Console.WindowWidth = 100;
 
-            CircleAndCross c = new CircleAndCross(1);
+            CircleAndCross c = new CircleAndCross(2);
             c.gameplay();
 
             for (int i=0; i<10; i++)
