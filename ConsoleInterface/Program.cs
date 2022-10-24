@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleInterface
 {
-    public class MiniSquareSymbolFragment
+    class MiniSquareSymbolFragment
     {
         public int column { get; set; }
         public int row { get; set; }
@@ -23,7 +23,7 @@ namespace ConsoleInterface
         }
     }
 
-    class Draw
+    static class Draw
     {
         public static void drawRectangle(int startColumn, int startRow, int height, int width, int colorNumber)
         {
@@ -212,6 +212,174 @@ namespace ConsoleInterface
         }
     }
 
+    static class Check
+    {
+        public static bool checkHorizontal(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
+        {
+            int right = 0, left = 0, positionColumn = currentPositionColumn;
+            while(positionColumn + 1 < chessSize && board2D[currentPositionRow, positionColumn] == board2D[currentPositionRow, positionColumn + 1])
+            {
+                right++;
+                positionColumn++;
+            }
+            positionColumn = currentPositionColumn;
+            while (positionColumn - 1 >= 0 && board2D[currentPositionRow, positionColumn] == board2D[currentPositionRow, positionColumn - 1])
+            {
+                left++;
+                positionColumn--;
+            }
+
+            if (right + left + 1 >= howMuchToWin)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool checkVertical(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
+        {
+            int down = 0, up = 0, positionRow = currentPositionRow;
+            while (positionRow + 1 < chessSize && board2D[positionRow, currentPositionColumn] == board2D[positionRow + 1, currentPositionColumn])
+            {
+                down++;
+                positionRow++;
+            }
+            positionRow = currentPositionRow;
+            while (positionRow - 1 >= 0 && board2D[positionRow, currentPositionColumn] == board2D[positionRow - 1, currentPositionColumn])
+            {
+                up++;
+                positionRow--;
+            }
+
+            if (down + up + 1 >= howMuchToWin)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool checkDiagonalUpDown(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
+        {
+            int rightDown = 0, leftUp = 0;
+            int positionRow = currentPositionRow, positionColumn = currentPositionColumn;
+            while (positionRow + 1 < chessSize && positionColumn +1 < chessSize && board2D[positionRow, positionColumn] == board2D[positionRow+1, positionColumn+1])
+            {
+                rightDown++;
+                positionRow++;
+                positionColumn++;
+            }
+            positionRow = currentPositionRow;
+            positionColumn = currentPositionColumn;
+            while (positionRow - 1 >= 0 && positionColumn -1 >= 0 && board2D[positionRow, positionColumn] == board2D[positionRow - 1, positionColumn-1])
+            {
+                leftUp++;
+                positionRow--;
+                positionColumn--;
+            }
+            if (rightDown + leftUp + 1 >= howMuchToWin)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool checkDiagonalDownUp(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
+        {
+            int rightUp = 0, leftDown = 0;
+            int positionRow = currentPositionRow, positionColumn = currentPositionColumn;
+            while (positionRow -1 >= 0 && positionColumn + 1 < chessSize && board2D[positionRow, positionColumn] == board2D[positionRow - 1, positionColumn + 1])
+            {
+                rightUp++;
+                positionRow--;
+                positionColumn++;
+            }
+            positionRow = currentPositionRow;
+            positionColumn = currentPositionColumn;
+            while (positionRow + 1 < chessSize && positionColumn - 1 >= 0 && board2D[positionRow, positionColumn] == board2D[positionRow + 1, positionColumn - 1])
+            {
+                leftDown++;
+                positionRow++;
+                positionColumn--;
+            }
+            if (rightUp + leftDown + 1 >= howMuchToWin)
+                return true;
+            else
+                return false;
+        }
+
+        public static int checkWin(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
+        {
+            if (checkHorizontal(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin))
+                return 1; //zwycieztwo poziome
+            else if (checkVertical(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin))
+                return 2; //zwycieztwo pionowe
+            else if (checkDiagonalUpDown(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin))
+                return 3; //zwycieztwo \
+            else if (checkDiagonalDownUp(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin))
+                return 4; //zwycieztwo /
+            return 0; //nie bylo wygranej
+        }
+
+        public static int checkIfEndGame(int[,] board2D, int moveCount, int chessSize, int currentPositionColumn, int currentPositionRow)
+        {
+            if (moveCount == board2D.Length)
+                return -1; //remis
+
+            int howMuchToWin = 0;
+            if (chessSize == 3)
+                howMuchToWin = 3;
+            else if (chessSize == 5)
+                howMuchToWin = 4;
+            else if (chessSize == 13)
+                howMuchToWin = 5;
+
+            int indexBoard = (currentPositionRow - 1) * chessSize + currentPositionColumn - 1;
+            int winner = checkWin(board2D, chessSize, currentPositionColumn - 1, currentPositionRow - 1, howMuchToWin);
+            return winner;
+        }
+
+        public static bool availableDrawSymbol(int[,] board2D, int currentPositionColumn, int currentPositionRow, int chessSize, int symbolValue)
+        {
+            //Console.SetCursorPosition(0, 0);
+            //Console.WriteLine("row: " +currentPositionRow + "  column: " + currentPositionColumn + "   :"+ board2D[currentPositionRow-1, currentPositionColumn-1]);
+
+            /*int indexBoard = (currentPositionRow - 1) * chessSize + currentPositionColumn - 1;
+            if (board[indexBoard] == -1)
+            {
+                board[indexBoard] = symbolValue;
+                return true;
+            }*/
+            if (board2D[currentPositionRow - 1, currentPositionColumn - 1] == -1)
+            {
+                board2D[currentPositionRow - 1, currentPositionColumn - 1] = symbolValue;
+                //Console.SetCursorPosition(0, 1);
+                //Console.WriteLine("row: " + currentPositionRow + "  column: " + currentPositionColumn + "   :" + board2D[currentPositionRow, currentPositionColumn]);
+                return true;
+            }
+
+            return false;
+        }
+        public static bool availableMove(ref int currentPositionRow, ref int currentPositionColumn, int chessSize, string key)
+        {
+            if ((key == "A" || key == "LeftArrow" || key == "NumPad4") && currentPositionColumn > 1)
+            {
+                currentPositionColumn -= 1;
+            }
+            else if ((key == "W" || key == "UpArrow" || key == "NumPad8") && currentPositionRow > 1)
+            {
+                currentPositionRow -= 1;
+            }
+            else if ((key == "S" || key == "DownArrow" || key == "NumPad2") && currentPositionRow < chessSize)
+            {
+                currentPositionRow += 1;
+            }
+            else if ((key == "D" || key == "RightArrow" || key == "NumPad6") && currentPositionColumn < chessSize)
+            {
+                currentPositionColumn += 1;
+            }
+            else
+                return false;
+            return true;
+        }
+    }
+
     class CircleAndCross
     {
         private int option;
@@ -278,114 +446,6 @@ namespace ConsoleInterface
             initializeParameters(option);
         }
 
-        private int checkNeighborhood(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin, int currentInRow, int direction)
-        {
-            if (howMuchToWin == currentInRow)
-                return board2D[currentPositionRow, currentPositionColumn]; //zwyciestwo kogos
-            if (currentPositionColumn+1 < chessSize && board2D[currentPositionRow, currentPositionColumn] == board2D[currentPositionRow, currentPositionColumn + 1] && (direction == 0 || direction == 1)) // prawo
-            {
-                direction = 1; // prawo
-                checkNeighborhood(board2D, chessSize, currentPositionColumn + 1, currentPositionRow, howMuchToWin, currentInRow + 1, direction);
-            }
-            /*if (currentPositionColumn - 1 >= 0 && board2D[currentPositionRow, currentPositionColumn] == board2D[currentPositionRow, currentPositionColumn - 1] && (direction == 0 || direction == 2)) // prawo
-            {
-                direction = 2; // lewo
-                checkNeighborhood(board2D, chessSize, currentPositionColumn-1, currentPositionRow, howMuchToWin, currentInRow + 1, direction);
-            }
-            if (currentPositionRow-1 >=0 && board2D[currentPositionRow, currentPositionColumn] == board2D[currentPositionRow-1, currentPositionColumn] && (direction == 0 || direction == 3)) // prawo
-            {
-                direction = 3; // gora
-                checkNeighborhood(board2D, chessSize, currentPositionColumn, currentPositionRow-1, howMuchToWin, currentInRow + 1, direction);
-            }
-            if (currentPositionRow + 1 < chessSize && board2D[currentPositionRow, currentPositionColumn] == board2D[currentPositionRow+1, currentPositionColumn] && (direction == 0 || direction == 4)) // prawo
-            {
-                direction = 4; // dol
-                checkNeighborhood(board2D, chessSize, currentPositionColumn, currentPositionRow+1, howMuchToWin, currentInRow + 1, direction);
-            }
-            if (currentPositionColumn+1 < chessSize && currentInRow-1 >= 0 && board2D[currentPositionRow, currentPositionColumn] == board2D[currentPositionRow-1, currentPositionColumn + 1] && (direction == 0 || direction == 5)) // prawo
-            {
-                direction = 5; // prawo gora
-                checkNeighborhood(board2D, chessSize, currentPositionColumn+1, currentPositionRow-1, howMuchToWin, currentInRow + 1, direction);
-            }
-            if (currentPositionColumn + 1 < chessSize && currentPositionRow + 1 < chessSize && board2D[currentPositionRow, currentPositionColumn] == board2D[currentPositionRow+1, currentPositionColumn + 1] && (direction == 0 || direction == 6)) // prawo
-            {
-                direction = 6; // prawo dol
-                checkNeighborhood(board2D, chessSize, currentPositionColumn + 1, currentPositionRow+1, howMuchToWin, currentInRow + 1, direction);
-            }
-            if (currentPositionColumn-1 >= 0 && currentPositionRow - 1 >= 0 && board2D[currentPositionRow, currentPositionColumn] == board2D[currentPositionRow-1, currentPositionColumn-1] && (direction == 0 || direction == 7)) // prawo
-            {
-                direction = 7; // lewo gora
-                checkNeighborhood(board2D, chessSize, currentPositionColumn-1, currentPositionRow-1, howMuchToWin, currentInRow + 1, direction);
-            }
-            if (currentPositionColumn-1 >= 0 && currentInRow+1 < chessSize && board2D[currentPositionRow, currentPositionColumn] == board2D[currentPositionRow+1, currentPositionColumn-1] && (direction == 0 || direction == 8)) // prawo
-            {
-                direction = 8; // lewo dol
-                checkNeighborhood(board2D, chessSize, currentPositionColumn-1, currentPositionRow+1, howMuchToWin, currentInRow + 1, direction);
-            }*/
-            //rekurencyjne sprawddzanie na wszystkie strony
-            return 0; // brak zwycieztwa
-        }
-        private int checkIfEndGame(int[,] board2D, int moveCount, int chessSize, int currentPositionColumn, int currentPositionRow)
-        {
-            if(moveCount == board2D.Length)
-                return -1; //remis
-
-            int howMuchToWin = 0;
-            if (chessSize == 3)
-                howMuchToWin = 3;
-            else if (chessSize == 5)
-                howMuchToWin = 4;
-            else if (chessSize == 13)
-                howMuchToWin = 5;
-
-            int indexBoard = (currentPositionRow - 1) * chessSize + currentPositionColumn - 1;
-            int winner = checkNeighborhood(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin, 1, 0);
-            return winner;
-        }
-
-        private bool availableDrawSymbol(int[,] board2D, int currentPositionColumn, int currentPositionRow, int chessSize, int symbolValue)
-        {
-            //Console.SetCursorPosition(0, 0);
-            //Console.WriteLine("row: " +currentPositionRow + "  column: " + currentPositionColumn + "   :"+ board2D[currentPositionRow-1, currentPositionColumn-1]);
-
-            /*int indexBoard = (currentPositionRow - 1) * chessSize + currentPositionColumn - 1;
-            if (board[indexBoard] == -1)
-            {
-                board[indexBoard] = symbolValue;
-                return true;
-            }*/
-            if (board2D[currentPositionRow-1, currentPositionColumn-1] == -1)
-            {
-                board2D[currentPositionRow-1, currentPositionColumn-1] = symbolValue;
-                //Console.SetCursorPosition(0, 1);
-                //Console.WriteLine("row: " + currentPositionRow + "  column: " + currentPositionColumn + "   :" + board2D[currentPositionRow, currentPositionColumn]);
-                return true;
-            }
-
-            return false;
-        }
-        private bool availableMove(ref int currentPositionRow, ref int currentPositionColumn, int chessSize, string key)
-        {
-            if ((key == "A" || key == "LeftArrow" || key == "NumPad4") && currentPositionColumn > 1)
-            {
-                currentPositionColumn -= 1;
-            }
-            else if ((key == "W" || key == "UpArrow" || key == "NumPad8") && currentPositionRow > 1)
-            {
-                currentPositionRow -= 1;
-            }
-            else if ((key == "S" || key == "DownArrow" || key == "NumPad2") && currentPositionRow < chessSize)
-            {
-                currentPositionRow += 1;
-            }
-            else if ((key == "D" || key == "RightArrow" || key == "NumPad6") && currentPositionColumn < chessSize)
-            {
-                currentPositionColumn += 1;
-            }
-            else
-                return false;
-            return true;
-        }
         public void gameplay()
         {
             ConsoleKey key;
@@ -404,37 +464,37 @@ namespace ConsoleInterface
                 key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.Enter || key == ConsoleKey.Spacebar)
                 {
-                    if(availableDrawSymbol(board2D, currentPositionColumn, currentPositionRow, chessSize, symbolValue))
+                    if(Check.availableDrawSymbol(board2D, currentPositionColumn, currentPositionRow, chessSize, symbolValue))
                     {
                         Draw.drawSymbol(option, startRow + 1, startColumn + 1, symbolValue, colorValue);
                         moveCount++;
-                        int winner = checkIfEndGame(board2D, moveCount, chessSize, currentPositionColumn, currentPositionRow);
+                        int winner = Check.checkIfEndGame(board2D, moveCount, chessSize, currentPositionColumn, currentPositionRow);
                         if (winner != 0)
                         {
                             Console.SetCursorPosition(0, 0);
                             Console.WriteLine("zwyciezca: " + winner);
                         }
 
-                        if (symbolValue == 0)
+                        if (symbolValue == 0) // 0 to kolko
                             colorValue = 12; //zmiana koloru na czerwony
-                        else
+                        else // 1 to krzyz
                             colorValue = 9; //zmiana koloru na niebieski
                         symbolValue = (symbolValue + 1) % 2; //zmiana symbolu
                     }
                 }
-                else if ((key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4) && availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
+                else if ((key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4) && Check.availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
                     startRow -= squareSize;
                 }
-                else if ((key == ConsoleKey.RightArrow || key == ConsoleKey.D || key == ConsoleKey.NumPad6) && availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
+                else if ((key == ConsoleKey.RightArrow || key == ConsoleKey.D || key == ConsoleKey.NumPad6) && Check.availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
                     startRow += squareSize;
                 }
-                else if ((key == ConsoleKey.UpArrow || key == ConsoleKey.W || key == ConsoleKey.NumPad8) && availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
+                else if ((key == ConsoleKey.UpArrow || key == ConsoleKey.W || key == ConsoleKey.NumPad8) && Check.availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
                     startColumn -= squareSize;
                 }
-                else if ((key == ConsoleKey.DownArrow || key == ConsoleKey.S || key == ConsoleKey.NumPad2) && availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
+                else if ((key == ConsoleKey.DownArrow || key == ConsoleKey.S || key == ConsoleKey.NumPad2) && Check.availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
                 {
                     startColumn += squareSize;
                 }
@@ -453,7 +513,7 @@ namespace ConsoleInterface
             Console.WindowHeight = 50;
             Console.WindowWidth = 100;
 
-            CircleAndCross c = new CircleAndCross(2);
+            CircleAndCross c = new CircleAndCross(1);
             c.gameplay();
 
             for (int i=0; i<10; i++)
