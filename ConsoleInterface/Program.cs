@@ -165,6 +165,14 @@ namespace ConsoleInterface
                 for (int j = 0; j < arenaSize; j++)
                     drawSquare(startColumn + i * squareSize, startRow + j * squareSize, squareSize, 15);
             }
+            Console.SetCursorPosition(25, 55);
+            Console.WriteLine("Sterowanie:");
+            Console.SetCursorPosition(25, 56);
+            Console.WriteLine("Do zmiany aktualnej pozycji używaj strzałek, WASD lub strzałek z klawiatury numerycznej (2,4,6,8)");
+            Console.SetCursorPosition(25, 57);
+            Console.WriteLine("Stawiaj symbol klikając Enter lub Spację.");
+            Console.SetCursorPosition(25, 58);
+            Console.WriteLine("Kliknij ESCAPE żeby otworzyć menu opcji. (możliwość zapisania/zakończenia gry lub wybrania innej)");
         }
 
         public static void drawSymbol(int option, int startColumn, int startRow, int symbolValue, int colorNumber)
@@ -655,19 +663,18 @@ namespace ConsoleInterface
             Draw.drawSubtitle("Wczytaj gre", 45, 44);
             Draw.drawRectangle(25, 54, 11, 100, 15);
             Draw.drawSubtitle("Wyjdz z gry", 45, 55);
-            Console.SetCursorPosition(25, 67);
+            Console.SetCursorPosition(17, 67);
             Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
+        }
 
-            int startColumn=25, startRow=10 , startColumnSubtitle = 38, startRowSubtitle = 11;
-            int option = 0;
-            string text = "Nowa gra 3x3";
-
+        static int chooseOptionFirstMenu(int startColumn = 25, int startRow = 10, int startColumnSubtitle = 38, int startRowSubtitle = 11, int option = 0, string text = "Nowa gra 3x3")
+        {
             ConsoleKey key;
             do
             {
                 while (!Console.KeyAvailable)
                 {
-                    switch(option)
+                    switch (option)
                     {
                         case 0:
                             startColumnSubtitle = 38;
@@ -706,8 +713,9 @@ namespace ConsoleInterface
                 key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.Enter || key == ConsoleKey.Spacebar)
                 {
+                    Console.Clear();
                     Console.SetCursorPosition(0, 0);
-                    Console.WriteLine("SUPER DZIALA");
+                    return option;
                 }
                 else if (key == ConsoleKey.UpArrow || key == ConsoleKey.W)
                 {
@@ -715,28 +723,41 @@ namespace ConsoleInterface
                         option--;
                     else
                         option = 4;
-
                 }
-                else if(key == ConsoleKey.DownArrow || key == ConsoleKey.S)
+                else if (key == ConsoleKey.DownArrow || key == ConsoleKey.S)
                 {
-                    if(option < 4)
-                        option++;
-                    else
-                        option = 0;
+                    option = (option+1)%5;
                 }
-            } while (key != ConsoleKey.Escape);
+            } while (true);
         }
-
+        
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
             setResolution();
             drawOptionFirstMenu();
-
-
-            Console.SetCursorPosition(0, 0);
-            /*CircleAndCross c = new CircleAndCross(2);
-            c.gameplay();*/
+            int chosenOption = chooseOptionFirstMenu();
+            int optionGame = 1;
+            switch (chosenOption)
+            {
+                case 0:
+                    optionGame = 3;
+                    break;
+                case 1:
+                    optionGame = 2;
+                    break;
+                case 2:
+                    optionGame = 1;
+                    break;
+                case 3:
+                    Console.WriteLine("Wczytales gre");
+                    return;
+                case 4:
+                    Console.WriteLine("Wyszedles z gry");
+                    return;
+            }
+            CircleAndCross c = new CircleAndCross(optionGame, 10, 56);
+            c.gameplay();
             for (int i=0; i<10; i++)
                 Console.WriteLine();
             Console.ReadKey();
