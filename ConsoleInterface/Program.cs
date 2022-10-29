@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Drawing;
+using System.Reflection;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -25,6 +27,84 @@ namespace ConsoleInterface
 
     static class Draw
     {
+        public static void drawSubtitle(string text, int startColumn, int startRow, int colorText=15, int colorBackground=0)
+        {
+            if (text == "title")
+            {
+                text = @"                                                          __                                                        __ 
+              __                                         (__)                                                      (__)
+ __  ___   __/ /_      __       __  ___   ______          __         __  ___  ______     ________  ____    ____  ________  ____    ____  __  ___ 
+|  |/  /  /  __  \    |  |__   |  |/  /  /  __  \        |  |       |  |/  / |   _  \   |       /  \   \  /   / |       /  \   \  /   / |  |/  / 
+|  '  /  |  |  |  |  _|   _/   |  '  /  |  |  |  |       |  |       |  '  /  |  |_)  |  `---/  /    \   \/   /  `---/  /    \   \/   /  |  '  /  
+|    <   |  |  |  | /_   |     |    <   |  |  |  |       |  |       |    <   |      /      /  /      \_    _/      /  /      \_    _/   |    <   
+|  .  \  |  `--'  |   |  `----.|  .  \  |  `--'  |       |  |       |  .  \  |  |\  \     /  /----.    |  |       /  /----.    |  |     |  .  \  
+|__|\__\  \______/    |_______||__|\__\  \______/        |__|       |__|\__\ |__| \__\   /________|    |__|      /________|    |__|     |__|\__\ 
+                                                                                                                                                  ";
+            }
+            if(text == "Nowa gra 3x3")
+            {
+                text = @" _   _                         _____                _____          _____ 
+| \ | |                       |  __ \              |____ |        |____ |
+|  \| |  ___ __      __ __ _  | |  \/ _ __  __ _       / / __  __     / /
+| . ` | / _ \\ \ /\ / // _` | | | __ | '_/ / _` |      \ \ \ \/ /     \ \
+| |\  || (_) |\ V  V /| (_| | | |_\ \| |  | (_| |  .___/ /  >  <  .___/ /
+|_| \_| \___/  \_/\_/  \__,_|  \____/|_|   \__,_|  \____/  /_/\_\ \____/ ";
+            }
+            if(text == "Nowa gra 5x5")
+            {
+                text = @" _   _                         _____                _____          _____ 
+| \ | |                       |  __ \              |  ___|        |  ___|
+|  \| |  ___ __      __ __ _  | |  \/ _ __  __ _   |___ \  __  __ |___ \ 
+| . ` | / _ \\ \ /\ / // _` | | | __ | '_/ / _` |      \ \ \ \/ /     \ \
+| |\  || (_) |\ V  V /| (_| | | |_\ \| |  | (_| |  /\__/ /  >  <  /\__/ /
+|_| \_| \___/  \_/\_/  \__,_|  \____/|_|   \__,_|  \____/  /_/\_\ \____/ ";
+            }
+            if(text == "Nowa gra 13x13")
+            {
+                text = @" _   _                         _____                __   _____          __   _____ 
+| \ | |                       |  __ \              /  | |____ |        /  | |____ |
+|  \| |  ___ __      __ __ _  | |  \/ _ __  __ _   `| |     / / __  __ `| |     / /
+| . ` | / _ \\ \ /\ / // _` | | | __ | '_/ / _` |   | |     \ \ \ \/ /  | |     \ \
+| |\  || (_) |\ V  V /| (_| | | |_\ \| |  | (_| |  _| |_.___/ /  >  <  _| |_.___/ /
+|_| \_| \___/  \_/\_/  \__,_|  \____/|_|   \__,_|  \___/\____/  /_/\_\ \___/\____/ ";
+            }
+            if(text == "Wczytaj gre")
+            {
+                text = @" _    _                    _          _                    
+| |  | |                  | |        (_)                   
+| |  | |  ___  ____ _   _ | |_  __ _  _    __ _  _ __  ___ 
+| |/\| | / __||_  /| | | || __|/ _` || |  / _` || '__|/ _ \
+\  /\  /| (__  / / | |_| || |_| (_| || | | (_| || |  |  __/
+ \/  \/  \___|/___| \__, | \__|\__,_|| |  \__, ||_|   \  _|
+                     __/ |          _/ |   __/ |       \_\ 
+                    |___/          |__/   |___/          ";
+            }
+            if(text == "Wyjdz z gry")
+            {
+                text = @" _    _           _      _                                   
+| |  | |         (_)    | |   __                             
+| |  | | _   _    _   __| | _/ /_   ____    __ _  _ __  _   _ 
+| |/\| || | | |  | | / _` ||_   /  |_  /   / _` || '__|| | | |
+\  /\  /| |_| |  | || (_| | /  /_   / /   | (_| || |   | |_| |
+ \/  \/  \__, |  | | \__,_|/____/  /___|   \__, ||_|    \__, |
+          __/ | _/ |                        __/ |        __/ |
+         |___/ |__/                        |___/        |___/ ";
+            }
+            Console.SetCursorPosition(startColumn, startRow);
+            Console.BackgroundColor = (ConsoleColor) colorBackground;
+            Console.ForegroundColor = (ConsoleColor) colorText;
+            int counter = 0;
+            for(int i = 0; i < text.Length; i++)
+            {
+                Console.Write(text[i]);
+                if (text[i] == '\n')
+                {
+                    Console.SetCursorPosition(startColumn, startRow+(++counter));
+                }
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+        }
         public static void drawRectangle(int startColumn, int startRow, int height, int width, int colorNumber)
         {
             Console.ForegroundColor = (ConsoleColor)colorNumber;
@@ -523,31 +603,140 @@ namespace ConsoleInterface
 
     class Program
     {
+        static void setResolution()
+        {
+            try
+            {
+                Console.WindowHeight = 70; //70
+                Console.WindowWidth = 150; //150
+            }
+            catch (System.ArgumentOutOfRangeException error)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 7, Console.LargestWindowHeight / 2 - 2);
+                Console.WriteLine("-- Warning --");
+                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 40, Console.LargestWindowHeight / 2 - 1);
+                Console.WriteLine("Your screen isn't big enough to match the game's desired width and hight.");
+                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 45, Console.LargestWindowHeight / 2);
+                Console.WriteLine("Things may not look quite right, unless you adjust the text size in your console window.");
+                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 10, Console.LargestWindowHeight / 2 + 1);
+                waitForKey(ConsoleKey.Enter);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WindowHeight = Console.LargestWindowHeight;
+                Console.WindowWidth = Console.LargestWindowWidth;
+            }
+        }
+        static void waitForKey(ConsoleKey expectedKey = ConsoleKey.Home)
+        {
+            if (expectedKey != ConsoleKey.Home)
+            {
+                Console.WriteLine($"Press {expectedKey} key to continue.");
+                while (Console.ReadKey().Key != expectedKey){}
+            }
+            else
+            {
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
+            }
+            Console.Clear();
+        }
+
+        static void drawOptionFirstMenu() 
+        {
+            //Main menu
+            Draw.drawSubtitle("title", 5, 1, 12);
+            Draw.drawRectangle(25, 10, 11, 100, 15);
+            Draw.drawSubtitle("Nowa gra 3x3", 38, 12);
+            Draw.drawRectangle(25, 21, 11, 100, 15);
+            Draw.drawSubtitle("Nowa gra 5x5", 38, 23);
+            Draw.drawRectangle(25, 32, 11, 100, 15);
+            Draw.drawSubtitle("Nowa gra 13x13", 34, 34);
+            Draw.drawRectangle(25, 43, 11, 100, 15);
+            Draw.drawSubtitle("Wczytaj gre", 45, 44);
+            Draw.drawRectangle(25, 54, 11, 100, 15);
+            Draw.drawSubtitle("Wyjdz z gry", 45, 55);
+            Console.SetCursorPosition(25, 67);
+            Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
+
+            int startColumn=25, startRow=10 , startColumnSubtitle = 38, startRowSubtitle = 11;
+            int option = 0;
+            string text = "Nowa gra 3x3";
+
+            ConsoleKey key;
+            do
+            {
+                while (!Console.KeyAvailable)
+                {
+                    switch(option)
+                    {
+                        case 0:
+                            startColumnSubtitle = 38;
+                            startRowSubtitle = 12;
+                            text = "Nowa gra 3x3";
+                            break;
+                        case 1:
+                            startColumnSubtitle = 38;
+                            startRowSubtitle = 23;
+                            text = "Nowa gra 5x5";
+                            break;
+                        case 2:
+                            startColumnSubtitle = 34;
+                            startRowSubtitle = 34;
+                            text = "Nowa gra 13x13";
+                            break;
+                        case 3:
+                            startColumnSubtitle = 45;
+                            startRowSubtitle = 44;
+                            text = "Wczytaj gre";
+                            break;
+                        case 4:
+                            startColumnSubtitle = 45;
+                            startRowSubtitle = 55;
+                            text = "Wyjdz z gry";
+                            break;
+                    }
+                    startRow = 10 + 11 * option;
+                    Draw.drawRectangle(startColumn, startRow, 11, 100, 12); //12 = red
+                    Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 12);
+                    System.Threading.Thread.Sleep(500);
+                    Draw.drawRectangle(startColumn, startRow, 11, 100, 15); //15 = white
+                    Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 15);
+                    System.Threading.Thread.Sleep(500);
+                }
+                key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.Enter || key == ConsoleKey.Spacebar)
+                {
+                    Console.SetCursorPosition(0, 0);
+                    Console.WriteLine("SUPER DZIALA");
+                }
+                else if (key == ConsoleKey.UpArrow || key == ConsoleKey.W)
+                {
+                    if (option > 0)
+                        option--;
+                    else
+                        option = 4;
+
+                }
+                else if(key == ConsoleKey.DownArrow || key == ConsoleKey.S)
+                {
+                    if(option < 4)
+                        option++;
+                    else
+                        option = 0;
+                }
+            } while (key != ConsoleKey.Escape);
+        }
+
         static void Main(string[] args)
         {
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.Red;
-            string title = @"                                                          /\                                                        /\ 
-              __                                          \/                                                        \/
- __  ___   __/ /_      __       __  ___   ______          __         __  ___  ______     ________  ____    ____  ________  ____    ____  __  ___ 
-|  |/  /  /  __  \    |  |__   |  |/  /  /  __  \        |  |       |  |/  / |   _  \   |       /  \   \  /   / |       /  \   \  /   / |  |/  / 
-|  '  /  |  |  |  |  _|   _/   |  '  /  |  |  |  |       |  |       |  '  /  |  |_)  |  `---/  /    \   \/   /  `---/  /    \   \/   /  |  '  /  
-|    <   |  |  |  | /_   |     |    <   |  |  |  |       |  |       |    <   |      /      /  /      \_    _/      /  /      \_    _/   |    <   
-|  .  \  |  `--'  |   |  `----.|  .  \  |  `--'  |       |  |       |  .  \  |  |\  \     /  /----.    |  |       /  /----.    |  |     |  .  \  
-|__|\__\  \______/    |_______||__|\__\  \______/        |__|       |__|\__\ |__| \__\   /________|    |__|      /________|    |__|     |__|\__\ 
-                                                                                                                                                  ";
-            Console.WriteLine(title);
-            //Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
-
-
             Console.CursorVisible = false;
-            Console.WindowHeight = 70;
-            Console.WindowWidth = 150;
+            setResolution();
+            drawOptionFirstMenu();
 
-            CircleAndCross c = new CircleAndCross(2);
-            c.gameplay();
 
+            Console.SetCursorPosition(0, 0);
+            /*CircleAndCross c = new CircleAndCross(2);
+            c.gameplay();*/
             for (int i=0; i<10; i++)
                 Console.WriteLine();
             Console.ReadKey();
