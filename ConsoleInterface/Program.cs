@@ -76,7 +76,7 @@ namespace ConsoleInterface
 | |/\| | / __||_  /| | | || __|/ _` || |  / _` || '__|/ _ \
 \  /\  /| (__  / / | |_| || |_| (_| || | | (_| || |  |  __/
  \/  \/  \___|/___| \__, | \__|\__,_|| |  \__, ||_|   \  _|
-                     __/ |          _/ |   __/ |       \_\ 
+                     __/ |          _/ |   __/ |       (_( 
                     |___/          |__/   |___/          ";
             }
             if(text == "Wyjdz z gry")
@@ -90,6 +90,54 @@ namespace ConsoleInterface
           __/ | _/ |                        __/ |        __/ |
          |___/ |__/                        |___/        |___/ ";
             }
+            if(text == "Ruch")
+            {
+                text = @"  ____                   _         
+ |  _ \   _   _    ___  | |__    _ 
+ | |_) | | | | |  / __| | '_ \  (_)
+ |  _ <  | |_| | | (__  | | | |  _ 
+ |_| \_\  \__,_|  \___| |_| |_| (_)";
+            }
+            if (text == "1")
+            {
+                text = @" __  __ 
+ \ \/ / 
+  \  /  
+  /  \  
+ /_/\_\ ";
+            }
+            if (text == "0")
+            {
+                text = @"   ___  
+  / _ \ 
+ | | | |
+ | |_| |
+  \___/ ";
+            }
+            if (text == "Wygrały")
+            {
+                text = @" __        __                                 _             
+ \ \      / /  _   _    __ _   _ __    __ _  | |  _   _   _ 
+  \ \ /\ / /  | | | |  / _` | | '__|  / _` | |// | | | | (_)
+   \ V  V /   | |_| | | (_| | | |    | (_| | //| | |_| |  _ 
+    \_/\_/     \__, |  \__, | |_|     \__,_| |_|  \__, | (_)
+               |___/   |___/                      |___/     ";
+            }
+            if (text == "Remis")
+            {
+                text = @"  ____                       _       
+ |  _ \    ___   _ __ ___   (_)  ___ 
+ | |_) |  / _ \ | '_ ` _ \  | | / __|
+ |  _ <  |  __/ | | | | | | | | \__ \
+ |_| \_\  \___| |_| |_| |_| |_| |___/";
+            }
+            /*if (text == "O")
+            {
+                text = @"";
+            }*/
+            if (text == "")
+                return;
+
             Console.SetCursorPosition(startColumn, startRow);
             Console.BackgroundColor = (ConsoleColor) colorBackground;
             Console.ForegroundColor = (ConsoleColor) colorText;
@@ -156,8 +204,9 @@ namespace ConsoleInterface
                 errorOccurred("Podano niewlasciwa wartosc arenaSize. Wcisnij dowolny przycisk zeby zakonczyc program.\n");
             }
         }
-        public static void drawArena(int arenaSize, int startColumn = 50, int startRow = 5)
+        public static void drawArena(int arenaSize, int startColumn = 50, int startRow = 56, int howMuchToWin=3)
         {
+            drawSubtitle("Ruch", 10, 3);
             int squareSize = 10;
             uploadParametrs(arenaSize, ref squareSize);
             for (int i = 0; i < arenaSize; i++)
@@ -165,6 +214,9 @@ namespace ConsoleInterface
                 for (int j = 0; j < arenaSize; j++)
                     drawSquare(startColumn + i * squareSize, startRow + j * squareSize, squareSize, 15);
             }
+            Console.SetCursorPosition(25, 53);
+            string infix = (howMuchToWin == 5) ? "i" : "e";
+            Console.WriteLine($"Cel gry: Ułożyć {howMuchToWin} symbol" + infix +" w jednej linii poziomo, pionowo lub ukośnie zanim zrobi to twój przeciwnik.");
             Console.SetCursorPosition(25, 55);
             Console.WriteLine("Sterowanie:");
             Console.SetCursorPosition(25, 56);
@@ -172,7 +224,7 @@ namespace ConsoleInterface
             Console.SetCursorPosition(25, 57);
             Console.WriteLine("Stawiaj symbol klikając Enter lub Spację.");
             Console.SetCursorPosition(25, 58);
-            Console.WriteLine("Kliknij ESCAPE żeby otworzyć menu opcji. (możliwość zapisania/zakończenia gry lub wybrania innej)");
+            Console.WriteLine("Kliknij ESCAPE żeby otworzyć menu opcji. (możliwość zapisania, zakończenia lub wybrania innej gry)");
         }
 
         public static void drawSymbol(int option, int startColumn, int startRow, int symbolValue, int colorNumber)
@@ -405,19 +457,10 @@ namespace ConsoleInterface
             return 0; //nie bylo wygranej
         }
 
-        public static int checkIfEndGame(int[,] board2D, int moveCount, int chessSize, int currentPositionColumn, int currentPositionRow)
+        public static int checkIfEndGame(int[,] board2D, int moveCount, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
         {
             if (moveCount == board2D.Length)
                 return -1; //remis
-
-            int howMuchToWin = 0;
-            if (chessSize == 3)
-                howMuchToWin = 3;
-            else if (chessSize == 5)
-                howMuchToWin = 4;
-            else if (chessSize == 13)
-                howMuchToWin = 5;
-
             int indexBoard = (currentPositionRow - 1) * chessSize + currentPositionColumn - 1;
             int winner = checkWin(board2D, chessSize, currentPositionColumn - 1, currentPositionRow - 1, howMuchToWin);
             return winner;
@@ -425,20 +468,9 @@ namespace ConsoleInterface
 
         public static bool availableDrawSymbol(int[,] board2D, int currentPositionColumn, int currentPositionRow, int chessSize, int symbolValue)
         {
-            //Console.SetCursorPosition(0, 0);
-            //Console.WriteLine("row: " +currentPositionRow + "  column: " + currentPositionColumn + "   :"+ board2D[currentPositionRow-1, currentPositionColumn-1]);
-
-            /*int indexBoard = (currentPositionRow - 1) * chessSize + currentPositionColumn - 1;
-            if (board[indexBoard] == -1)
-            {
-                board[indexBoard] = symbolValue;
-                return true;
-            }*/
             if (board2D[currentPositionRow - 1, currentPositionColumn - 1] == -1)
             {
                 board2D[currentPositionRow - 1, currentPositionColumn - 1] = symbolValue;
-                //Console.SetCursorPosition(0, 1);
-                //Console.WriteLine("row: " + currentPositionRow + "  column: " + currentPositionColumn + "   :" + board2D[currentPositionRow, currentPositionColumn]);
                 return true;
             }
 
@@ -483,44 +515,45 @@ namespace ConsoleInterface
         private int moveCount;
         private int wayToWin;
         private int winner;
-        private int startArenaRow;
-        private int startArenaColumn;
+        private int howMuchToWin;
 
         private void initializeParameters(int option, int startArenaRow, int startArenaColumn)
         {
             this.option = option;
-            this.startArenaRow = startArenaRow;
-            this.startArenaColumn = startArenaColumn;
-            symbolValue = 1; //krzyz
-            colorValue = 12; //czerwony
+            symbolValue = 1; //0-kolko 1-krzyz
+            colorValue = 12; //9-niebieski 12-czerwony
+            Draw.drawSubtitle(symbolValue.ToString(), 47, 3, colorValue);
             switch (option)
             {
                 case 1:
-                    Draw.drawArena(13, startArenaColumn, startArenaRow);
+                    howMuchToWin = 5;
                     startColumn = startArenaColumn + 18;//68;
                     startRow = startArenaRow + 18;//23;
                     squareSize = 3;
                     chessSize = 13;
                     currentPositionRow = 7;
                     currentPositionColumn = 7;
+                    Draw.drawArena(chessSize, startArenaColumn, startArenaRow, howMuchToWin);
                     break;
                 case 2:
-                    Draw.drawArena(5, startArenaColumn, startArenaRow);
+                    howMuchToWin = 4;
                     startColumn = startArenaColumn + 14;//64;
                     startRow = startArenaRow + 14;//19;
                     squareSize = 7;
                     chessSize = 5;
                     currentPositionRow = 3;
                     currentPositionColumn = 3;
+                    Draw.drawArena(chessSize, startArenaColumn, startArenaRow, howMuchToWin);
                     break;
                 case 3:
-                    Draw.drawArena(3, startArenaColumn, startArenaRow);
+                    howMuchToWin = 3;
                     startColumn = startArenaColumn + 12;//62;
                     startRow = startArenaRow + 12;//17;
                     squareSize = 12;
                     chessSize = 3;
                     currentPositionRow = 2;
                     currentPositionColumn = 2;
+                    Draw.drawArena(chessSize, startArenaColumn, startArenaRow, howMuchToWin);
                     break;
             }
             board2D = new int[chessSize, chessSize];
@@ -532,9 +565,34 @@ namespace ConsoleInterface
             winner = 0;
         }
 
-        public CircleAndCross(int option, int startArenaRow = 10, int startArenaColumn = 50)
+        public CircleAndCross(int option, int startArenaRow = 10, int startArenaColumn = 56)
         {
             initializeParameters(option, startArenaRow, startArenaColumn);
+        }
+
+        private void drawBoard(int[,] board2D, int chessSize, int startArenaRow, int startArenaColumn, int howMuchToWin)
+        {
+            Draw.drawArena(chessSize, startArenaColumn, startArenaRow, howMuchToWin);
+        }
+
+        private void endOfGame(int winner, int color=15)
+        {
+            Console.Clear();
+            //drawBoard();
+            if (winner == 0)
+            {
+                Draw.drawSubtitle("Wygrały",40,3, color);
+                Draw.drawSubtitle("0", 100, 3, color);
+            }
+            else if(winner == 1)
+            {
+                Draw.drawSubtitle("Wygrały", 40, 3, color);
+                Draw.drawSubtitle("1", 100, 3, color);
+            }
+            else
+            {
+                Draw.drawSubtitle("Remis", 50, 3);
+            }
         }
 
         public void gameplay()
@@ -559,19 +617,24 @@ namespace ConsoleInterface
                     {
                         Draw.drawSymbol(option, startColumn + 1, startRow + 1, symbolValue, colorValue);
                         moveCount++;
-                        wayToWin = Check.checkIfEndGame(board2D, moveCount, chessSize, currentPositionColumn, currentPositionRow);
+                        wayToWin = Check.checkIfEndGame(board2D, moveCount, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin);
                         if (wayToWin != 0)
                         {
                             if (wayToWin > 0)
-                                winner = board2D[currentPositionRow-1, currentPositionColumn-1];
-                            break;
+                            {
+                                winner = board2D[currentPositionRow - 1, currentPositionColumn - 1];
+                                endOfGame(winner, colorValue);
+                            }
+                            else
+                                endOfGame(-1, 15);
+                            return;
                         }
-
-                        if (symbolValue == 0) // 0 to kolko
-                            colorValue = 12; //zmiana koloru na czerwony
-                        else // 1 to krzyz
-                            colorValue = 9; //zmiana koloru na niebieski
                         symbolValue = (symbolValue + 1) % 2; //zmiana symbolu
+                        if (symbolValue == 0)
+                            colorValue = 9; //zmiana koloru na niebieski
+                        else
+                            colorValue = 12; //zmiana koloru na czerwony
+                        Draw.drawSubtitle(symbolValue.ToString(), 47, 3, colorValue);
                     }
                 }
                 else if ((key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4) && Check.availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
@@ -591,21 +654,6 @@ namespace ConsoleInterface
                     startRow += squareSize;
                 }
             } while (key != ConsoleKey.Escape);
-            //After escape set cursor at 0,0 and print "leftArrow"
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine(ConsoleKey.LeftArrow.ToString());
-
-            /*Console.SetCursorPosition(0, 5);
-            Console.WriteLine("zwyciezca: " + winner + " sposob zwycieztwa: " + wayToWin);
-            Console.WriteLine("Tablica");
-            for (int i = 0; i < chessSize; i++)
-            {
-                for (int j = 0; j < chessSize; j++)
-                {
-                    Console.Write(board2D[i, j]+" ");
-                }
-                Console.WriteLine();
-            }*/
         }
     }
 
@@ -756,9 +804,9 @@ namespace ConsoleInterface
                     Console.WriteLine("Wyszedles z gry");
                     return;
             }
-            CircleAndCross c = new CircleAndCross(optionGame, 10, 56);
+            CircleAndCross c = new CircleAndCross(optionGame);
             c.gameplay();
-            for (int i=0; i<10; i++)
+            for (int i = 0; i < 10; i++)
                 Console.WriteLine();
             Console.ReadKey();
         }
