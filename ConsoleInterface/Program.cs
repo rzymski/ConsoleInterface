@@ -41,7 +41,40 @@ namespace ConsoleInterface
 |__|\__\  \______/    |_______||__|\__\  \______/        |__|       |__|\__\ |__| \__\   /________|    |__|      /________|    |__|     |__|\__\
                                                                                                                                                 ";
             }
-            if(text == "Nowa gra 3x3")
+            if (text == "kolko")
+            {
+                text = @"              __    
+ __  ___   __/ /_      __       __  ___   ______ 
+|  |/  /  /  __  \    |  |__   |  |/  /  /  __  \ 
+|  '  /  |  |  |  |  _|   _/   |  '  /  |  |  |  |
+|    <   |  |  |  | /_   |     |    <   |  |  |  | 
+|  .  \  |  `--'  |   |  `----.|  .  \  |  `--'  | 
+|__|\__\  \______/    |_______||__|\__\  \______/ ";
+            }
+            if (text == "i")
+            {
+                text = @" __
+(__)
+ __ 
+|  |
+|  |
+|  |
+|  |
+|__|";
+            }
+            if (text == "krzyzyk")
+            {
+                text = @"                                                __ 
+                                               (__)
+ __  ___  ______     ________  ____    ____  ________  ____    ____  __  ___
+|  |/  / |   _  \   |       /  \   \  /   / |       /  \   \  /   / |  |/  /
+|  '  /  |  |_)  |  `---/  /    \   \/   /  `---/  /    \   \/   /  |  '  / 
+|    <   |      /      /  /      \_    _/      /  /      \_    _/   |    <  
+|  .  \  |  |\  \     /  /----.    |  |       /  /----.    |  |     |  .  \ 
+|__|\__\ |__| \__\   /________|    |__|      /________|    |__|     |__|\__\
+                                                                                                                                                ";
+            }
+            if (text == "Nowa gra 3x3")
             {
                 text = @" _   _                         _____                _____          _____ 
 | \ | |                       |  __ \              |____ |        |____ |
@@ -135,6 +168,16 @@ namespace ConsoleInterface
             {
                 text = @"";
             }*/
+            if(text == "czysc")
+            {
+                text = "";
+                for(int i=0; i< 10; i++)
+                {
+                    for (int j = 0; j < 150; j++)
+                        text += " ";
+                    text += "\n";
+                }
+            }
             if (text == "")
                 return;
 
@@ -363,14 +406,26 @@ namespace ConsoleInterface
                 for (int j = 0; j < chessSize; j++)
                 {
                     if(board2D[i, j] == 1)
-                        drawSymbol(option, tempStartColumn, startRow, board2D[i, j], 12);
+                        drawSymbol(option, tempStartColumn, startRow, board2D[i, j], 4);
                     if (board2D[i, j] == 0)
-                        drawSymbol(option, tempStartColumn, startRow, board2D[i, j], 9);
+                        drawSymbol(option, tempStartColumn, startRow, board2D[i, j], 1);
                     tempStartColumn += squareSize;
                 }
                 tempStartColumn = startColumn;
                 startRow += squareSize;
             }
+        }
+        private static void drawHorizontalLine(int currentPositionColumn, int currentPositionRow, int colorValue) 
+        {
+            Console.SetCursorPosition(currentPositionColumn, currentPositionRow);
+            Console.BackgroundColor = (ConsoleColor)4;
+            //Console.ForegroundColor = (ConsoleColor)4;
+            for(int i=0; i<36; i++)
+                Console.Write(" ");
+        }
+        public static void drawWinningLine(int[,] board2D, int currentPositionColumn, int currentPositionRow, int squareSize, int wayToWin, int colorValue)
+        {
+            drawHorizontalLine(currentPositionColumn, currentPositionRow+squareSize/2, colorValue);
         }
     }
 
@@ -545,7 +600,7 @@ namespace ConsoleInterface
         {
             this.option = option;
             symbolValue = 1; //0-kolko 1-krzyz
-            colorValue = 12; //9-niebieski 12-czerwony
+            colorValue = 4; //1-niebieski 4-czerwony
             this.startArenaColumn = startArenaColumn;
             this.startArenaRow = startArenaRow;
             switch (option)
@@ -598,6 +653,7 @@ namespace ConsoleInterface
 
         private void endOfGame(int winner, int color=15)
         {
+            Draw.drawSubtitle("czysc", 0, 0);
             //Console.Clear();
             if (winner == 0)
             {
@@ -625,7 +681,7 @@ namespace ConsoleInterface
                 //Console.WriteLine("row: " +currentPositionRow + "  column: " + currentPositionColumn);
                 while (!Console.KeyAvailable)
                 {
-                    Draw.drawSquare(startColumn, startRow, squareSize, colorValue); //12 = red
+                    Draw.drawSquare(startColumn, startRow, squareSize, colorValue); //4 = red
                     System.Threading.Thread.Sleep(250);
                     Draw.drawSquare(startColumn, startRow, squareSize, 15); //15 = white
                     System.Threading.Thread.Sleep(250);
@@ -644,6 +700,7 @@ namespace ConsoleInterface
                             if (wayToWin > 0)
                             {
                                 winner = board2D[currentPositionRow - 1, currentPositionColumn - 1];
+                                Draw.drawWinningLine(board2D, startColumn, startRow, squareSize, wayToWin, colorValue);
                                 endOfGame(winner, colorValue);
                             }
                             else
@@ -652,9 +709,9 @@ namespace ConsoleInterface
                         }
                         symbolValue = (symbolValue + 1) % 2; //zmiana symbolu
                         if (symbolValue == 0)
-                            colorValue = 9; //zmiana koloru na niebieski
+                            colorValue = 1; //zmiana koloru na niebieski
                         else
-                            colorValue = 12; //zmiana koloru na czerwony
+                            colorValue = 4; //zmiana koloru na czerwony
                         Draw.drawSubtitle(symbolValue.ToString(), 77, 3, colorValue);
                     }
                 }
@@ -728,7 +785,9 @@ namespace ConsoleInterface
         {
             int littleHight = 10, actualRow = startRow;
             //Main menu
-            Draw.drawSubtitle("title", adjustToCenterText(0, 150, 145), actualRow, 12);
+            Draw.drawSubtitle("kolko", 2, actualRow+1, 1);
+            Draw.drawSubtitle("i", 59, actualRow, 6);
+            Draw.drawSubtitle("krzyzyk", 70, actualRow, 4);
             actualRow += 10;
             Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
             Draw.drawSubtitle("Nowa gra 3x3", adjustToCenterText(25, 125, 74), actualRow + 2);
@@ -743,7 +802,7 @@ namespace ConsoleInterface
             Draw.drawSubtitle("Wczytaj gre", adjustToCenterText(25, 125, 60), actualRow + 1);
             actualRow += littleHight;
             Draw.drawRectangle(25, actualRow, 10, 100, 15);
-            Draw.drawSubtitle("Wyjdz z gry", adjustToCenterText(25, 125, 63), actualRow+1);
+            Draw.drawSubtitle("Wyjdz z gry", adjustToCenterText(25, 125, 63), actualRow + 1);
             Console.SetCursorPosition(17, actualRow + 12);
             Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
             Console.SetCursorPosition(0, 0);
@@ -790,8 +849,8 @@ namespace ConsoleInterface
                             text = "Wyjdz z gry";
                             break;
                     }
-                    Draw.drawRectangle(startColumn, startRow, 10, 100, 12); //12 = red
-                    Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 12);
+                    Draw.drawRectangle(startColumn, startRow, 10, 100, 4); //4 = red
+                    Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 4);
                     System.Threading.Thread.Sleep(500);
                     Draw.drawRectangle(startColumn, startRow, 10, 100, 15); //15 = white
                     Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 15);
