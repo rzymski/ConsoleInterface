@@ -684,7 +684,7 @@ namespace ConsoleInterface
         {
             try
             {
-                Console.WindowHeight = 70; //70
+                Console.WindowHeight = 65; //70
                 Console.WindowWidth = 150; //150
             }
             catch (System.ArgumentOutOfRangeException error)
@@ -734,6 +734,7 @@ namespace ConsoleInterface
             Draw.drawSubtitle("Wyjdz z gry", 45, 55);
             Console.SetCursorPosition(17, 67);
             Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
+            Console.SetCursorPosition(0,0);
         }
 
         static int chooseOptionFirstMenu(int startColumn = 25, int startRow = 10, int startColumnSubtitle = 38, int startRowSubtitle = 11, int option = 0, string text = "Nowa gra 3x3")
