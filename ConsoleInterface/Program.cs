@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Security.Claims;
@@ -27,6 +28,10 @@ namespace ConsoleInterface
 
     static class Draw
     {
+        public static int adjustToCenterText(int startRow, int endColumn, int length)
+        {
+            return (endColumn + startRow - length) / 2;
+        }
         public static void drawSubtitle(string text, int startColumn, int startRow, int colorText=15, int colorBackground=0)
         {
             if (text == "title")
@@ -178,6 +183,109 @@ namespace ConsoleInterface
                     text += "\n";
                 }
             }
+            /*if(text == "nowa gra - wcisnij Enter")
+            {
+                text = @"  _   _                                                             _   __      _  _   _____       _            
+ | \ | | _____      ____ _    __ _ _ __ __ _          __      _____(_)_/_/_ __ (_)(_) | ____|_ __ | |_ ___ _ __ 
+ |  \| |/ _ \ \ /\ / / _` |  / _` | '__/ _` |  _____  \ \ /\ / / __| / __| '_ \| || | |  _| | '_ \| __/ _ \ '__|
+ | |\  | (_) \ V  V / (_| | | (_| | | | (_| | |_____|  \ V  V / (__| \__ \ | | | || | | |___| | | | ||  __/ |   
+ |_| \_|\___/ \_/\_/ \__,_|  \__, |_|  \__,_|           \_/\_/ \___|_|___/_| |_|_|/ | |_____|_| |_|\__\___|_|   
+                             |___/                                              |__/                            ";
+            }*/
+            if (text == "nowa gra - wcisnij Enter")
+            {
+                text = @"  _   _                                                                    _              _    _    _____         _              
+ | \ | |  ___ __      __ __ _    __ _  _ __  __ _          __      __ ___ (_) ___  _ __  (_)  (_)  | ____| _ __  | |_   ___  _ __ 
+ |  \| | / _ \\ \ /\ / // _` |  / _` || '__|/ _` |  _____  \ \ /\ / // __|| |/ __|| '_ \ | |  | |  |  _|  | '_ \ | __| / _ \| '__|
+ | |\  || (_) |\ V  V /| (_| | | (_| || |  | (_| | |_____|  \ V  V /| (__ | |\__ \| | | || |  | |  | |___ | | | || |_ |  __/| |   
+ |_| \_| \___/  \_/\_/  \__,_|  \__, ||_|   \__,_|           \_/\_/  \___||_||___/|_| |_||_| _/ |  |_____||_| |_| \__| \___||_|   
+                                |___/                                                       |__/                                ";
+            }
+            if (text == "menu - wcisnij Escape")
+            {
+                text = @"  __  __                                              _    __        _    _    _____                               
+ |  \/  |  ___  _ __   _   _          __      __ ___ (_) _/_/ _ __  (_)  (_)  | ____| ___   ___  __ _  _ __    ___ 
+ | |\/| | / _ \| '_ \ | | | |  _____  \ \ /\ / // __|| |/ __|| '_ \ | |  | |  |  _|  / __| / __|/ _` || '_ \  / _ \
+ | |  | ||  __/| | | || |_| | |_____|  \ V  V /| (__ | |\__ \| | | || |  | |  | |___ \__ \| (__| (_| || |_) ||  __/
+ |_|  |_| \___||_| |_| \__,_|           \_/\_/  \___||_||___/|_| |_||_| _/ |  |_____||___/ \___|\__,_|| .__/  \___|
+                                                                       |__/                           |_|          ";
+            }
+            if (text == "trzy")
+            {
+                text = @" 333333333333333   
+3:::::::::::::::33 
+3::::::33333::::::3
+3333333     3:::::3
+            3:::::3
+            3:::::3
+    33333333:::::3 
+    3:::::::::::3  
+    33333333:::::3 
+            3:::::3
+            3:::::3
+            3:::::3
+3333333     3:::::3
+3::::::33333::::::3
+3:::::::::::::::33 
+ 333333333333333   ";
+            }
+            if (text == "dwa")
+            {
+                text = @" 222222222222222    
+2:::::::::::::::22  
+2::::::222222:::::2 
+2222222     2:::::2 
+            2:::::2 
+            2:::::2 
+         2222::::2  
+    22222::::::22   
+  22::::::::222     
+ 2:::::22222        
+2:::::2             
+2:::::2             
+2:::::2       222222
+2::::::2222222:::::2
+2::::::::::::::::::2
+22222222222222222222";
+            }
+            if (text == "jeden")
+            {
+                text = @"  1111111   
+ 1::::::1   
+1:::::::1   
+111:::::1   
+   1::::1   
+   1::::1   
+   1::::1   
+   1::::l   
+   1::::l   
+   1::::l   
+   1::::l   
+   1::::l   
+111::::::111
+1::::::::::1
+1::::::::::1
+111111111111";
+            }
+            if (text == "start")
+            {
+                text = @"   SSSSSSSSSSSSSSS TTTTTTTTTTTTTTTTTTTTTTT               AAA               RRRRRRRRRRRRRRRRR   TTTTTTTTTTTTTTTTTTTTTTT
+ SS:::::::::::::::ST:::::::::::::::::::::T              A:::A              R::::::::::::::::R  T:::::::::::::::::::::T
+S:::::SSSSSS::::::ST:::::::::::::::::::::T             A:::::A             R::::::RRRRRR:::::R T:::::::::::::::::::::T
+S:::::S     SSSSSSST:::::TT:::::::TT:::::T            A:::::::A            RR:::::R     R:::::RT:::::TT:::::::TT:::::T
+S:::::S            TTTTTT  T:::::T  TTTTTT           A:::::::::A             R::::R     R:::::RTTTTTT  T:::::T  TTTTTT
+S:::::S                    T:::::T                  A:::::A:::::A            R::::R     R:::::R        T:::::T        
+ S::::SSSS                 T:::::T                 A:::::A A:::::A           R::::RRRRRR:::::R         T:::::T        
+  SS::::::SSSSS            T:::::T                A:::::A   A:::::A          R:::::::::::::RR          T:::::T        
+    SSS::::::::SS          T:::::T               A:::::A     A:::::A         R::::RRRRRR:::::R         T:::::T        
+       SSSSSS::::S         T:::::T              A:::::AAAAAAAAA:::::A        R::::R     R:::::R        T:::::T        
+            S:::::S        T:::::T             A:::::::::::::::::::::A       R::::R     R:::::R        T:::::T        
+            S:::::S        T:::::T            A:::::AAAAAAAAAAAAA:::::A      R::::R     R:::::R        T:::::T        
+SSSSSSS     S:::::S      TT:::::::TT         A:::::A             A:::::A   RR:::::R     R:::::R      TT:::::::TT      
+S::::::SSSSSS:::::S      T:::::::::T        A:::::A               A:::::A  R::::::R     R:::::R      T:::::::::T      
+S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::::R     R:::::R      T:::::::::T      
+ SSSSSSSSSSSSSSS         TTTTTTTTTTT      AAAAAAA                   AAAAAAARRRRRRRR     RRRRRRR      TTTTTTTTTTT      ";
+            }
             if (text == "")
                 return;
 
@@ -258,9 +366,9 @@ namespace ConsoleInterface
             }
         }
 
-        public static void printInstructionInGame(int howMuchToWin)
+        public static void printInstructionInGame(int howMuchToWin, int column, int row)
         {
-            Console.SetCursorPosition(25, 53);
+            Console.SetCursorPosition(column, row);//25 53
             string infix = (howMuchToWin == 5) ? "i" : "e";
             Console.WriteLine($"Cel gry: Ułożyć {howMuchToWin} symbol" + infix + " w jednej linii poziomo, pionowo lub ukośnie zanim zrobi to twój przeciwnik.");
             Console.SetCursorPosition(25, 56);
@@ -415,97 +523,123 @@ namespace ConsoleInterface
                 startRow += squareSize;
             }
         }
-        private static void drawHorizontalLine(int currentPositionColumn, int currentPositionRow, int colorValue) 
+        public static void drawWinningSquares(List<int> squares, int startColumn, int startRow, int squareSize, int option, int symbolValue, int colorSymbolValue = 6, int colorSquareValue=6)
         {
-            Console.SetCursorPosition(currentPositionColumn, currentPositionRow);
-            Console.BackgroundColor = (ConsoleColor)4;
-            //Console.ForegroundColor = (ConsoleColor)4;
-            for(int i=0; i<36; i++)
-                Console.Write(" ");
-        }
-        public static void drawWinningLine(int[,] board2D, int currentPositionColumn, int currentPositionRow, int squareSize, int wayToWin, int colorValue)
-        {
-            drawHorizontalLine(currentPositionColumn, currentPositionRow+squareSize/2, colorValue);
+            for(int i=0; i<squares.Count; i+=2)
+            {
+                drawSquare(startColumn + squares[i+1]*squareSize, startRow + squares[i] * squareSize, squareSize, colorSquareValue);
+                drawSymbol(option, startColumn + squares[i + 1] * squareSize + 1, startRow + squares[i] * squareSize + 1, symbolValue, colorSymbolValue);
+            }
         }
     }
 
     static class Check
     {
-        public static bool checkHorizontal(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
+        public static List<int> checkHorizontal(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
         {
+            List<int> result = new List<int>();
             int right = 0, left = 0, positionColumn = currentPositionColumn;
             while(positionColumn + 1 < chessSize && board2D[currentPositionRow, positionColumn] == board2D[currentPositionRow, positionColumn + 1])
             {
                 right++;
                 positionColumn++;
+                result.Add(currentPositionRow);
+                result.Add(positionColumn);
             }
             positionColumn = currentPositionColumn;
             while (positionColumn - 1 >= 0 && board2D[currentPositionRow, positionColumn] == board2D[currentPositionRow, positionColumn - 1])
             {
                 left++;
                 positionColumn--;
+                result.Add(currentPositionRow);
+                result.Add(positionColumn);
             }
 
             if (right + left + 1 >= howMuchToWin)
-                return true;
+            {
+                result.Add(currentPositionRow);
+                result.Add(currentPositionColumn);
+                return result;
+            }
             else
-                return false;
+                return null;
         }
 
-        public static bool checkVertical(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
+        public static List<int> checkVertical(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
         {
+            List<int> result = new List<int>();
             int down = 0, up = 0, positionRow = currentPositionRow;
             while (positionRow + 1 < chessSize && board2D[positionRow, currentPositionColumn] == board2D[positionRow + 1, currentPositionColumn])
             {
                 down++;
                 positionRow++;
+                result.Add(positionRow);
+                result.Add(currentPositionColumn);
             }
             positionRow = currentPositionRow;
             while (positionRow - 1 >= 0 && board2D[positionRow, currentPositionColumn] == board2D[positionRow - 1, currentPositionColumn])
             {
                 up++;
                 positionRow--;
+                result.Add(positionRow);
+                result.Add(currentPositionColumn);
             }
 
             if (down + up + 1 >= howMuchToWin)
-                return true;
+            {
+                result.Add(currentPositionRow);
+                result.Add(currentPositionColumn);
+                return result;
+            }
             else
-                return false;
+                return null;
         }
 
-        public static bool checkDiagonalUpDown(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
+        public static List<int> checkDiagonalUpDown(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
         {
+            List<int> result = new List<int>();
             int rightDown = 0, leftUp = 0;
             int positionRow = currentPositionRow, positionColumn = currentPositionColumn;
-            while (positionRow + 1 < chessSize && positionColumn +1 < chessSize && board2D[positionRow, positionColumn] == board2D[positionRow+1, positionColumn+1])
+            while (positionRow + 1 < chessSize && positionColumn + 1 < chessSize && board2D[positionRow, positionColumn] == board2D[positionRow + 1, positionColumn + 1])
             {
                 rightDown++;
                 positionRow++;
                 positionColumn++;
+                result.Add(positionRow);
+                result.Add(positionColumn);
             }
             positionRow = currentPositionRow;
             positionColumn = currentPositionColumn;
-            while (positionRow - 1 >= 0 && positionColumn -1 >= 0 && board2D[positionRow, positionColumn] == board2D[positionRow - 1, positionColumn-1])
+            while (positionRow - 1 >= 0 && positionColumn - 1 >= 0 && board2D[positionRow, positionColumn] == board2D[positionRow - 1, positionColumn - 1])
             {
                 leftUp++;
                 positionRow--;
                 positionColumn--;
+                result.Add(positionRow);
+                result.Add(positionColumn);
             }
             if (rightDown + leftUp + 1 >= howMuchToWin)
-                return true;
+            {
+                result.Add(currentPositionRow);
+                result.Add(currentPositionColumn);
+                return result;
+            }
             else
-                return false;
+                return null;
         }
 
-        public static bool checkDiagonalDownUp(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
+        public static List<int> checkDiagonalDownUp(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
         {
+            List<int> result = new List<int>();
             int rightUp = 0, leftDown = 0;
             int positionRow = currentPositionRow, positionColumn = currentPositionColumn;
-            while (positionRow -1 >= 0 && positionColumn + 1 < chessSize && board2D[positionRow, positionColumn] == board2D[positionRow - 1, positionColumn + 1])
+            while (positionRow - 1 >= 0 && positionColumn + 1 < chessSize && board2D[positionRow, positionColumn] == board2D[positionRow - 1, positionColumn + 1])
             {
                 rightUp++;
                 positionRow--;
                 positionColumn++;
+                result.Add(positionRow);
+                result.Add(positionColumn);
             }
             positionRow = currentPositionRow;
             positionColumn = currentPositionColumn;
@@ -514,32 +648,50 @@ namespace ConsoleInterface
                 leftDown++;
                 positionRow++;
                 positionColumn--;
+                result.Add(positionRow);
+                result.Add(positionColumn);
             }
             if (rightUp + leftDown + 1 >= howMuchToWin)
-                return true;
+            {
+                result.Add(currentPositionRow);
+                result.Add(currentPositionColumn);
+                return result;
+            }
             else
-                return false;
+                return null;
         }
 
-        public static int checkWin(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
+        public static int checkWin(int[,] board2D, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin, ref List<int> listWinnerPositions)
         {
-            if (checkHorizontal(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin))
+            if (checkHorizontal(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin) != null)
+            {
+                listWinnerPositions = checkHorizontal(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin);
                 return 1; //zwycieztwo poziome
-            else if (checkVertical(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin))
+            }
+            else if (checkVertical(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin) != null)
+            {
+                listWinnerPositions = checkVertical(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin);
                 return 2; //zwycieztwo pionowe
-            else if (checkDiagonalUpDown(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin))
+            }
+            else if (checkDiagonalUpDown(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin) != null)
+            {
+                listWinnerPositions = checkDiagonalUpDown(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin);
                 return 3; //zwycieztwo \
-            else if (checkDiagonalDownUp(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin))
+            }
+            else if (checkDiagonalDownUp(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin) != null)
+            {
+                listWinnerPositions = checkDiagonalDownUp(board2D, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin);
                 return 4; //zwycieztwo /
+            }
             return 0; //nie bylo wygranej
         }
 
-        public static int checkIfEndGame(int[,] board2D, int moveCount, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin)
+        public static int checkIfEndGame(int[,] board2D, int moveCount, int chessSize, int currentPositionColumn, int currentPositionRow, int howMuchToWin, ref List<int> listWinnerPositions)
         {
-            if (moveCount == board2D.Length)
-                return -1; //remis
             int indexBoard = (currentPositionRow - 1) * chessSize + currentPositionColumn - 1;
-            int winner = checkWin(board2D, chessSize, currentPositionColumn - 1, currentPositionRow - 1, howMuchToWin);
+            int winner = checkWin(board2D, chessSize, currentPositionColumn - 1, currentPositionRow - 1, howMuchToWin, ref listWinnerPositions);
+            if (moveCount == board2D.Length && winner == 0)
+                return -1; //remis
             return winner;
         }
 
@@ -595,6 +747,7 @@ namespace ConsoleInterface
         private int howMuchToWin;
         private int startArenaColumn;
         private int startArenaRow;
+        private List<int> listWinnerPositions;
 
         private void initializeParameters(int option, int startArenaRow, int startArenaColumn)
         {
@@ -640,18 +793,19 @@ namespace ConsoleInterface
             moveCount = 0;
             wayToWin = 0;
             winner = 0;
+            listWinnerPositions = new List<int>();
         }
 
         public CircleAndCross(int option, int startArenaRow = 10, int startArenaColumn = 56)
         {
             initializeParameters(option, startArenaRow, startArenaColumn);
             Draw.drawArena(chessSize, startArenaColumn, startArenaRow);
-            Draw.drawSubtitle("Ruch", 40, 3);
+            Draw.drawSubtitle("Ruch", 40, 3, 6);
             Draw.drawSubtitle(symbolValue.ToString(), 77, 3, colorValue);
-            Draw.printInstructionInGame(howMuchToWin);
+            Draw.printInstructionInGame(howMuchToWin, 25, 53);
         }
 
-        private void endOfGame(int winner, int color=15)
+        private int endOfGame(int winner, int color=15)
         {
             Draw.drawSubtitle("czysc", 0, 0);
             //Console.Clear();
@@ -670,10 +824,45 @@ namespace ConsoleInterface
                 Draw.drawSubtitle("Remis", 50, 3);
             }
             //Draw.redrawBoardWithSymbols(board2D, option, chessSize, squareSize, startArenaColumn, startArenaRow, startArenaColumn+1, startArenaRow+1);
+            System.Threading.Thread.Sleep(1000);
+            Draw.drawSubtitle("czysc", 25, 53);
+            int changeColor = 0;
+            ConsoleKey key;
+            do
+            {
+                while (!Console.KeyAvailable)
+                {
+                    Draw.drawSubtitle("nowa gra - wcisnij Enter", Draw.adjustToCenterText(0, 150, 131), 50, 5 + changeColor);
+                    Draw.drawSubtitle("menu - wcisnij Escape", Draw.adjustToCenterText(0, 150, 116), 58, 7 + changeColor);
+                    Console.SetCursorPosition(0, 0);
+                    changeColor = (changeColor + 1) % 2;
+                    System.Threading.Thread.Sleep(250);
+                }
+                key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    Draw.drawSubtitle("trzy", Draw.adjustToCenterText(0, 150, 20), Draw.adjustToCenterText(0, 65, 16), 5);
+                    System.Threading.Thread.Sleep(300);
+                    Console.Clear();
+                    Draw.drawSubtitle("dwa", Draw.adjustToCenterText(0, 150, 20), Draw.adjustToCenterText(0, 65, 16), 6);
+                    System.Threading.Thread.Sleep(300);
+                    Console.Clear();
+                    Draw.drawSubtitle("jeden", Draw.adjustToCenterText(0, 150, 13), Draw.adjustToCenterText(0, 65, 16), 2);
+                    System.Threading.Thread.Sleep(300);
+                    Console.Clear();
+                    Draw.drawSubtitle("start", Draw.adjustToCenterText(0, 150, 119), Draw.adjustToCenterText(0, 65, 16), 1);
+                    System.Threading.Thread.Sleep(300);
+                    Console.Clear();
+                    return option;
+                }
+            } while (key != ConsoleKey.Escape);
+            return 4;
         }
 
-        public void gameplay()
+        public int gameplay()
         {
+            int gameplayResult = 0;
             ConsoleKey key;
             do
             {
@@ -694,18 +883,18 @@ namespace ConsoleInterface
                     {
                         Draw.drawSymbol(option, startColumn + 1, startRow + 1, symbolValue, colorValue);
                         moveCount++;
-                        wayToWin = Check.checkIfEndGame(board2D, moveCount, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin);
+                        wayToWin = Check.checkIfEndGame(board2D, moveCount, chessSize, currentPositionColumn, currentPositionRow, howMuchToWin, ref listWinnerPositions);
                         if (wayToWin != 0)
                         {
                             if (wayToWin > 0)
                             {
                                 winner = board2D[currentPositionRow - 1, currentPositionColumn - 1];
-                                Draw.drawWinningLine(board2D, startColumn, startRow, squareSize, wayToWin, colorValue);
-                                endOfGame(winner, colorValue);
+                                Draw.drawWinningSquares(listWinnerPositions, startArenaColumn, startArenaRow, squareSize, option, winner);
+                                gameplayResult = endOfGame(winner, colorValue);
                             }
                             else
-                                endOfGame(-1, 15);
-                            return;
+                                gameplayResult = endOfGame(-1, 15);
+                            return gameplayResult;
                         }
                         symbolValue = (symbolValue + 1) % 2; //zmiana symbolu
                         if (symbolValue == 0)
@@ -732,6 +921,7 @@ namespace ConsoleInterface
                     startRow += squareSize;
                 }
             } while (key != ConsoleKey.Escape);
+            return gameplayResult;
         }
     }
 
@@ -776,11 +966,6 @@ namespace ConsoleInterface
             }
             Console.Clear();
         }
-
-        static int adjustToCenterText(int startRow, int endColumn, int length)
-        {
-            return (endColumn+startRow - length)/2;
-        }
         static void drawOptionFirstMenu(int startRow=0)
         {
             int littleHight = 10, actualRow = startRow;
@@ -790,19 +975,19 @@ namespace ConsoleInterface
             Draw.drawSubtitle("krzyzyk", 70, actualRow, 4);
             actualRow += 10;
             Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("Nowa gra 3x3", adjustToCenterText(25, 125, 74), actualRow + 2);
+            Draw.drawSubtitle("Nowa gra 3x3", Draw.adjustToCenterText(25, 125, 74), actualRow + 2);
             actualRow += littleHight;
             Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("Nowa gra 5x5", adjustToCenterText(25, 125, 74), actualRow + 2);
+            Draw.drawSubtitle("Nowa gra 5x5", Draw.adjustToCenterText(25, 125, 74), actualRow + 2);
             actualRow += littleHight;
             Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("Nowa gra 13x13", adjustToCenterText(25, 125, 84), actualRow + 2);
+            Draw.drawSubtitle("Nowa gra 13x13", Draw.adjustToCenterText(25, 125, 84), actualRow + 2);
             actualRow += littleHight;
             Draw.drawRectangle(25, actualRow, 10, 100, 15);
-            Draw.drawSubtitle("Wczytaj gre", adjustToCenterText(25, 125, 60), actualRow + 1);
+            Draw.drawSubtitle("Wczytaj gre", Draw.adjustToCenterText(25, 125, 60), actualRow + 1);
             actualRow += littleHight;
             Draw.drawRectangle(25, actualRow, 10, 100, 15);
-            Draw.drawSubtitle("Wyjdz z gry", adjustToCenterText(25, 125, 63), actualRow + 1);
+            Draw.drawSubtitle("Wyjdz z gry", Draw.adjustToCenterText(25, 125, 63), actualRow + 1);
             Console.SetCursorPosition(17, actualRow + 12);
             Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
             Console.SetCursorPosition(0, 0);
@@ -819,31 +1004,31 @@ namespace ConsoleInterface
                     switch (option)
                     {
                         case 0:
-                            startColumnSubtitle = adjustToCenterText(25, 125, 74);//38;
+                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 74);//38;
                             startRowSubtitle = 12;
                             startRow = startRowSubtitle - 2;
                             text = "Nowa gra 3x3";
                             break;
                         case 1:
-                            startColumnSubtitle = adjustToCenterText(25, 125, 74);
+                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 74);
                             startRowSubtitle = 22;
                             startRow = startRowSubtitle - 2;
                             text = "Nowa gra 5x5";
                             break;
                         case 2:
-                            startColumnSubtitle = adjustToCenterText(25, 125, 84);
+                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 84);
                             startRowSubtitle = 32;
                             startRow = startRowSubtitle - 2;
                             text = "Nowa gra 13x13";
                             break;
                         case 3:
-                            startColumnSubtitle = adjustToCenterText(25, 125, 60);
+                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 60);
                             startRowSubtitle = 41;
                             startRow = startRowSubtitle - 1;
                             text = "Wczytaj gre";
                             break;
                         case 4:
-                            startColumnSubtitle = adjustToCenterText(25, 125, 63);
+                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 63);
                             startRowSubtitle = 51;
                             startRow = startRowSubtitle - 1;
                             text = "Wyjdz z gry";
@@ -876,7 +1061,6 @@ namespace ConsoleInterface
                 }
             } while (true);
         }
-        
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
@@ -902,11 +1086,14 @@ namespace ConsoleInterface
                     Console.WriteLine("Wyszedles z gry");
                     return;
             }
-            CircleAndCross c = new CircleAndCross(optionGame);
-            c.gameplay();
-            for (int i = 0; i < 10; i++)
-                Console.WriteLine();
-            Console.ReadKey();
+            do{
+                CircleAndCross c = new CircleAndCross(optionGame);
+                optionGame = c.gameplay();
+            } while(optionGame != 4);
+
+            Console.Clear();
+            Console.WriteLine("Wyszedles z gry pewnie klikajac ESCAPE");
+            Environment.Exit(0);
         }
     }
 }
