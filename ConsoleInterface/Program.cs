@@ -687,7 +687,7 @@ namespace ConsoleInterface
                 Console.WindowHeight = 65; //65
                 Console.WindowWidth = 150; //150
             }
-            catch (System.ArgumentOutOfRangeException error)
+            catch (System.ArgumentOutOfRangeException)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 7, Console.LargestWindowHeight / 2 - 2);
@@ -696,7 +696,9 @@ namespace ConsoleInterface
                 Console.WriteLine("Your screen isn't big enough to match the game's desired width and hight.");
                 Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 45, Console.LargestWindowHeight / 2);
                 Console.WriteLine("Things may not look quite right, unless you adjust the text size in your console window.");
-                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 10, Console.LargestWindowHeight / 2 + 1);
+                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 33, Console.LargestWindowHeight / 2 + 1);
+                Console.WriteLine("Required min. resolution 150x65, your actual resolution is "+Console.LargestWindowWidth+"x"+Console.LargestWindowHeight);
+                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 10, Console.LargestWindowHeight / 2 + 2);
                 waitForKey(ConsoleKey.Enter);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WindowHeight = Console.LargestWindowHeight;
