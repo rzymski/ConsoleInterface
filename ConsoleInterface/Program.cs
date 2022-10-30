@@ -220,13 +220,13 @@ namespace ConsoleInterface
             Console.SetCursorPosition(25, 53);
             string infix = (howMuchToWin == 5) ? "i" : "e";
             Console.WriteLine($"Cel gry: Ułożyć {howMuchToWin} symbol" + infix + " w jednej linii poziomo, pionowo lub ukośnie zanim zrobi to twój przeciwnik.");
-            Console.SetCursorPosition(25, 55);
-            Console.WriteLine("Sterowanie:");
             Console.SetCursorPosition(25, 56);
-            Console.WriteLine("Do zmiany aktualnej pozycji używaj strzałek, WASD lub strzałek z klawiatury numerycznej (2,4,6,8)");
+            Console.WriteLine("Sterowanie:");
             Console.SetCursorPosition(25, 57);
+            Console.WriteLine("Do zmiany aktualnej pozycji używaj strzałek, WASD lub strzałek z klawiatury numerycznej (2,4,6,8)");
+            Console.SetCursorPosition(25, 59);
             Console.WriteLine("Stawiaj symbol klikając Enter lub Spację.");
-            Console.SetCursorPosition(25, 58);
+            Console.SetCursorPosition(25, 61);
             Console.WriteLine("Kliknij ESCAPE żeby otworzyć menu opcji. (możliwość zapisania, zakończenia lub wybrania innej gry)");
         }
 
