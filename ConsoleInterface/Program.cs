@@ -33,13 +33,13 @@ namespace ConsoleInterface
             {
                 text = @"                                                          __                                                        __ 
               __                                         (__)                                                      (__)
- __  ___   __/ /_      __       __  ___   ______          __         __  ___  ______     ________  ____    ____  ________  ____    ____  __  ___ 
-|  |/  /  /  __  \    |  |__   |  |/  /  /  __  \        |  |       |  |/  / |   _  \   |       /  \   \  /   / |       /  \   \  /   / |  |/  / 
-|  '  /  |  |  |  |  _|   _/   |  '  /  |  |  |  |       |  |       |  '  /  |  |_)  |  `---/  /    \   \/   /  `---/  /    \   \/   /  |  '  /  
-|    <   |  |  |  | /_   |     |    <   |  |  |  |       |  |       |    <   |      /      /  /      \_    _/      /  /      \_    _/   |    <   
-|  .  \  |  `--'  |   |  `----.|  .  \  |  `--'  |       |  |       |  .  \  |  |\  \     /  /----.    |  |       /  /----.    |  |     |  .  \  
-|__|\__\  \______/    |_______||__|\__\  \______/        |__|       |__|\__\ |__| \__\   /________|    |__|      /________|    |__|     |__|\__\ 
-                                                                                                                                                  ";
+ __  ___   __/ /_      __       __  ___   ______          __         __  ___  ______     ________  ____    ____  ________  ____    ____  __  ___
+|  |/  /  /  __  \    |  |__   |  |/  /  /  __  \        |  |       |  |/  / |   _  \   |       /  \   \  /   / |       /  \   \  /   / |  |/  /
+|  '  /  |  |  |  |  _|   _/   |  '  /  |  |  |  |       |  |       |  '  /  |  |_)  |  `---/  /    \   \/   /  `---/  /    \   \/   /  |  '  / 
+|    <   |  |  |  | /_   |     |    <   |  |  |  |       |  |       |    <   |      /      /  /      \_    _/      /  /      \_    _/   |    <  
+|  .  \  |  `--'  |   |  `----.|  .  \  |  `--'  |       |  |       |  .  \  |  |\  \     /  /----.    |  |       /  /----.    |  |     |  .  \ 
+|__|\__\  \______/    |_______||__|\__\  \______/        |__|       |__|\__\ |__| \__\   /________|    |__|      /________|    |__|     |__|\__\
+                                                                                                                                                ";
             }
             if(text == "Nowa gra 3x3")
             {
@@ -684,7 +684,7 @@ namespace ConsoleInterface
         {
             try
             {
-                Console.WindowHeight = 65; //70
+                Console.WindowHeight = 65; //65
                 Console.WindowWidth = 150; //150
             }
             catch (System.ArgumentOutOfRangeException error)
@@ -718,27 +718,38 @@ namespace ConsoleInterface
             Console.Clear();
         }
 
-        static void drawOptionFirstMenu() 
+        static int adjustToCenterText(int startRow, int endColumn, int length)
         {
-            //Main menu
-            Draw.drawSubtitle("title", 5, 1, 12);
-            Draw.drawRectangle(25, 10, 11, 100, 15);
-            Draw.drawSubtitle("Nowa gra 3x3", 38, 12);
-            Draw.drawRectangle(25, 21, 11, 100, 15);
-            Draw.drawSubtitle("Nowa gra 5x5", 38, 23);
-            Draw.drawRectangle(25, 32, 11, 100, 15);
-            Draw.drawSubtitle("Nowa gra 13x13", 34, 34);
-            Draw.drawRectangle(25, 43, 11, 100, 15);
-            Draw.drawSubtitle("Wczytaj gre", 45, 44);
-            Draw.drawRectangle(25, 54, 11, 100, 15);
-            Draw.drawSubtitle("Wyjdz z gry", 45, 55);
-            Console.SetCursorPosition(17, 67);
-            Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
-            Console.SetCursorPosition(0,0);
+            return (endColumn+startRow - length)/2;
         }
-
-        static int chooseOptionFirstMenu(int startColumn = 25, int startRow = 10, int startColumnSubtitle = 38, int startRowSubtitle = 11, int option = 0, string text = "Nowa gra 3x3")
+        static void drawOptionFirstMenu(int startRow=0)
         {
+            int littleHight = 10, actualRow = startRow;
+            //Main menu
+            Draw.drawSubtitle("title", adjustToCenterText(0, 150, 145), actualRow, 12);
+            actualRow += 10;
+            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
+            Draw.drawSubtitle("Nowa gra 3x3", adjustToCenterText(25, 125, 74), actualRow + 2);
+            actualRow += littleHight;
+            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
+            Draw.drawSubtitle("Nowa gra 5x5", adjustToCenterText(25, 125, 74), actualRow + 2);
+            actualRow += littleHight;
+            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
+            Draw.drawSubtitle("Nowa gra 13x13", adjustToCenterText(25, 125, 84), actualRow + 2);
+            actualRow += littleHight;
+            Draw.drawRectangle(25, actualRow, 10, 100, 15);
+            Draw.drawSubtitle("Wczytaj gre", adjustToCenterText(25, 125, 60), actualRow + 1);
+            actualRow += littleHight;
+            Draw.drawRectangle(25, actualRow, 10, 100, 15);
+            Draw.drawSubtitle("Wyjdz z gry", adjustToCenterText(25, 125, 63), actualRow+1);
+            Console.SetCursorPosition(17, actualRow + 12);
+            Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
+            Console.SetCursorPosition(0, 0);
+        }
+        static int chooseOptionFirstMenu(int startColumn = 25, int option = 0)
+        {
+            int startRow = 0, startColumnSubtitle = 0, startRowSubtitle = 0;
+            string text = "";
             ConsoleKey key;
             do
             {
@@ -747,36 +758,40 @@ namespace ConsoleInterface
                     switch (option)
                     {
                         case 0:
-                            startColumnSubtitle = 38;
+                            startColumnSubtitle = adjustToCenterText(25, 125, 74);//38;
                             startRowSubtitle = 12;
+                            startRow = startRowSubtitle - 2;
                             text = "Nowa gra 3x3";
                             break;
                         case 1:
-                            startColumnSubtitle = 38;
-                            startRowSubtitle = 23;
+                            startColumnSubtitle = adjustToCenterText(25, 125, 74);
+                            startRowSubtitle = 22;
+                            startRow = startRowSubtitle - 2;
                             text = "Nowa gra 5x5";
                             break;
                         case 2:
-                            startColumnSubtitle = 34;
-                            startRowSubtitle = 34;
+                            startColumnSubtitle = adjustToCenterText(25, 125, 84);
+                            startRowSubtitle = 32;
+                            startRow = startRowSubtitle - 2;
                             text = "Nowa gra 13x13";
                             break;
                         case 3:
-                            startColumnSubtitle = 45;
-                            startRowSubtitle = 44;
+                            startColumnSubtitle = adjustToCenterText(25, 125, 60);
+                            startRowSubtitle = 41;
+                            startRow = startRowSubtitle - 1;
                             text = "Wczytaj gre";
                             break;
                         case 4:
-                            startColumnSubtitle = 45;
-                            startRowSubtitle = 55;
+                            startColumnSubtitle = adjustToCenterText(25, 125, 63);
+                            startRowSubtitle = 51;
+                            startRow = startRowSubtitle - 1;
                             text = "Wyjdz z gry";
                             break;
                     }
-                    startRow = 10 + 11 * option;
-                    Draw.drawRectangle(startColumn, startRow, 11, 100, 12); //12 = red
+                    Draw.drawRectangle(startColumn, startRow, 10, 100, 12); //12 = red
                     Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 12);
                     System.Threading.Thread.Sleep(500);
-                    Draw.drawRectangle(startColumn, startRow, 11, 100, 15); //15 = white
+                    Draw.drawRectangle(startColumn, startRow, 10, 100, 15); //15 = white
                     Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 15);
                     System.Threading.Thread.Sleep(500);
                 }
