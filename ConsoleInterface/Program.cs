@@ -34,6 +34,7 @@ namespace ConsoleInterface
         }
         public static void drawSubtitle(string text, int startColumn, int startRow, int colorText=15, int colorBackground=0)
         {
+            text = text.ToLower();
             if (text == "title")
             {
                 text = @"                                                          __                                                        __ 
@@ -79,7 +80,7 @@ namespace ConsoleInterface
 |__|\__\ |__| \__\   /________|    |__|      /________|    |__|     |__|\__\
                                                                                                                                                 ";
             }
-            if (text == "Nowa gra 3x3")
+            if (text == "nowa gra 3x3")
             {
                 text = @" _   _                         _____                _____          _____ 
 | \ | |                       |  __ \              |____ |        |____ |
@@ -88,7 +89,7 @@ namespace ConsoleInterface
 | |\  || (_) |\ V  V /| (_| | | |_\ \| |  | (_| |  .___/ /  >  <  .___/ /
 |_| \_| \___/  \_/\_/  \__,_|  \____/|_|   \__,_|  \____/  /_/\_\ \____/ ";
             }
-            if(text == "Nowa gra 5x5")
+            if(text == "nowa gra 5x5")
             {
                 text = @" _   _                         _____                _____          _____ 
 | \ | |                       |  __ \              |  ___|        |  ___|
@@ -97,7 +98,7 @@ namespace ConsoleInterface
 | |\  || (_) |\ V  V /| (_| | | |_\ \| |  | (_| |  /\__/ /  >  <  /\__/ /
 |_| \_| \___/  \_/\_/  \__,_|  \____/|_|   \__,_|  \____/  /_/\_\ \____/ ";
             }
-            if(text == "Nowa gra 13x13")
+            if(text == "nowa gra 13x13")
             {
                 text = @" _   _                         _____                __   ______         __   ______ 
 | \ | |                       |  __ \              /  | |____  |       /  | |____  |
@@ -106,7 +107,7 @@ namespace ConsoleInterface
 | |\  || (_) |\ V  V /| (_| | | |_\ \| |  | (_| |   | | .___/ /  >  <  _| |_.___/ /
 |_| \_| \___/  \_/\_/  \__,_|  \____/|_|   \__,_|   |_| \____/  /_/\_\ \___/\____/ ";
             }
-            if(text == "Wczytaj gre")
+            if(text == "wczytaj gre")
             {
                 text = @" _    _                    _          _                    
 | |  | |                  | |        (_)                   
@@ -117,7 +118,7 @@ namespace ConsoleInterface
                      __/ |          _/ |   __/ |       (_( 
                     |___/          |__/   |___/          ";
             }
-            if(text == "Wyjdz z gry")
+            if(text == "wyjdz z gry")
             {
                 text = @" _    _           _      _                                   
 | |  | |         (_)    | |   __                             
@@ -128,7 +129,7 @@ namespace ConsoleInterface
           __/ | _/ |                        __/ |        __/ |
          |___/ |__/                        |___/        |___/ ";
             }
-            if(text == "Ruch")
+            if(text == "ruch")
             {
                 text = @"  ____                   _         
  |  _ \   _   _    ___  | |__    _ 
@@ -152,16 +153,16 @@ namespace ConsoleInterface
  | |_| |
   \___/ ";
             }
-            if (text == "Wygrały")
+            if (text == "wygrały")
             {
-                text = @" __        __                                 _             
- \ \      / /  _   _    __ _   _ __    __ _  | |  _   _   _ 
-  \ \ /\ / /  | | | |  / _` | | '__|  / _` | |// | | | | (_)
-   \ V  V /   | |_| | | (_| | | |    | (_| | //| | |_| |  _ 
-    \_/\_/     \__, |  \__, | |_|     \__,_| |_|  \__, | (_)
+                text = @" __        __                                _             
+ \ \      / /  _   _    __ _   _ __   __ _  | |  _   _   _ 
+  \ \ /\ / /  | | | |  / _` | | '__| / _` | |// | | | | (_)
+   \ V  V /   | |_| | | (_| | | |   | (_| | //| | |_| |  _ 
+    \_/\_/     \__, |  \__, | |_|    \__,_| |_|  \__, | (_)
                |___/   |___/                      |___/     ";
             }
-            if (text == "Remis")
+            if (text == "remis")
             {
                 text = @"  ____                       _       
  |  _ \    ___   _ __ ___   (_)  ___ 
@@ -183,16 +184,7 @@ namespace ConsoleInterface
                     text += "\n";
                 }
             }
-            /*if(text == "nowa gra - wcisnij Enter")
-            {
-                text = @"  _   _                                                             _   __      _  _   _____       _            
- | \ | | _____      ____ _    __ _ _ __ __ _          __      _____(_)_/_/_ __ (_)(_) | ____|_ __ | |_ ___ _ __ 
- |  \| |/ _ \ \ /\ / / _` |  / _` | '__/ _` |  _____  \ \ /\ / / __| / __| '_ \| || | |  _| | '_ \| __/ _ \ '__|
- | |\  | (_) \ V  V / (_| | | (_| | | | (_| | |_____|  \ V  V / (__| \__ \ | | | || | | |___| | | | ||  __/ |   
- |_| \_|\___/ \_/\_/ \__,_|  \__, |_|  \__,_|           \_/\_/ \___|_|___/_| |_|_|/ | |_____|_| |_|\__\___|_|   
-                             |___/                                              |__/                            ";
-            }*/
-            if (text == "nowa gra - wcisnij Enter")
+            if (text == "nowa gra - wcisnij enter")
             {
                 text = @"  _   _                                                                    _              _    _    _____         _              
  | \ | |  ___ __      __ __ _    __ _  _ __  __ _          __      __ ___ (_) ___  _ __  (_)  (_)  | ____| _ __  | |_   ___  _ __ 
@@ -201,7 +193,7 @@ namespace ConsoleInterface
  |_| \_| \___/  \_/\_/  \__,_|  \__, ||_|   \__,_|           \_/\_/  \___||_||___/|_| |_||_| _/ |  |_____||_| |_| \__| \___||_|   
                                 |___/                                                       |__/                                ";
             }
-            if (text == "menu - wcisnij Escape")
+            if (text == "menu - wcisnij escape")
             {
                 text = @"  __  __                                              _    __        _    _    _____                               
  |  \/  |  ___  _ __   _   _          __      __ ___ (_) _/_/ _ __  (_)  (_)  | ____| ___   ___  __ _  _ __    ___ 
@@ -285,6 +277,33 @@ SSSSSSS     S:::::S      TT:::::::TT         A:::::A             A:::::A   RR:::
 S::::::SSSSSS:::::S      T:::::::::T        A:::::A               A:::::A  R::::::R     R:::::R      T:::::::::T      
 S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::::R     R:::::R      T:::::::::T      
  SSSSSSSSSSSSSSS         TTTTTTTTTTT      AAAAAAA                   AAAAAAARRRRRRRR     RRRRRRR      TTTTTTTTTTT      ";
+            }
+            if (text == "kontynuuj gre")
+            {
+                text = @"  _  __              _                                  _                    
+ | |/ / ___   _ __  | |_  _   _  _ __   _   _  _   _   (_)    __ _  _ __  ___ 
+ | ' / / _ \ | '_ \ | __|| | | || '_ \ | | | || | | |  | |   / _` || '__|/ _ \
+ | . \| (_) || | | || |_ | |_| || | | || |_| || |_| |  | |  | (_| || |  |  __/
+ |_|\_\\___/ |_| |_| \__| \__, ||_| |_| \__,_| \__,_| _/ |   \__, ||_|   \___|
+                          |___/                      |__/    |___/         (_(";
+            }
+            if (text == "zapisz gre")
+            {
+                text = @"  _____              _                              
+ |__  / __ _  _ __  (_) ___  ____   __ _  _ __  ___ 
+   / / / _` || '_ \ | |/ __||_  /  / _` || '__|/ _ \
+  / /_| (_| || |_) || |\__ \ / /  | (_| || |  |  __/
+ /____|\__,_|| .__/ |_||___//___|  \__, ||_|   \___|
+             |_|                   |___/         (_(";
+            }
+            if (text == "wyjdz do menu")
+            {
+                text = @" __        __        _      _    _       _                                        
+ \ \      / /_   _  (_)  __| | _/_/   __| |  ___    _ __ ___    ___  _ __   _   _ 
+  \ \ /\ / /| | | | | | / _` ||_  /  / _` | / _ \  | '_ ` _ \  / _ \| '_ \ | | | |
+   \ V  V / | |_| | | || (_| | / /  | (_| || (_) | | | | | | ||  __/| | | || |_| |
+    \_/\_/   \__, |_/ | \__,_|/___|  \__,_| \___/  |_| |_| |_| \___||_| |_| \__,_|
+             |___/|__/                                                            ";
             }
             if (text == "")
                 return;
@@ -531,6 +550,122 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 drawSymbol(option, startColumn + squares[i + 1] * squareSize + 1, startRow + squares[i] * squareSize + 1, symbolValue, colorSymbolValue);
             }
         }
+        public static void drawFirstMenu(int startRow = 0)
+        {
+            int littleHight = 10, actualRow = startRow;
+            //Main menu
+            Draw.drawSubtitle("kolko", 2, actualRow + 1, 1);
+            Draw.drawSubtitle("i", 59, actualRow, 6);
+            Draw.drawSubtitle("krzyzyk", 70, actualRow, 4);
+            actualRow += 10;
+            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
+            Draw.drawSubtitle("Nowa gra 3x3", Draw.adjustToCenterText(25, 125, 74), actualRow + 2);
+            actualRow += littleHight;
+            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
+            Draw.drawSubtitle("Nowa gra 5x5", Draw.adjustToCenterText(25, 125, 74), actualRow + 2);
+            actualRow += littleHight;
+            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
+            Draw.drawSubtitle("Nowa gra 13x13", Draw.adjustToCenterText(25, 125, 84), actualRow + 2);
+            actualRow += littleHight;
+            Draw.drawRectangle(25, actualRow, 10, 100, 15);
+            Draw.drawSubtitle("Wczytaj gre", Draw.adjustToCenterText(25, 125, 60), actualRow + 1);
+            actualRow += littleHight;
+            Draw.drawRectangle(25, actualRow, 10, 100, 15);
+            Draw.drawSubtitle("Wyjdz z gry", Draw.adjustToCenterText(25, 125, 63), actualRow + 1);
+            Console.SetCursorPosition(17, actualRow + 12);
+            Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
+            Console.SetCursorPosition(0, 0);
+        }
+
+        public static void drawContinuedMenu(int startRow = 0)
+        {
+            Console.Clear();
+            int littleHight = 10, actualRow = startRow;
+            //Continued menu
+            Draw.drawSubtitle("kolko", 2, actualRow + 1, 1);
+            Draw.drawSubtitle("i", 59, actualRow, 6);
+            Draw.drawSubtitle("krzyzyk", 70, actualRow, 4);
+            actualRow += 10;
+            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
+            Draw.drawSubtitle("kontynuuj gre", Draw.adjustToCenterText(25, 125, 79), actualRow + 2);
+            actualRow += littleHight;
+            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
+            Draw.drawSubtitle("zapisz gre", Draw.adjustToCenterText(25, 125, 53), actualRow + 2);
+            actualRow += littleHight;
+            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
+            Draw.drawSubtitle("wyjdz do menu", Draw.adjustToCenterText(25, 125, 83), actualRow + 2);
+            actualRow += littleHight;
+            Draw.drawRectangle(25, actualRow, 10, 100, 15);
+            Draw.drawSubtitle("wyjdz z gry", Draw.adjustToCenterText(25, 125, 63), actualRow + 1);
+            Console.SetCursorPosition(17, actualRow + 12);
+            Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
+            Console.SetCursorPosition(0, 0);
+        }
+
+        public static int chooseOptionContinuedMenu(int startColumn = 25, int option = 0)
+        {
+            int startRow = 0, startColumnSubtitle = 0, startRowSubtitle = 0;
+            string text = "";
+            ConsoleKey key;
+            do
+            {
+                while (!Console.KeyAvailable)
+                {
+                    switch (option)
+                    {
+                        case 0:
+                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 79);//38;
+                            startRowSubtitle = 12;
+                            startRow = startRowSubtitle - 2;
+                            text = "kontynuuj gre";
+                            break;
+                        case 1:
+                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 53);
+                            startRowSubtitle = 22;
+                            startRow = startRowSubtitle - 2;
+                            text = "zapisz gre";
+                            break;
+                        case 2:
+                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 83);
+                            startRowSubtitle = 32;
+                            startRow = startRowSubtitle - 2;
+                            text = "wyjdz do menu";
+                            break;
+                        case 3:
+                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 63);
+                            startRowSubtitle = 41;
+                            startRow = startRowSubtitle - 1;
+                            text = "wyjdz z gry";
+                            break;
+                    }
+                    Draw.drawRectangle(startColumn, startRow, 10, 100, 4); //4 = red
+                    Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 4);
+                    System.Threading.Thread.Sleep(500);
+                    Draw.drawRectangle(startColumn, startRow, 10, 100, 15); //15 = white
+                    Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 15);
+                    System.Threading.Thread.Sleep(500);
+                }
+                key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.Enter || key == ConsoleKey.Spacebar)
+                {
+                    Console.Clear();
+                    Console.SetCursorPosition(0, 0);
+                    return ++option;
+                }
+                else if (key == ConsoleKey.UpArrow || key == ConsoleKey.W)
+                {
+                    if (option > 0)
+                        option--;
+                    else
+                        option = 3;
+                }
+                else if (key == ConsoleKey.DownArrow || key == ConsoleKey.S)
+                {
+                    option = (option + 1) % 4;
+                }
+            } while (true);
+        }
+
     }
 
     static class Check
@@ -807,6 +942,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
 
         private int endOfGame(int winner, int color=15)
         {
+            int optionReturn = 4;
             Draw.drawSubtitle("czysc", 0, 0);
             //Console.Clear();
             if (winner == 0)
@@ -857,7 +993,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     return option;
                 }
             } while (key != ConsoleKey.Escape);
-            return 4;
+            Draw.drawContinuedMenu();
+            optionReturn = Draw.chooseOptionContinuedMenu();
+            return optionReturn;
         }
 
         public int gameplay()
@@ -921,6 +1059,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     startRow += squareSize;
                 }
             } while (key != ConsoleKey.Escape);
+            Draw.drawContinuedMenu();
+            gameplayResult = Draw.chooseOptionContinuedMenu();
             return gameplayResult;
         }
     }
@@ -965,32 +1105,6 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 Console.ReadKey();
             }
             Console.Clear();
-        }
-        static void drawOptionFirstMenu(int startRow=0)
-        {
-            int littleHight = 10, actualRow = startRow;
-            //Main menu
-            Draw.drawSubtitle("kolko", 2, actualRow+1, 1);
-            Draw.drawSubtitle("i", 59, actualRow, 6);
-            Draw.drawSubtitle("krzyzyk", 70, actualRow, 4);
-            actualRow += 10;
-            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("Nowa gra 3x3", Draw.adjustToCenterText(25, 125, 74), actualRow + 2);
-            actualRow += littleHight;
-            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("Nowa gra 5x5", Draw.adjustToCenterText(25, 125, 74), actualRow + 2);
-            actualRow += littleHight;
-            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("Nowa gra 13x13", Draw.adjustToCenterText(25, 125, 84), actualRow + 2);
-            actualRow += littleHight;
-            Draw.drawRectangle(25, actualRow, 10, 100, 15);
-            Draw.drawSubtitle("Wczytaj gre", Draw.adjustToCenterText(25, 125, 60), actualRow + 1);
-            actualRow += littleHight;
-            Draw.drawRectangle(25, actualRow, 10, 100, 15);
-            Draw.drawSubtitle("Wyjdz z gry", Draw.adjustToCenterText(25, 125, 63), actualRow + 1);
-            Console.SetCursorPosition(17, actualRow + 12);
-            Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
-            Console.SetCursorPosition(0, 0);
         }
         static int chooseOptionFirstMenu(int startColumn = 25, int option = 0)
         {
@@ -1065,35 +1179,40 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         {
             Console.CursorVisible = false;
             setResolution();
-            drawOptionFirstMenu();
+            Draw.drawFirstMenu();
             int chosenOption = chooseOptionFirstMenu();
             int optionGame = 1;
-            switch (chosenOption)
+            do
             {
-                case 0:
-                    optionGame = 3;
-                    break;
-                case 1:
-                    optionGame = 2;
-                    break;
-                case 2:
-                    optionGame = 1;
-                    break;
-                case 3:
-                    Console.WriteLine("Wczytales gre");
-                    return;
-                case 4:
-                    Console.WriteLine("Wyszedles z gry");
-                    return;
-            }
-            do{
+                switch (chosenOption)
+                {
+                    case 0:
+                        optionGame = 3;
+                        break;
+                    case 1:
+                        optionGame = 2;
+                        break;
+                    case 2:
+                        optionGame = 1;
+                        break;
+                    case 3:
+                        Console.WriteLine("Wczytales gre");
+                        return;
+                    case 4:
+                        Console.Clear();
+                        Console.SetCursorPosition(Draw.adjustToCenterText(0, 150, 67), Draw.adjustToCenterText(0, 65, 0));
+                        Console.WriteLine("Wyszedłeś/aś z gry, ale mam nadzieję, że jeszcze zagrasz kiedyś :D\n\n\n\n\n\n\n\n\n\n");
+                        Environment.Exit(0);
+                        return;
+                }
                 CircleAndCross c = new CircleAndCross(optionGame);
-                optionGame = c.gameplay();
-            } while(optionGame != 4);
-
-            Console.Clear();
-            Console.WriteLine("Wyszedles z gry pewnie klikajac ESCAPE");
-            Environment.Exit(0);
+                chosenOption = c.gameplay();
+                if(chosenOption == 3)
+                {
+                    Draw.drawFirstMenu();
+                    chosenOption = chooseOptionFirstMenu();
+                }
+            } while(true);
         }
     }
 }
