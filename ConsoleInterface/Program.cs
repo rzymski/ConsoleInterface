@@ -965,7 +965,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             string workingDirectory = Environment.CurrentDirectory;
             Console.WriteLine(workingDirectory);
 
-            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3.json";
+            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3";
             NecessaryData save = new NecessaryData
             {
                 board = board2D,
@@ -1288,9 +1288,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         {
             Console.Clear();
 
-            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3.json";
-            NecessaryData jsonData = FileWithData.Load<NecessaryData>(path);
-            CircleAndCross c = new CircleAndCross(jsonData.board, jsonData.poption, jsonData.pstartArenaColumn, jsonData.pstartArenaRow, jsonData.psymbolValue, jsonData.pcolorValue);
+            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3";
+            NecessaryData fileData = FileWithData.Load<NecessaryData>(path);
+            CircleAndCross c = new CircleAndCross(fileData.board, fileData.poption, fileData.pstartArenaColumn, fileData.pstartArenaRow, fileData.psymbolValue, fileData.pcolorValue);
 
             Console.ReadKey();
 
