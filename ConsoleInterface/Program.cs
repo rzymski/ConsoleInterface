@@ -1,12 +1,19 @@
 ﻿using Microsoft.VisualBasic.FileIO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace ConsoleInterface
 {
@@ -862,6 +869,27 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         }
     }
 
+    /*public class JsonSave
+    {
+        public int[,] board { get; set; }
+        public int poption { get; set; }
+        public int pstartArenaColumn { get; set; }
+        public int pstartArenaRow { get; set; }
+        public int psymbolValue { get; set; }
+        public int pcolorValue { get; set; }
+    }*/
+
+    [Serializable]
+    public class JsonSave
+    {
+        public int[,] board { get; set; }
+        public int poption { get; set; }
+        public int pstartArenaColumn { get; set; }
+        public int pstartArenaRow { get; set; }
+        public int psymbolValue { get; set; }
+        public int pcolorValue { get; set; }
+    }
+
     class CircleAndCross
     {
         private int option;
@@ -881,6 +909,33 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         private int startArenaColumn;
         private int startArenaRow;
         private List<int> listWinnerPositions;
+
+        private void saveGame()
+        {
+            Console.Clear();
+
+
+
+            //string workingDirectory = Environment.CurrentDirectory;
+
+            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3.json";
+            JsonSave save = new JsonSave
+            {
+                board = board2D,
+                poption = option,
+                pstartArenaColumn = startArenaColumn,
+                pstartArenaRow = startArenaRow,
+                psymbolValue = symbolValue,
+                pcolorValue = colorValue,
+            };
+            /*var jsonString = JsonConvert.SerializeObject(save);
+            File.WriteAllText(path, jsonString);*/
+
+            Plik.Zapisz(path, save);
+
+
+            Console.ReadKey();
+        }
 
         private void initializeParameters(int option, int startArenaRow, int startArenaColumn)
         {
@@ -932,6 +987,14 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         public CircleAndCross(int option, int startArenaRow = 10, int startArenaColumn = 56)
         {
             initializeParameters(option, startArenaRow, startArenaColumn);
+        }
+
+        public CircleAndCross(int[,] board, int poption, int pstartArenaColumn, int pstartArenaRow, int psymbolValue, int pcolorValue)
+        {
+            initializeParameters(poption, pstartArenaRow, pstartArenaColumn);
+            board2D = board;
+            symbolValue = psymbolValue;
+            colorValue = pcolorValue;
         }
 
         private int endOfGame(int winner, int color=15)
@@ -1052,9 +1115,72 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     startRow += squareSize;
                 }
             } while (key != ConsoleKey.Escape); //escpae klikniety w trakcie gry
-            Draw.drawContinuedMenu();
-            gameplayResult = Draw.chooseOptionContinuedMenu();
+            do
+            {
+                Draw.drawContinuedMenu();
+                gameplayResult = Draw.chooseOptionContinuedMenu();
+                if(gameplayResult == 2)
+                {
+                    saveGame();
+                }
+            } while (gameplayResult == 2); //zapisz gre
             return gameplayResult;
+        }
+    }
+
+    static class Plik
+    {
+        public static void Zapisz<T>(string sciezka, T obiektZapis) //Binarna serializacja obiektu
+        {
+            FileStream stream = null;
+            BinaryFormatter formatter = new BinaryFormatter();
+            try
+            {
+                stream = File.Create(sciezka);
+                formatter.Serialize(stream, obiektZapis);
+            }
+            catch (SerializationException e)
+            {
+                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                throw;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+        }
+        public static T Wczytaj<T>(string sciezka)//Binarna deserializacja obiektu
+        {
+            FileStream stream = null;
+            BinaryFormatter formatter = new BinaryFormatter();
+            T obj;
+            try
+            {
+                stream = new FileStream(sciezka, FileMode.Open);
+                obj = (T)formatter.Deserialize(stream);
+            }
+            catch (SerializationException e)
+            {
+                Console.WriteLine("Failed to deserialize. Reason: " + e.Message);
+                throw;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+            return obj;
         }
     }
 
@@ -1168,6 +1294,23 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 }
             } while (true);
         }
+
+        private static CircleAndCross loadCircleAndCross()
+        {
+            Console.Clear();
+
+            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3.json";
+            JsonSave jsonData = Plik.Wczytaj<JsonSave>(path);
+
+            /*string text = File.ReadAllText(path);
+            JsonSave jsonData = JsonConvert.DeserializeObject<JsonSave>(text);*/
+            CircleAndCross c = new CircleAndCross(jsonData.board, jsonData.poption, jsonData.pstartArenaColumn, jsonData.pstartArenaRow, jsonData.psymbolValue, jsonData.pcolorValue);
+
+            Console.ReadKey();
+
+            return c;
+        }
+
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
@@ -1189,8 +1332,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                         optionGame = 0;
                         break;
                     case 3:
-                        Console.WriteLine("Wczytales gre");
-                        return;
+                        break;
+                        //Console.WriteLine("Wczytales gre");
+                        //return;
                     case 4:
                         Console.Clear();
                         Console.SetCursorPosition(Draw.adjustToCenterText(0, 150, 67), Draw.adjustToCenterText(0, 65, 0));
@@ -1198,7 +1342,13 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                         Environment.Exit(0);
                         return;
                 }
-                CircleAndCross c = new CircleAndCross(optionGame);
+                CircleAndCross c = null;
+                if(chosenOption != 3)
+                    c = new CircleAndCross(optionGame);
+                else
+                {
+                    c = loadCircleAndCross();
+                }
                 chosenOption = c.gameplay();
                 while (chosenOption == 1)
                 {
