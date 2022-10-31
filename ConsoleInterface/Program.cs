@@ -404,13 +404,13 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         {
             switch (option)
             {
-                case 1:
+                case 0:
                     drawSymbolSize1(startColumn, startRow, symbolValue, colorNumber);
                     break;
-                case 2:
+                case 1:
                     drawSymbolSize5(startColumn, startRow, symbolValue, colorNumber);
                     break;
-                case 3:
+                case 2:
                     drawSymbolSize10(startColumn, startRow, symbolValue, colorNumber);
                     break;
             }
@@ -522,25 +522,6 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 errorOccurred("Podano zla wartosc symbolu. Wcisnij dowolny przycisk zeby zakonczyc program.\n");
             }
             Console.BackgroundColor = ConsoleColor.Black;
-        }
-
-        public static void redrawBoardWithSymbols(int[,] board2D, int option, int chessSize, int squareSize, int startArenaColumn, int startArenaRow, int startColumn, int startRow)
-        {
-            drawArena(chessSize, startArenaColumn, startArenaRow);
-            int tempStartColumn = startColumn;
-            for (int i = 0; i < chessSize; i++)
-            {
-                for (int j = 0; j < chessSize; j++)
-                {
-                    if(board2D[i, j] == 1)
-                        drawSymbol(option, tempStartColumn, startRow, board2D[i, j], 4);
-                    if (board2D[i, j] == 0)
-                        drawSymbol(option, tempStartColumn, startRow, board2D[i, j], 1);
-                    tempStartColumn += squareSize;
-                }
-                tempStartColumn = startColumn;
-                startRow += squareSize;
-            }
         }
         public static void drawWinningSquares(List<int> squares, int startColumn, int startRow, int squareSize, int option, int symbolValue, int colorSymbolValue = 6, int colorSquareValue=6)
         {
@@ -665,7 +646,24 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 }
             } while (true);
         }
-
+        public static void redrawBoardWithSymbols(int[,] board2D, int option, int chessSize, int squareSize, int startArenaColumn, int startArenaRow, int startColumn, int startRow)
+        {
+            drawArena(chessSize, startArenaColumn, startArenaRow);
+            int tempStartColumn = startColumn, tempStartRow = startRow;
+            for (int i = 0; i < chessSize; i++)
+            {
+                for (int j = 0; j < chessSize; j++)
+                {
+                    if (board2D[i, j] == 1)
+                        drawSymbol(option, tempStartColumn, tempStartRow, board2D[i, j], 4);
+                    if (board2D[i, j] == 0)
+                        drawSymbol(option, tempStartColumn, tempStartRow, board2D[i, j], 1);
+                    tempStartColumn += squareSize;
+                }
+                tempStartColumn = startColumn;
+                tempStartRow += squareSize;
+            }
+        }
     }
 
     static class Check
@@ -893,7 +891,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             this.startArenaRow = startArenaRow;
             switch (option)
             {
-                case 1:
+                case 0:
                     howMuchToWin = 5;
                     startColumn = startArenaColumn + 18;//68;
                     startRow = startArenaRow + 18;//23;
@@ -902,7 +900,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     currentPositionRow = 7;
                     currentPositionColumn = 7;
                     break;
-                case 2:
+                case 1:
                     howMuchToWin = 4;
                     startColumn = startArenaColumn + 14;//64;
                     startRow = startArenaRow + 14;//19;
@@ -911,7 +909,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     currentPositionRow = 3;
                     currentPositionColumn = 3;
                     break;
-                case 3:
+                case 2:
                     howMuchToWin = 3;
                     startColumn = startArenaColumn + 12;//62;
                     startRow = startArenaRow + 12;//17;
@@ -935,9 +933,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         {
             initializeParameters(option, startArenaRow, startArenaColumn);
             Draw.drawArena(chessSize, startArenaColumn, startArenaRow);
-            Draw.drawSubtitle("Ruch", 40, 3, 6);
+            /*Draw.drawSubtitle("Ruch", 40, 3, 6);
             Draw.drawSubtitle(symbolValue.ToString(), 77, 3, colorValue);
-            Draw.printInstructionInGame(howMuchToWin, 25, 53);
+            Draw.printInstructionInGame(howMuchToWin, 25, 53);*/
         }
 
         private int endOfGame(int winner, int color=15)
@@ -958,7 +956,6 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             {
                 Draw.drawSubtitle("Remis", 50, 3);
             }
-            //Draw.redrawBoardWithSymbols(board2D, option, chessSize, squareSize, startArenaColumn, startArenaRow, startArenaColumn+1, startArenaRow+1);
             System.Threading.Thread.Sleep(1000);
             Draw.drawSubtitle("czysc", 25, 53);
             int changeColor = 0;
@@ -989,7 +986,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     Draw.drawSubtitle("start", Draw.adjustToCenterText(0, 150, 119), Draw.adjustToCenterText(0, 65, 16), 1);
                     System.Threading.Thread.Sleep(300);
                     Console.Clear();
-                    return option;
+                    return 100+option;
                 }
             } while (key != ConsoleKey.Escape);
             Console.Clear();
@@ -998,6 +995,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
 
         public int gameplay()
         {
+            Draw.drawSubtitle("Ruch", 40, 3, 6);
+            Draw.drawSubtitle(symbolValue.ToString(), 77, 3, colorValue);
+            Draw.printInstructionInGame(howMuchToWin, 25, 53);
             int gameplayResult = 0;
             ConsoleKey key;
             do
@@ -1059,6 +1059,10 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             } while (key != ConsoleKey.Escape); //escpae klikniety w trakcie gry
             Draw.drawContinuedMenu();
             gameplayResult = Draw.chooseOptionContinuedMenu();
+            if(gameplayResult == 1)
+            {
+                Draw.redrawBoardWithSymbols(board2D, option, chessSize, squareSize, startArenaColumn, startArenaRow, startArenaColumn+1, startArenaRow+1);
+            }
             return gameplayResult;
         }
     }
@@ -1185,13 +1189,13 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 switch (chosenOption)
                 {
                     case 0:
-                        optionGame = 3;
-                        break;
-                    case 1:
                         optionGame = 2;
                         break;
-                    case 2:
+                    case 1:
                         optionGame = 1;
+                        break;
+                    case 2:
+                        optionGame = 0;
                         break;
                     case 3:
                         Console.WriteLine("Wczytales gre");
@@ -1205,11 +1209,21 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 }
                 CircleAndCross c = new CircleAndCross(optionGame);
                 chosenOption = c.gameplay();
-                if(chosenOption == 3)
+                while (chosenOption == 1)
+                {
+                    chosenOption = c.gameplay();
+                }
+                if (chosenOption == 3)
                 {
                     Draw.drawFirstMenu();
                     chosenOption = chooseOptionFirstMenu();
                 }
+                if (chosenOption == 100)
+                    chosenOption = 2;
+                if (chosenOption == 101)
+                    chosenOption = 1;
+                if (chosenOption == 102)
+                    chosenOption = 0;
             } while(true);
         }
     }
