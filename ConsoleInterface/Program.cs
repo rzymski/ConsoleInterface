@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-/*using System.Text;
-using System.Threading;
-using System.Threading.Tasks;*/
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 
@@ -947,6 +944,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         private int startArenaColumn;
         private int startArenaRow;
         private List<int> listWinnerPositions;
+        private int resolutionWidth;
+        private int resolutionHeight;
 
         private void saveGame()
         {
@@ -974,8 +973,10 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Console.ReadKey();
         }
 
-        private void initializeParameters(int option, int startArenaRow, int startArenaColumn)
+        private void initializeParameters(int option, int resolutionWidthParametr, int resolutionHeightParametr, int startArenaRow, int startArenaColumn)
         {
+            this.resolutionWidth = resolutionWidthParametr;
+            this.resolutionHeight = resolutionHeightParametr;
             this.option = option;
             symbolValue = 1; //0-kolko 1-krzyz
             colorValue = 4; //1-niebieski 4-czerwony
@@ -1021,14 +1022,14 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             listWinnerPositions = new List<int>();
         }
 
-        public CircleAndCross(int option, int startArenaRow = 10, int startArenaColumn = 56)
+        public CircleAndCross(int option, int resolutionWidth, int resolutionHeight, int startArenaRow = 10, int startArenaColumn = 56)
         {
-            initializeParameters(option, startArenaRow, startArenaColumn);
+            initializeParameters(option, resolutionWidth, resolutionHeight, startArenaRow, startArenaColumn);
         }
 
-        public CircleAndCross(int[,] board, int poption, int pstartArenaColumn, int pstartArenaRow, int psymbolValue, int pcolorValue)
+        public CircleAndCross(int[,] board, int poption, int resolutionWidth, int resolutionHeight, int pstartArenaColumn, int pstartArenaRow, int psymbolValue, int pcolorValue)
         {
-            initializeParameters(poption, pstartArenaRow, pstartArenaColumn);
+            initializeParameters(poption, resolutionWidth, resolutionHeight, pstartArenaRow, pstartArenaColumn);
             board2D = board;
             symbolValue = psymbolValue;
             colorValue = pcolorValue;
@@ -1060,8 +1061,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             {
                 while (!Console.KeyAvailable)
                 {
-                    Draw.drawSubtitle("nowa gra - wcisnij Enter", Draw.adjustToCenterText(0, 150, 131), 50, 5 + changeColor);
-                    Draw.drawSubtitle("menu - wcisnij Escape", Draw.adjustToCenterText(0, 150, 116), 58, 7 + changeColor);
+                    Draw.drawSubtitle("nowa gra - wcisnij Enter", Draw.adjustToCenterText(0, resolutionWidth, 131), 50, 5 + changeColor);
+                    Draw.drawSubtitle("menu - wcisnij Escape", Draw.adjustToCenterText(0, resolutionWidth, 116), 58, 7 + changeColor);
                     Console.SetCursorPosition(0, 0);
                     changeColor = (changeColor + 1) % 2;
                     System.Threading.Thread.Sleep(250);
@@ -1070,16 +1071,16 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 if (key == ConsoleKey.Enter)
                 {
                     Console.Clear();
-                    Draw.drawSubtitle("trzy", Draw.adjustToCenterText(0, 150, 20), Draw.adjustToCenterText(0, 65, 16), 5);
+                    Draw.drawSubtitle("trzy", Draw.adjustToCenterText(0, resolutionWidth, 20), Draw.adjustToCenterText(0, resolutionHeight, 16), 5);
                     System.Threading.Thread.Sleep(300);
                     Console.Clear();
-                    Draw.drawSubtitle("dwa", Draw.adjustToCenterText(0, 150, 20), Draw.adjustToCenterText(0, 65, 16), 6);
+                    Draw.drawSubtitle("dwa", Draw.adjustToCenterText(0, resolutionWidth, 20), Draw.adjustToCenterText(0, resolutionHeight, 16), 6);
                     System.Threading.Thread.Sleep(300);
                     Console.Clear();
-                    Draw.drawSubtitle("jeden", Draw.adjustToCenterText(0, 150, 13), Draw.adjustToCenterText(0, 65, 16), 2);
+                    Draw.drawSubtitle("jeden", Draw.adjustToCenterText(0, resolutionWidth, 13), Draw.adjustToCenterText(0, resolutionHeight, 16), 2);
                     System.Threading.Thread.Sleep(300);
                     Console.Clear();
-                    Draw.drawSubtitle("start", Draw.adjustToCenterText(0, 150, 119), Draw.adjustToCenterText(0, 65, 16), 1);
+                    Draw.drawSubtitle("start", Draw.adjustToCenterText(0, resolutionWidth, 119), Draw.adjustToCenterText(0, resolutionHeight, 16), 1);
                     System.Threading.Thread.Sleep(300);
                     Console.Clear();
                     return 100+option;
@@ -1167,12 +1168,12 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
 
     class Program
     {
-        static void setResolution()
+        static void setResolution(ref int resolutionWidth, ref int resolutionHeight)
         {
             try
             {
-                Console.WindowHeight = 65; //65
-                Console.WindowWidth = 160;//150; //150
+                Console.WindowWidth = resolutionWidth; //160
+                Console.WindowHeight = resolutionHeight; //65
             }
             catch (System.ArgumentOutOfRangeException)
             {
@@ -1184,12 +1185,12 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 45, Console.LargestWindowHeight / 2);
                 Console.WriteLine("Things may not look quite right, unless you adjust the text size in your console window.");
                 Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 33, Console.LargestWindowHeight / 2 + 1);
-                Console.WriteLine("Required min. resolution 150x65, your actual resolution is "+Console.LargestWindowWidth+"x"+Console.LargestWindowHeight);
+                Console.WriteLine($"Required min. resolution {resolutionWidth}x{resolutionHeight}, your actual resolution is "+Console.LargestWindowWidth+"x"+Console.LargestWindowHeight);
                 Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 10, Console.LargestWindowHeight / 2 + 2);
                 waitForKey(ConsoleKey.Enter);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WindowHeight = Console.LargestWindowHeight;
-                Console.WindowWidth = Console.LargestWindowWidth;
+                resolutionWidth = Console.WindowHeight = Console.LargestWindowHeight;
+                resolutionHeight = Console.WindowWidth = Console.LargestWindowWidth;
             }
         }
         static void waitForKey(ConsoleKey expectedKey = ConsoleKey.Home)
@@ -1276,13 +1277,13 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             } while (true);
         }
 
-        private static CircleAndCross loadCircleAndCross()
+        private static CircleAndCross loadCircleAndCross(int resolutionWidth, int resolutionHeight)
         {
             Console.Clear();
 
             string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3";
             NecessaryData fileData = FileWithData.Load<NecessaryData>(path);
-            CircleAndCross c = new CircleAndCross(fileData.board, fileData.poption, fileData.pstartArenaColumn, fileData.pstartArenaRow, fileData.psymbolValue, fileData.pcolorValue);
+            CircleAndCross c = new CircleAndCross(fileData.board, fileData.poption, resolutionWidth, resolutionHeight, fileData.pstartArenaColumn, fileData.pstartArenaRow, fileData.psymbolValue, fileData.pcolorValue);
 
             Console.ReadKey();
 
@@ -1292,7 +1293,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
-            setResolution();
+            int resolutionWidth = 160, resolutionHeight = 65;
+            setResolution(ref resolutionWidth, ref resolutionHeight);
             Draw.drawFirstMenu();
             int chosenOption = chooseOptionFirstMenu();
             int optionGame = 1;
@@ -1315,12 +1317,12 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                         break;
                     case 4:
                         Console.Clear();
-                        Console.SetCursorPosition(Draw.adjustToCenterText(0, 150, 67), Draw.adjustToCenterText(0, 65, 0));
+                        Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 67), Draw.adjustToCenterText(0, resolutionHeight, 0));
                         Console.WriteLine("Wyszedłeś/aś z gry, ale mam nadzieję, że jeszcze zagrasz kiedyś :D\n\n\n\n\n\n\n\n\n\n");
                         Environment.Exit(0);
                         return;
                 }
-                CircleAndCross c = (chosenOption != 3)? new CircleAndCross(optionGame) : c = loadCircleAndCross();
+                CircleAndCross c = (chosenOption != 3)? new CircleAndCross(optionGame, resolutionWidth, resolutionHeight) : c = loadCircleAndCross(resolutionWidth, resolutionHeight);
                 chosenOption = c.gameplay();
                 while (chosenOption == 1)
                 {
