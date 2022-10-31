@@ -923,6 +923,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         public int pstartArenaRow { get; set; }
         public int psymbolValue { get; set; }
         public int pcolorValue { get; set; }
+        public int pmoveCount { get; set; }
     }
 
     class CircleAndCross
@@ -965,6 +966,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 pstartArenaRow = startArenaRow,
                 psymbolValue = symbolValue,
                 pcolorValue = colorValue,
+                pmoveCount = moveCount,
             };
 
             FileWithData.Save(path, save);
@@ -1027,12 +1029,13 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             initializeParameters(option, resolutionWidth, resolutionHeight, startArenaRow, startArenaColumn);
         }
 
-        public CircleAndCross(int[,] board, int poption, int resolutionWidth, int resolutionHeight, int pstartArenaColumn, int pstartArenaRow, int psymbolValue, int pcolorValue)
+        public CircleAndCross(int[,] board, int poption, int resolutionWidth, int resolutionHeight, int pstartArenaColumn, int pstartArenaRow, int psymbolValue, int pcolorValue, int pmoveCount)
         {
             initializeParameters(poption, resolutionWidth, resolutionHeight, pstartArenaRow, pstartArenaColumn);
             board2D = board;
             symbolValue = psymbolValue;
             colorValue = pcolorValue;
+            moveCount = pmoveCount;
         }
 
         private int endOfGame(int winner, int color=15)
@@ -1283,7 +1286,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
 
             string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3";
             NecessaryData fileData = FileWithData.Load<NecessaryData>(path);
-            CircleAndCross c = new CircleAndCross(fileData.board, fileData.poption, resolutionWidth, resolutionHeight, fileData.pstartArenaColumn, fileData.pstartArenaRow, fileData.psymbolValue, fileData.pcolorValue);
+            CircleAndCross c = new CircleAndCross(fileData.board, fileData.poption, resolutionWidth, resolutionHeight, fileData.pstartArenaColumn, fileData.pstartArenaRow, fileData.psymbolValue, fileData.pcolorValue, fileData.pmoveCount);
 
             Console.ReadKey();
 
