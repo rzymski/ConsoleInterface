@@ -186,8 +186,8 @@ namespace ConsoleInterface
             }
             if (text == "nowa gra - wcisnij enter")
             {
-                text = @"  _   _                                                                    _              _    _    _____         _              
- | \ | |  ___ __      __ __ _    __ _  _ __  __ _          __      __ ___ (_) ___  _ __  (_)  (_)  | ____| _ __  | |_   ___  _ __ 
+                text = @"  _   _                                                                    _    __        _    _    _____         _              
+ | \ | |  ___ __      __ __ _    __ _  _ __  __ _          __      __ ___ (_) _/_/ _ __  (_)  (_)  | ____| _ __  | |_   ___  _ __ 
  |  \| | / _ \\ \ /\ / // _` |  / _` || '__|/ _` |  _____  \ \ /\ / // __|| |/ __|| '_ \ | |  | |  |  _|  | '_ \ | __| / _ \| '__|
  | |\  || (_) |\ V  V /| (_| | | (_| || |  | (_| | |_____|  \ V  V /| (__ | |\__ \| | | || |  | |  | |___ | | | || |_ |  __/| |   
  |_| \_| \___/  \_/\_/  \__,_|  \__, ||_|   \__,_|           \_/\_/  \___||_||___/|_| |_||_| _/ |  |_____||_| |_| \__| \___||_|   
@@ -932,10 +932,6 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         public CircleAndCross(int option, int startArenaRow = 10, int startArenaColumn = 56)
         {
             initializeParameters(option, startArenaRow, startArenaColumn);
-            Draw.drawArena(chessSize, startArenaColumn, startArenaRow);
-            /*Draw.drawSubtitle("Ruch", 40, 3, 6);
-            Draw.drawSubtitle(symbolValue.ToString(), 77, 3, colorValue);
-            Draw.printInstructionInGame(howMuchToWin, 25, 53);*/
         }
 
         private int endOfGame(int winner, int color=15)
@@ -956,7 +952,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             {
                 Draw.drawSubtitle("Remis", 50, 3);
             }
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(1500);
             Draw.drawSubtitle("czysc", 25, 53);
             int changeColor = 0;
             ConsoleKey key;
@@ -995,6 +991,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
 
         public int gameplay()
         {
+            Draw.redrawBoardWithSymbols(board2D, option, chessSize, squareSize, startArenaColumn, startArenaRow, startArenaColumn + 1, startArenaRow + 1);
             Draw.drawSubtitle("Ruch", 40, 3, 6);
             Draw.drawSubtitle(symbolValue.ToString(), 77, 3, colorValue);
             Draw.printInstructionInGame(howMuchToWin, 25, 53);
@@ -1002,8 +999,6 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             ConsoleKey key;
             do
             {
-                //Console.SetCursorPosition(0, 0);
-                //Console.WriteLine("row: " +currentPositionRow + "  column: " + currentPositionColumn);
                 while (!Console.KeyAvailable)
                 {
                     Draw.drawSquare(startColumn, startRow, squareSize, colorValue); //4 = red
@@ -1059,10 +1054,6 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             } while (key != ConsoleKey.Escape); //escpae klikniety w trakcie gry
             Draw.drawContinuedMenu();
             gameplayResult = Draw.chooseOptionContinuedMenu();
-            if(gameplayResult == 1)
-            {
-                Draw.redrawBoardWithSymbols(board2D, option, chessSize, squareSize, startArenaColumn, startArenaRow, startArenaColumn+1, startArenaRow+1);
-            }
             return gameplayResult;
         }
     }
