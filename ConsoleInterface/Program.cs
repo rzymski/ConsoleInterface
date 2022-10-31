@@ -1,17 +1,9 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Text.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Reflection;
-using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+/*using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Threading.Tasks;*/
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 
@@ -1180,7 +1172,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             try
             {
                 Console.WindowHeight = 65; //65
-                Console.WindowWidth = 150; //150
+                Console.WindowWidth = 160;//150; //150
             }
             catch (System.ArgumentOutOfRangeException)
             {
