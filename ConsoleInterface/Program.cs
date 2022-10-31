@@ -942,7 +942,6 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
 
         private int endOfGame(int winner, int color=15)
         {
-            int optionReturn = 4;
             Draw.drawSubtitle("czysc", 0, 0);
             //Console.Clear();
             if (winner == 0)
@@ -993,9 +992,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     return option;
                 }
             } while (key != ConsoleKey.Escape);
-            Draw.drawContinuedMenu();
-            optionReturn = Draw.chooseOptionContinuedMenu();
-            return optionReturn;
+            Console.Clear();
+            return 3;
         }
 
         public int gameplay()
@@ -1058,7 +1056,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 {
                     startRow += squareSize;
                 }
-            } while (key != ConsoleKey.Escape);
+            } while (key != ConsoleKey.Escape); //escpae klikniety w trakcie gry
             Draw.drawContinuedMenu();
             gameplayResult = Draw.chooseOptionContinuedMenu();
             return gameplayResult;
