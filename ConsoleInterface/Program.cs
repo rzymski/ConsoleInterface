@@ -869,18 +869,64 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         }
     }
 
-    /*public class JsonSave
+    static class FileWithData
     {
-        public int[,] board { get; set; }
-        public int poption { get; set; }
-        public int pstartArenaColumn { get; set; }
-        public int pstartArenaRow { get; set; }
-        public int psymbolValue { get; set; }
-        public int pcolorValue { get; set; }
-    }*/
+        public static void Save<T>(string path, T objectToSave) //Binarna serializacja obiektu
+        {
+            FileStream stream = null;
+            BinaryFormatter formatter = new BinaryFormatter();
+            try
+            {
+                stream = File.Create(path);
+                formatter.Serialize(stream, objectToSave);
+            }
+            catch (SerializationException e)
+            {
+                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                throw;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+        }
+        public static T Load<T>(string path) //Binarna deserializacja obiektu
+        {
+            FileStream stream = null;
+            BinaryFormatter formatter = new BinaryFormatter();
+            T obj;
+            try
+            {
+                stream = new FileStream(path, FileMode.Open);
+                obj = (T)formatter.Deserialize(stream);
+            }
+            catch (SerializationException e)
+            {
+                Console.WriteLine("Failed to deserialize. Reason: " + e.Message);
+                throw;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+            return obj;
+        }
+    }
 
     [Serializable]
-    public class JsonSave
+    public class NecessaryData
     {
         public int[,] board { get; set; }
         public int poption { get; set; }
@@ -916,10 +962,11 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
 
 
 
-            //string workingDirectory = Environment.CurrentDirectory;
+            string workingDirectory = Environment.CurrentDirectory;
+            Console.WriteLine(workingDirectory);
 
             string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3.json";
-            JsonSave save = new JsonSave
+            NecessaryData save = new NecessaryData
             {
                 board = board2D,
                 poption = option,
@@ -928,10 +975,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 psymbolValue = symbolValue,
                 pcolorValue = colorValue,
             };
-            /*var jsonString = JsonConvert.SerializeObject(save);
-            File.WriteAllText(path, jsonString);*/
 
-            Plik.Zapisz(path, save);
+            FileWithData.Save(path, save);
 
 
             Console.ReadKey();
@@ -1128,62 +1173,6 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         }
     }
 
-    static class Plik
-    {
-        public static void Zapisz<T>(string sciezka, T obiektZapis) //Binarna serializacja obiektu
-        {
-            FileStream stream = null;
-            BinaryFormatter formatter = new BinaryFormatter();
-            try
-            {
-                stream = File.Create(sciezka);
-                formatter.Serialize(stream, obiektZapis);
-            }
-            catch (SerializationException e)
-            {
-                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
-                throw;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                throw;
-            }
-            finally
-            {
-                if (stream != null)
-                    stream.Close();
-            }
-        }
-        public static T Wczytaj<T>(string sciezka)//Binarna deserializacja obiektu
-        {
-            FileStream stream = null;
-            BinaryFormatter formatter = new BinaryFormatter();
-            T obj;
-            try
-            {
-                stream = new FileStream(sciezka, FileMode.Open);
-                obj = (T)formatter.Deserialize(stream);
-            }
-            catch (SerializationException e)
-            {
-                Console.WriteLine("Failed to deserialize. Reason: " + e.Message);
-                throw;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                throw;
-            }
-            finally
-            {
-                if (stream != null)
-                    stream.Close();
-            }
-            return obj;
-        }
-    }
-
     class Program
     {
         static void setResolution()
@@ -1300,10 +1289,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Console.Clear();
 
             string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3.json";
-            JsonSave jsonData = Plik.Wczytaj<JsonSave>(path);
-
-            /*string text = File.ReadAllText(path);
-            JsonSave jsonData = JsonConvert.DeserializeObject<JsonSave>(text);*/
+            NecessaryData jsonData = FileWithData.Load<NecessaryData>(path);
             CircleAndCross c = new CircleAndCross(jsonData.board, jsonData.poption, jsonData.pstartArenaColumn, jsonData.pstartArenaRow, jsonData.psymbolValue, jsonData.pcolorValue);
 
             Console.ReadKey();
@@ -1332,9 +1318,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                         optionGame = 0;
                         break;
                     case 3:
-                        break;
                         //Console.WriteLine("Wczytales gre");
                         //return;
+                        break;
                     case 4:
                         Console.Clear();
                         Console.SetCursorPosition(Draw.adjustToCenterText(0, 150, 67), Draw.adjustToCenterText(0, 65, 0));
@@ -1342,13 +1328,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                         Environment.Exit(0);
                         return;
                 }
-                CircleAndCross c = null;
-                if(chosenOption != 3)
-                    c = new CircleAndCross(optionGame);
-                else
-                {
-                    c = loadCircleAndCross();
-                }
+                CircleAndCross c = (chosenOption != 3)? new CircleAndCross(optionGame) : c = loadCircleAndCross();
                 chosenOption = c.gameplay();
                 while (chosenOption == 1)
                 {
