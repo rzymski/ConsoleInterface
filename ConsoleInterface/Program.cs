@@ -118,15 +118,42 @@ namespace ConsoleInterface
             if(text == "wyjdz z gry")
             {
                 text = @" _    _           _      _                                   
-| |  | |         (_)    | |   __                             
-| |  | | _   _    _   __| | _/ /_   ____    __ _  _ __  _   _ 
-| |/\| || | | |  | | / _` ||_   /  |_  /   / _` || '__|| | | |
-\  /\  /| |_| |  | || (_| | /  /_   / /   | (_| || |   | |_| |
- \/  \/  \__, |  | | \__,_|/____/  /___|   \__, ||_|    \__, |
-          __/ | _/ |                        __/ |        __/ |
-         |___/ |__/                        |___/        |___/ ";
+| |  | |         (_)    | |    _                             
+| |  | | _   _    _   __| | _/_/   ____    __ _  _ __  _   _ 
+| |/\| || | | |  | | / _` ||_  /  |_  /   / _` || '__|| | | |
+\  /\  /| |_| |  | || (_| | / /_   / /   | (_| || |   | |_| |
+ \/  \/  \__, |  | | \__,_|/___/  /___|   \__, ||_|    \__, |
+          __/ | _/ |                       __/ |        __/ |
+         |___/ |__/                       |___/        |___/ ";
             }
-            if(text == "ruch")
+            if (text == "kontynuuj gre")
+            {
+                text = @"  _  __              _                                  _                    
+ | |/ / ___   _ __  | |_  _   _  _ __   _   _  _   _   (_)    __ _  _ __  ___ 
+ | ' / / _ \ | '_ \ | __|| | | || '_ \ | | | || | | |  | |   / _` || '__|/ _ \
+ | . \| (_) || | | || |_ | |_| || | | || |_| || |_| |  | |  | (_| || |  |  __/
+ |_|\_\\___/ |_| |_| \__| \__, ||_| |_| \__,_| \__,_| _/ |   \__, ||_|   \___|
+                          |___/                      |__/    |___/         (_(";
+            }
+            if (text == "zapisz gre")
+            {
+                text = @"  _____              _                              
+ |__  / __ _  _ __  (_) ___  ____   __ _  _ __  ___ 
+   / / / _` || '_ \ | |/ __||_  /  / _` || '__|/ _ \
+  / /_| (_| || |_) || |\__ \ / /  | (_| || |  |  __/
+ /____|\__,_|| .__/ |_||___//___|  \__, ||_|   \___|
+             |_|                   |___/         (_(";
+            }
+            if (text == "wyjdz do menu")
+            {
+                text = @" __        __        _      _     _      _                                        
+ \ \      / /_   _  (_)  __| | _/_/   __| |  ___    _ __ ___    ___  _ __   _   _ 
+  \ \ /\ / /| | | | | | / _` ||_  /  / _` | / _ \  | '_ ` _ \  / _ \| '_ \ | | | |
+   \ V  V / | |_| | | || (_| | / /  | (_| || (_) | | | | | | ||  __/| | | || |_| |
+    \_/\_/   \__, |_/ | \__,_|/___|  \__,_| \___/  |_| |_| |_| \___||_| |_| \__,_|
+             |___/|__/                                                            ";
+            }
+            if (text == "ruch")
             {
                 text = @"  ____                   _         
  |  _ \   _   _    ___  | |__    _ 
@@ -275,33 +302,6 @@ S::::::SSSSSS:::::S      T:::::::::T        A:::::A               A:::::A  R::::
 S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::::R     R:::::R      T:::::::::T      
  SSSSSSSSSSSSSSS         TTTTTTTTTTT      AAAAAAA                   AAAAAAARRRRRRRR     RRRRRRR      TTTTTTTTTTT      ";
             }
-            if (text == "kontynuuj gre")
-            {
-                text = @"  _  __              _                                  _                    
- | |/ / ___   _ __  | |_  _   _  _ __   _   _  _   _   (_)    __ _  _ __  ___ 
- | ' / / _ \ | '_ \ | __|| | | || '_ \ | | | || | | |  | |   / _` || '__|/ _ \
- | . \| (_) || | | || |_ | |_| || | | || |_| || |_| |  | |  | (_| || |  |  __/
- |_|\_\\___/ |_| |_| \__| \__, ||_| |_| \__,_| \__,_| _/ |   \__, ||_|   \___|
-                          |___/                      |__/    |___/         (_(";
-            }
-            if (text == "zapisz gre")
-            {
-                text = @"  _____              _                              
- |__  / __ _  _ __  (_) ___  ____   __ _  _ __  ___ 
-   / / / _` || '_ \ | |/ __||_  /  / _` || '__|/ _ \
-  / /_| (_| || |_) || |\__ \ / /  | (_| || |  |  __/
- /____|\__,_|| .__/ |_||___//___|  \__, ||_|   \___|
-             |_|                   |___/         (_(";
-            }
-            if (text == "wyjdz do menu")
-            {
-                text = @" __        __        _      _    _       _                                        
- \ \      / /_   _  (_)  __| | _/_/   __| |  ___    _ __ ___    ___  _ __   _   _ 
-  \ \ /\ / /| | | | | | / _` ||_  /  / _` | / _ \  | '_ ` _ \  / _ \| '_ \ | | | |
-   \ V  V / | |_| | | || (_| | / /  | (_| || (_) | | | | | | ||  __/| | | || |_| |
-    \_/\_/   \__, |_/ | \__,_|/___|  \__,_| \___/  |_| |_| |_| \___||_| |_| \__,_|
-             |___/|__/                                                            ";
-            }
             if (text == "")
                 return;
 
@@ -387,13 +387,13 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Console.SetCursorPosition(column, row);//25 53
             string infix = (howMuchToWin == 5) ? "i" : "e";
             Console.WriteLine($"Cel gry: Ułożyć {howMuchToWin} symbol" + infix + " w jednej linii poziomo, pionowo lub ukośnie zanim zrobi to twój przeciwnik.");
-            Console.SetCursorPosition(25, 56);
+            Console.SetCursorPosition(column, 56);
             Console.WriteLine("Sterowanie:");
-            Console.SetCursorPosition(25, 57);
+            Console.SetCursorPosition(column, 57);
             Console.WriteLine("Do zmiany aktualnej pozycji używaj strzałek, WASD lub strzałek z klawiatury numerycznej (2,4,6,8)");
-            Console.SetCursorPosition(25, 59);
+            Console.SetCursorPosition(column, 59);
             Console.WriteLine("Stawiaj symbol klikając Enter lub Spację.");
-            Console.SetCursorPosition(25, 61);
+            Console.SetCursorPosition(column, 61);
             Console.WriteLine("Kliknij ESCAPE żeby otworzyć menu opcji. (możliwość zapisania, zakończenia lub wybrania innej gry)");
         }
 
@@ -528,7 +528,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 drawSymbol(option, startColumn + squares[i + 1] * squareSize + 1, startRow + squares[i] * squareSize + 1, symbolValue, colorSymbolValue);
             }
         }
-        public static void drawFirstMenu(int startRow = 0)
+        public static void drawFirstMenu(int startRow = 0, int startColumn = 30, int rectangleLength = 100, int resolutionWidth = 160, int colorNumber=15)
         {
             int littleHight = 10, actualRow = startRow;
             //Main menu
@@ -536,51 +536,51 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Draw.drawSubtitle("i", 65, actualRow, 6);
             Draw.drawSubtitle("krzyzyk", 76, actualRow, 4);
             actualRow += 10;
-            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("Nowa gra 3x3", Draw.adjustToCenterText(25, 125, 74), actualRow + 2);
+            Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, colorNumber);
+            Draw.drawSubtitle("Nowa gra 3x3", Draw.adjustToCenterText(startColumn, startColumn+rectangleLength, 74), actualRow + 2);
             actualRow += littleHight;
-            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("Nowa gra 5x5", Draw.adjustToCenterText(25, 125, 74), actualRow + 2);
+            Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, colorNumber);
+            Draw.drawSubtitle("Nowa gra 5x5", Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 74), actualRow + 2);
             actualRow += littleHight;
-            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("Nowa gra 13x13", Draw.adjustToCenterText(25, 125, 84), actualRow + 2);
+            Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, colorNumber);
+            Draw.drawSubtitle("Nowa gra 13x13", Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 84), actualRow + 2);
             actualRow += littleHight;
-            Draw.drawRectangle(25, actualRow, 10, 100, 15);
-            Draw.drawSubtitle("Wczytaj gre", Draw.adjustToCenterText(25, 125, 60), actualRow + 1);
+            Draw.drawRectangle(startColumn, actualRow, 10, rectangleLength, colorNumber);
+            Draw.drawSubtitle("Wczytaj gre", Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 60), actualRow + 1);
             actualRow += littleHight;
-            Draw.drawRectangle(25, actualRow, 10, 100, 15);
-            Draw.drawSubtitle("Wyjdz z gry", Draw.adjustToCenterText(25, 125, 63), actualRow + 1);
-            Console.SetCursorPosition(17, actualRow + 12);
+            Draw.drawRectangle(startColumn, actualRow, 10, rectangleLength, colorNumber);
+            Draw.drawSubtitle("Wyjdz z gry", Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 63), actualRow + 1);
+            Console.SetCursorPosition(adjustToCenterText(0, resolutionWidth, 115), actualRow + 12);
             Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
             Console.SetCursorPosition(0, 0);
         }
 
-        public static void drawContinuedMenu(int startRow = 0)
+        public static void drawContinuedMenu(int startRow = 0, int startColumn = 30 ,int rectangleLength = 100, int resolutionWidth=160)
         {
             Console.Clear();
             int littleHight = 10, actualRow = startRow;
             //Continued menu
-            Draw.drawSubtitle("kolko", 2, actualRow + 1, 1);
-            Draw.drawSubtitle("i", 59, actualRow, 6);
-            Draw.drawSubtitle("krzyzyk", 70, actualRow, 4);
+            Draw.drawSubtitle("kolko", 8, actualRow + 1, 1);
+            Draw.drawSubtitle("i", 65, actualRow, 6);
+            Draw.drawSubtitle("krzyzyk", 76, actualRow, 4);
             actualRow += 10;
-            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("kontynuuj gre", Draw.adjustToCenterText(25, 125, 79), actualRow + 2);
+            Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, 15);
+            Draw.drawSubtitle("kontynuuj gre", Draw.adjustToCenterText(startColumn, startColumn+rectangleLength, 79), actualRow + 2);
             actualRow += littleHight;
-            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("zapisz gre", Draw.adjustToCenterText(25, 125, 53), actualRow + 2);
+            Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, 15);
+            Draw.drawSubtitle("zapisz gre", Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 53), actualRow + 2);
             actualRow += littleHight;
-            Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
-            Draw.drawSubtitle("wyjdz do menu", Draw.adjustToCenterText(25, 125, 83), actualRow + 2);
+            Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, 15);
+            Draw.drawSubtitle("wyjdz do menu", Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 83), actualRow + 2);
             actualRow += littleHight;
-            Draw.drawRectangle(25, actualRow, 10, 100, 15);
-            Draw.drawSubtitle("wyjdz z gry", Draw.adjustToCenterText(25, 125, 63), actualRow + 1);
-            Console.SetCursorPosition(17, actualRow + 12);
+            Draw.drawRectangle(startColumn, actualRow, 10, rectangleLength, 15);
+            Draw.drawSubtitle("wyjdz z gry", Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 63), actualRow + 1);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 115), actualRow + 12);
             Console.WriteLine("Zmieniaj opcje używając strzałek góra/dół lub W/S. Zatwierdź wybraną opcję klikając Enter lub Spację. Miłej gry :)");
             Console.SetCursorPosition(0, 0);
         }
 
-        public static int chooseOptionContinuedMenu(int startColumn = 25, int option = 0)
+        public static int chooseOptionContinuedMenu(int startColumn = 30, int rectangleLength = 100,int option = 0)
         {
             int startRow = 0, startColumnSubtitle = 0, startRowSubtitle = 0;
             string text = "";
@@ -592,34 +592,34 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     switch (option)
                     {
                         case 0:
-                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 79);//38;
+                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn+rectangleLength, 79);//38;
                             startRowSubtitle = 12;
                             startRow = startRowSubtitle - 2;
                             text = "kontynuuj gre";
                             break;
                         case 1:
-                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 53);
+                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 53);
                             startRowSubtitle = 22;
                             startRow = startRowSubtitle - 2;
                             text = "zapisz gre";
                             break;
                         case 2:
-                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 83);
+                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 83);
                             startRowSubtitle = 32;
                             startRow = startRowSubtitle - 2;
                             text = "wyjdz do menu";
                             break;
                         case 3:
-                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 63);
+                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 63);
                             startRowSubtitle = 41;
                             startRow = startRowSubtitle - 1;
                             text = "wyjdz z gry";
                             break;
                     }
-                    Draw.drawRectangle(startColumn, startRow, 10, 100, 4); //4 = red
+                    Draw.drawRectangle(startColumn, startRow, 10, rectangleLength, 4); //4 = red
                     Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 4);
                     System.Threading.Thread.Sleep(500);
-                    Draw.drawRectangle(startColumn, startRow, 10, 100, 15); //15 = white
+                    Draw.drawRectangle(startColumn, startRow, 10, rectangleLength, 15); //15 = white
                     Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 15);
                     System.Threading.Thread.Sleep(500);
                 }
@@ -1144,7 +1144,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Draw.redrawBoardWithSymbols(board2D, option, chessSize, squareSize, startArenaColumn, startArenaRow, startArenaColumn + 1, startArenaRow + 1);
             Draw.drawSubtitle("Ruch", Draw.adjustToCenterText(0, 150, 44), 3, 6); //wczesniej kolumna 40
             Draw.drawSubtitle(symbolValue.ToString(), Draw.adjustToCenterText(0, 150, 44) + 37, 3, colorValue); //wczesniej kolumna 77
-            Draw.printInstructionInGame(howMuchToWin, 25, 53);
+            Draw.printInstructionInGame(howMuchToWin, 30, 53);
             int gameplayResult = 0;
             ConsoleKey key;
             do
@@ -1256,7 +1256,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             }
             Console.Clear();
         }
-        static int chooseOptionFirstMenu(int startColumn = 25, int option = 0)
+        static int chooseOptionFirstMenu(int startColumn = 30, int option = 0, int rectangleLength=100)
         {
             int startRow = 0, startColumnSubtitle = 0, startRowSubtitle = 0;
             string text = "";
@@ -1268,40 +1268,40 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     switch (option)
                     {
                         case 0:
-                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 74);//38;
+                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn+rectangleLength, 74);//38;
                             startRowSubtitle = 12;
                             startRow = startRowSubtitle - 2;
                             text = "Nowa gra 3x3";
                             break;
                         case 1:
-                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 74);
+                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 74);
                             startRowSubtitle = 22;
                             startRow = startRowSubtitle - 2;
                             text = "Nowa gra 5x5";
                             break;
                         case 2:
-                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 84);
+                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 84);
                             startRowSubtitle = 32;
                             startRow = startRowSubtitle - 2;
                             text = "Nowa gra 13x13";
                             break;
                         case 3:
-                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 60);
+                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 60);
                             startRowSubtitle = 41;
                             startRow = startRowSubtitle - 1;
                             text = "Wczytaj gre";
                             break;
                         case 4:
-                            startColumnSubtitle = Draw.adjustToCenterText(25, 125, 63);
+                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 63);
                             startRowSubtitle = 51;
                             startRow = startRowSubtitle - 1;
                             text = "Wyjdz z gry";
                             break;
                     }
-                    Draw.drawRectangle(startColumn, startRow, 10, 100, 4); //4 = red
+                    Draw.drawRectangle(startColumn, startRow, 10, rectangleLength, 4); //4 = red
                     Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 4);
                     System.Threading.Thread.Sleep(500);
-                    Draw.drawRectangle(startColumn, startRow, 10, 100, 15); //15 = white
+                    Draw.drawRectangle(startColumn, startRow, 10, rectangleLength, 15); //15 = white
                     Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 15);
                     System.Threading.Thread.Sleep(500);
                 }
