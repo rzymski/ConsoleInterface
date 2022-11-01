@@ -26,7 +26,7 @@ namespace ConsoleInterface
     {
         public static int adjustToCenterText(int startRow, int endColumn, int length)
         {
-            return (endColumn + startRow - length) / 2;
+            return ((endColumn+startRow-length)/2 > 0) ? ((endColumn+startRow-length)/2) : 0;
         }
         public static void drawSubtitle(string text, int startColumn, int startRow, int colorText=15, int colorBackground=0)
         {
@@ -860,7 +860,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
 
     static class FileWithData
     {
-        public static void Save<T>(string path, T objectToSave) //Binarna serializacja obiektu
+        public static int Save<T>(string path, T objectToSave) //Binarna serializacja obiektu
         {
             FileStream stream = null;
             BinaryFormatter formatter = new BinaryFormatter();
@@ -868,16 +868,27 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             {
                 stream = File.Create(path);
                 formatter.Serialize(stream, objectToSave);
+                return 0;
             }
             catch (SerializationException e)
             {
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, 32+e.Message.Length), 65 / 2 + 13);
                 Console.WriteLine("Failed to serialize. Reason: " + e.Message);
-                throw;
+                //throw;
+                return -1;
+            }
+            catch (DirectoryNotFoundException dirEx)
+            {
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, 21 + dirEx.Message.Length), 65/2 + 13);
+                Console.WriteLine("Directory not found: " + dirEx.Message);
+                return 1;
             }
             catch (Exception e)
             {
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, e.Message.Length), 65 / 2 + 13);
                 Console.WriteLine(e.Message);
-                throw;
+                //throw;
+                return 2;
             }
             finally
             {
@@ -952,12 +963,25 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         {
             Console.Clear();
 
+            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\szybkiZapis";
 
-
-            string workingDirectory = Environment.CurrentDirectory;
-            Console.WriteLine(workingDirectory);
-
-            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3";
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 105), resolutionHeight/2-5);
+            Console.WriteLine($"Jeśli chcesz zapisać grę z ścieżką {path} - kliknij Enter");
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 76 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 3);
+            Console.WriteLine($"Jeśli chcesz zapisać grę w folderze {Environment.CurrentDirectory}, Podaj tylko nazwę pliku i kliknij Enter");
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 113), resolutionHeight / 2-1);
+            Console.WriteLine("Jeśli chcesz zapisać grę w sprecyzowanym folderze, podaj pełną ścieżkę gdzie chcesz zapisać plik i kliknij Enter");
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 71), resolutionHeight / 2 + 1);
+            Console.WriteLine("Prawidłowa ścieżka zapisu to np. C:\\NazwaFolderu\\NazwaFolderu\\NazwaPliku");
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32), resolutionHeight / 2+3);
+            Console.WriteLine("Wybrana ścieżka zapisu: ");
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32)+25, resolutionHeight / 2 + 3);
+            string input = Console.ReadLine();
+            //Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 113), resolutionHeight / 2 + 13); // na wypadek wyjatku o braku pliku
+            if (input != "")
+            {
+                path = input;
+            }
             NecessaryData save = new NecessaryData
             {
                 board = board2D,
@@ -969,10 +993,31 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 pmoveCount = moveCount,
             };
 
-            FileWithData.Save(path, save);
-
-
-            Console.ReadKey();
+            //Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 55 + Environment.CurrentDirectory.Length + path.Length), resolutionHeight / 2 + 13);
+            int result = FileWithData.Save(path, save);
+            if (result == 0)
+            {
+                if (!path.Contains(':'))
+                    path = Environment.CurrentDirectory + "\\" + path;
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 17 + path.Length), resolutionHeight / 2 + 13);
+                Console.WriteLine("Zapisano grę w: " + path);
+            }
+            /*if(result == 0)
+            {
+                //Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 20 + path.Length), resolutionHeight / 2 + 13);
+                if (path.Contains(':'))
+                    Console.WriteLine("Zapisano grę w: " + path);
+                else
+                    Console.WriteLine("Zapisano grę w: " + Environment.CurrentDirectory+ "\\"  + path);
+            }*/
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32), resolutionHeight / 2 + 20);
+            Console.WriteLine("Wciśnij Enter, żeby kontynuować");
+            //Console.ReadKey();
+            ConsoleKey key = Console.ReadKey(true).Key;
+            while (key != ConsoleKey.Enter)
+            {
+                key = Console.ReadKey(true).Key;
+            }
         }
 
         private void initializeParameters(int option, int resolutionWidthParametr, int resolutionHeightParametr, int startArenaRow, int startArenaColumn)
@@ -1284,7 +1329,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         {
             Console.Clear();
 
-            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\zapis3";
+            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\szybkiZapis";
             NecessaryData fileData = FileWithData.Load<NecessaryData>(path);
             CircleAndCross c = new CircleAndCross(fileData.board, fileData.poption, resolutionWidth, resolutionHeight, fileData.pstartArenaColumn, fileData.pstartArenaRow, fileData.psymbolValue, fileData.pcolorValue, fileData.pmoveCount);
 
