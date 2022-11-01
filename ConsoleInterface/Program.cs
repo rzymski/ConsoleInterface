@@ -532,9 +532,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         {
             int littleHight = 10, actualRow = startRow;
             //Main menu
-            Draw.drawSubtitle("kolko", 2, actualRow + 1, 1);
-            Draw.drawSubtitle("i", 59, actualRow, 6);
-            Draw.drawSubtitle("krzyzyk", 70, actualRow, 4);
+            Draw.drawSubtitle("kolko", 8, actualRow + 1, 1);
+            Draw.drawSubtitle("i", 65, actualRow, 6);
+            Draw.drawSubtitle("krzyzyk", 76, actualRow, 4);
             actualRow += 10;
             Draw.drawRectangle(25, actualRow, littleHight, 100, 15);
             Draw.drawSubtitle("Nowa gra 3x3", Draw.adjustToCenterText(25, 125, 74), actualRow + 2);
@@ -1090,17 +1090,17 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             //Console.Clear();
             if (winner == 0)
             {
-                Draw.drawSubtitle("Wygrały",40,3, color);
-                Draw.drawSubtitle("0", 100, 3, color);
+                Draw.drawSubtitle("Wygrały", Draw.adjustToCenterText(0, 150, 60), 3, color); //wczesniej kolumna = 40
+                Draw.drawSubtitle("0", Draw.adjustToCenterText(0, 150, 60)+60, 3, color); //wczesniej kolumna = 100
             }
             else if(winner == 1)
             {
-                Draw.drawSubtitle("Wygrały", 40, 3, color);
-                Draw.drawSubtitle("1", 100, 3, color);
+                Draw.drawSubtitle("Wygrały", Draw.adjustToCenterText(0, 150, 60), 3, color);
+                Draw.drawSubtitle("1", Draw.adjustToCenterText(0, 150, 60) + 60, 3, color);
             }
             else
             {
-                Draw.drawSubtitle("Remis", 50, 3);
+                Draw.drawSubtitle("Remis", Draw.adjustToCenterText(0,150, 37), 3); //wczesniej kolumna = 50
             }
             System.Threading.Thread.Sleep(1500);
             Draw.drawSubtitle("czysc", 25, 53);
@@ -1142,8 +1142,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         public int gameplay()
         {
             Draw.redrawBoardWithSymbols(board2D, option, chessSize, squareSize, startArenaColumn, startArenaRow, startArenaColumn + 1, startArenaRow + 1);
-            Draw.drawSubtitle("Ruch", 40, 3, 6);
-            Draw.drawSubtitle(symbolValue.ToString(), 77, 3, colorValue);
+            Draw.drawSubtitle("Ruch", Draw.adjustToCenterText(0, 150, 44), 3, 6); //wczesniej kolumna 40
+            Draw.drawSubtitle(symbolValue.ToString(), Draw.adjustToCenterText(0, 150, 44) + 37, 3, colorValue); //wczesniej kolumna 77
             Draw.printInstructionInGame(howMuchToWin, 25, 53);
             int gameplayResult = 0;
             ConsoleKey key;
@@ -1182,7 +1182,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                             colorValue = 1; //zmiana koloru na niebieski
                         else
                             colorValue = 4; //zmiana koloru na czerwony
-                        Draw.drawSubtitle(symbolValue.ToString(), 77, 3, colorValue);
+                        Draw.drawSubtitle(symbolValue.ToString(), Draw.adjustToCenterText(0, 150, 44) + 37, 3, colorValue);
                     }
                 }
                 else if ((key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4) && Check.availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
