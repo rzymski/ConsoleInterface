@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using Microsoft.VisualBasic.FileIO;
 
 namespace ConsoleInterface
 {
@@ -906,15 +907,25 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 stream = new FileStream(path, FileMode.Open);
                 obj = (T)formatter.Deserialize(stream);
             }
+            catch (System.UnauthorizedAccessException e)
+            {
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, e.Message.Length), 65 / 2 + 13);
+                Console.WriteLine(e.Message);
+                obj = default(T);
+            }
             catch (SerializationException e)
             {
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, 30+e.Message.Length), 65 / 2 + 13);
                 Console.WriteLine("Failed to deserialize. Reason: " + e.Message);
-                throw;
+                obj = default(T);
+                //throw;
             }
             catch (Exception e)
             {
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, e.Message.Length), 65 / 2 + 13);
                 Console.WriteLine(e.Message);
-                throw;
+                //throw;
+                obj = default (T);
             }
             finally
             {
@@ -993,7 +1004,6 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 pmoveCount = moveCount,
             };
 
-            //Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 55 + Environment.CurrentDirectory.Length + path.Length), resolutionHeight / 2 + 13);
             int result = FileWithData.Save(path, save);
             if (result == 0)
             {
@@ -1002,17 +1012,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 17 + path.Length), resolutionHeight / 2 + 13);
                 Console.WriteLine("Zapisano grę w: " + path);
             }
-            /*if(result == 0)
-            {
-                //Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 20 + path.Length), resolutionHeight / 2 + 13);
-                if (path.Contains(':'))
-                    Console.WriteLine("Zapisano grę w: " + path);
-                else
-                    Console.WriteLine("Zapisano grę w: " + Environment.CurrentDirectory+ "\\"  + path);
-            }*/
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32), resolutionHeight / 2 + 20);
             Console.WriteLine("Wciśnij Enter, żeby kontynuować");
-            //Console.ReadKey();
             ConsoleKey key = Console.ReadKey(true).Key;
             while (key != ConsoleKey.Enter)
             {
@@ -1330,11 +1331,45 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Console.Clear();
 
             string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\szybkiZapis";
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 105), resolutionHeight / 2 - 5);
+            Console.WriteLine($"Jeśli chcesz wczytać grę z ścieżki {path} - kliknij Enter");
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 77 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 3);
+            Console.WriteLine($"Jeśli chcesz wczytaćć grę z folderu {Environment.CurrentDirectory}, Podaj tylko nazwę pliku i kliknij Enter");
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 113), resolutionHeight / 2 - 1);
+            Console.WriteLine("Jeśli chcesz wczytać grę z sprecyzowanego folderu, podaj pełną ścieżkę skąd chcesz wczytać plik i kliknij Enter");
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 65), resolutionHeight / 2 + 1);
+            Console.WriteLine("Prawidłowa ścieżka to np. C:\\NazwaFolderu\\NazwaFolderu\\NazwaPliku");
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 18), resolutionHeight / 2 + 3);
+            Console.WriteLine("Wybrana ścieżka: ");
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32) + 25, resolutionHeight / 2 + 3);
+            string input = Console.ReadLine();
+            if (input != "")
+            {
+                path = input;
+            }
+            CircleAndCross c = null;
             NecessaryData fileData = FileWithData.Load<NecessaryData>(path);
-            CircleAndCross c = new CircleAndCross(fileData.board, fileData.poption, resolutionWidth, resolutionHeight, fileData.pstartArenaColumn, fileData.pstartArenaRow, fileData.psymbolValue, fileData.pcolorValue, fileData.pmoveCount);
-
-            Console.ReadKey();
-
+            if(fileData != default(NecessaryData))
+            {
+                if (!path.Contains(':'))
+                    path = Environment.CurrentDirectory + "\\" + path;
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 17 + path.Length), resolutionHeight / 2 + 15);
+                Console.WriteLine("Wczytano grę z: " + path);
+                c = new CircleAndCross(fileData.board, fileData.poption, resolutionWidth, resolutionHeight, fileData.pstartArenaColumn, fileData.pstartArenaRow, fileData.psymbolValue, fileData.pcolorValue, fileData.pmoveCount);
+            }
+            else
+            {
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 28 + path.Length), resolutionHeight / 2 + 15);
+                Console.WriteLine("Nie udało się wczytać gry z: " + path);
+            }
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32), resolutionHeight / 2 + 20);
+            Console.WriteLine("Wciśnij Enter, żeby kontynuować");
+            ConsoleKey key = Console.ReadKey(true).Key;
+            while (key != ConsoleKey.Enter)
+            {
+                key = Console.ReadKey(true).Key;
+            }
+            Console.Clear();
             return c;
         }
 
@@ -1371,7 +1406,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                         return;
                 }
                 CircleAndCross c = (chosenOption != 3)? new CircleAndCross(optionGame, resolutionWidth, resolutionHeight) : c = loadCircleAndCross(resolutionWidth, resolutionHeight);
-                chosenOption = c.gameplay();
+                if(c != null)
+                    chosenOption = c.gameplay();
                 while (chosenOption == 1)
                 {
                     chosenOption = c.gameplay();
