@@ -1012,6 +1012,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 17 + path.Length), resolutionHeight / 2 + 13);
                 Console.WriteLine("Zapisano grę w: " + path);
             }
+
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32), resolutionHeight / 2 + 20);
             Console.WriteLine("Wciśnij Enter, żeby kontynuować");
             ConsoleKey key = Console.ReadKey(true).Key;
