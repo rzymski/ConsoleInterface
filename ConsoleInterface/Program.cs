@@ -530,11 +530,13 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         }
         public static void drawFirstMenu(int startRow = 0, int startColumn = 30, int rectangleLength = 100, int resolutionWidth = 160, int colorNumber=15)
         {
-            int littleHight = 10, actualRow = startRow;
+            int littleHight = 10;
+            int actualRow = startRow;
+            int firstColumnToSubtitleCrossAndCircle = (resolutionWidth-144)/2;
             //Main menu
-            Draw.drawSubtitle("kolko", 8, actualRow + 1, 1);
-            Draw.drawSubtitle("i", 65, actualRow, 6);
-            Draw.drawSubtitle("krzyzyk", 76, actualRow, 4);
+            Draw.drawSubtitle("kolko", firstColumnToSubtitleCrossAndCircle, actualRow + 1, 1); //start column 8 in laptop
+            Draw.drawSubtitle("i", firstColumnToSubtitleCrossAndCircle+57, actualRow, 6); //start column 65 in laptop
+            Draw.drawSubtitle("krzyzyk", firstColumnToSubtitleCrossAndCircle+68, actualRow, 4); //start column 76 in laptop
             actualRow += 10;
             Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, colorNumber);
             Draw.drawSubtitle("Nowa gra 3x3", Draw.adjustToCenterText(startColumn, startColumn+rectangleLength, 74), actualRow + 2);
@@ -558,11 +560,13 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         public static void drawContinuedMenu(int startRow = 0, int startColumn = 30 ,int rectangleLength = 100, int resolutionWidth=160)
         {
             Console.Clear();
-            int littleHight = 10, actualRow = startRow;
+            int littleHight = 10;
+            int actualRow = startRow;
+            int firstColumnToSubtitleCrossAndCircle = (resolutionWidth - 144) / 2;
             //Continued menu
-            Draw.drawSubtitle("kolko", 8, actualRow + 1, 1);
-            Draw.drawSubtitle("i", 65, actualRow, 6);
-            Draw.drawSubtitle("krzyzyk", 76, actualRow, 4);
+            Draw.drawSubtitle("kolko", firstColumnToSubtitleCrossAndCircle, actualRow + 1, 1); //start column 8 in laptop
+            Draw.drawSubtitle("i", firstColumnToSubtitleCrossAndCircle + 57, actualRow, 6); //start column 65 in laptop
+            Draw.drawSubtitle("krzyzyk", firstColumnToSubtitleCrossAndCircle + 68, actualRow, 4); //start column 76 in laptop
             actualRow += 10;
             Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, 15);
             Draw.drawSubtitle("kontynuuj gre", Draw.adjustToCenterText(startColumn, startColumn+rectangleLength, 79), actualRow + 2);
@@ -941,8 +945,6 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
     {
         public int[,] board { get; set; }
         public int poption { get; set; }
-        public int pstartArenaColumn { get; set; }
-        public int pstartArenaRow { get; set; }
         public int psymbolValue { get; set; }
         public int pcolorValue { get; set; }
         public int pmoveCount { get; set; }
@@ -997,8 +999,6 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             {
                 board = board2D,
                 poption = option,
-                pstartArenaColumn = startArenaColumn,
-                pstartArenaRow = startArenaRow,
                 psymbolValue = symbolValue,
                 pcolorValue = colorValue,
                 pmoveCount = moveCount,
@@ -1022,41 +1022,43 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             }
         }
 
-        private void initializeParameters(int option, int resolutionWidthParametr, int resolutionHeightParametr, int startArenaRow, int startArenaColumn)
+        private void initializeParameters(int option, int resolutionWidthParametr, int resolutionHeightParametr)
         {
             this.resolutionWidth = resolutionWidthParametr;
             this.resolutionHeight = resolutionHeightParametr;
             this.option = option;
             symbolValue = 1; //0-kolko 1-krzyz
             colorValue = 4; //1-niebieski 4-czerwony
-            this.startArenaColumn = startArenaColumn;
-            this.startArenaRow = startArenaRow;
+            startArenaRow = 10;
             switch (option)
             {
                 case 0:
                     howMuchToWin = 5;
-                    startColumn = startArenaColumn + 18;//68;
-                    startRow = startArenaRow + 18;//23;
                     squareSize = 3;
                     chessSize = 13;
+                    startArenaColumn = (resolutionWidth - squareSize * chessSize) / 2;
+                    startColumn = startArenaColumn + 18;//68;
+                    startRow = startArenaRow + 18;//23;
                     currentPositionRow = 7;
                     currentPositionColumn = 7;
                     break;
                 case 1:
                     howMuchToWin = 4;
-                    startColumn = startArenaColumn + 14;//64;
-                    startRow = startArenaRow + 14;//19;
                     squareSize = 7;
                     chessSize = 5;
+                    startArenaColumn = (resolutionWidth - squareSize * chessSize) / 2;
+                    startColumn = startArenaColumn + 14;//64;
+                    startRow = startArenaRow + 14;//19;
                     currentPositionRow = 3;
                     currentPositionColumn = 3;
                     break;
                 case 2:
                     howMuchToWin = 3;
-                    startColumn = startArenaColumn + 12;//62;
-                    startRow = startArenaRow + 12;//17;
                     squareSize = 12;
                     chessSize = 3;
+                    startArenaColumn = (resolutionWidth - squareSize * chessSize) / 2;
+                    startColumn = startArenaColumn + 12;//62;
+                    startRow = startArenaRow + 12;//17;
                     currentPositionRow = 2;
                     currentPositionColumn = 2;
                     break;
@@ -1071,14 +1073,14 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             listWinnerPositions = new List<int>();
         }
 
-        public CircleAndCross(int option, int resolutionWidth, int resolutionHeight, int startArenaRow = 10, int startArenaColumn = 56)
+        public CircleAndCross(int option, int resolutionWidth, int resolutionHeight)
         {
-            initializeParameters(option, resolutionWidth, resolutionHeight, startArenaRow, startArenaColumn);
+            initializeParameters(option, resolutionWidth, resolutionHeight);
         }
 
-        public CircleAndCross(int[,] board, int poption, int resolutionWidth, int resolutionHeight, int pstartArenaColumn, int pstartArenaRow, int psymbolValue, int pcolorValue, int pmoveCount)
+        public CircleAndCross(int[,] board, int poption, int resolutionWidth, int resolutionHeight, int psymbolValue, int pcolorValue, int pmoveCount)
         {
-            initializeParameters(poption, resolutionWidth, resolutionHeight, pstartArenaRow, pstartArenaColumn);
+            initializeParameters(poption, resolutionWidth, resolutionHeight);
             board2D = board;
             symbolValue = psymbolValue;
             colorValue = pcolorValue;
@@ -1091,17 +1093,17 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             //Console.Clear();
             if (winner == 0)
             {
-                Draw.drawSubtitle("Wygrały", Draw.adjustToCenterText(0, 150, 60), 3, color); //wczesniej kolumna = 40
-                Draw.drawSubtitle("0", Draw.adjustToCenterText(0, 150, 60)+60, 3, color); //wczesniej kolumna = 100
+                Draw.drawSubtitle("Wygrały", Draw.adjustToCenterText(0, resolutionWidth, 60), 3, color); //wczesniej kolumna = 40
+                Draw.drawSubtitle("0", Draw.adjustToCenterText(0, resolutionWidth, 60)+60, 3, color); //wczesniej kolumna = 100
             }
             else if(winner == 1)
             {
-                Draw.drawSubtitle("Wygrały", Draw.adjustToCenterText(0, 150, 60), 3, color);
-                Draw.drawSubtitle("1", Draw.adjustToCenterText(0, 150, 60) + 60, 3, color);
+                Draw.drawSubtitle("Wygrały", Draw.adjustToCenterText(0, resolutionWidth, 60), 3, color);
+                Draw.drawSubtitle("1", Draw.adjustToCenterText(0, resolutionWidth, 60) + 60, 3, color);
             }
             else
             {
-                Draw.drawSubtitle("Remis", Draw.adjustToCenterText(0,150, 37), 3); //wczesniej kolumna = 50
+                Draw.drawSubtitle("Remis", Draw.adjustToCenterText(0, resolutionWidth, 37), 3); //wczesniej kolumna = 50
             }
             System.Threading.Thread.Sleep(1500);
             Draw.drawSubtitle("czysc", 25, 53);
@@ -1142,10 +1144,11 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
 
         public int gameplay()
         {
+            int startColumnToDraw = (resolutionWidth - 100) / 2;
             Draw.redrawBoardWithSymbols(board2D, option, chessSize, squareSize, startArenaColumn, startArenaRow, startArenaColumn + 1, startArenaRow + 1);
-            Draw.drawSubtitle("Ruch", Draw.adjustToCenterText(0, 150, 44), 3, 6); //wczesniej kolumna 40
-            Draw.drawSubtitle(symbolValue.ToString(), Draw.adjustToCenterText(0, 150, 44) + 37, 3, colorValue); //wczesniej kolumna 77
-            Draw.printInstructionInGame(howMuchToWin, 30, 53);
+            Draw.drawSubtitle("Ruch", Draw.adjustToCenterText(0, resolutionWidth, 44), 3, 6); //wczesniej kolumna 40
+            Draw.drawSubtitle(symbolValue.ToString(), Draw.adjustToCenterText(0, resolutionWidth, 44) + 37, 3, colorValue); //wczesniej kolumna 77
+            Draw.printInstructionInGame(howMuchToWin, startColumnToDraw, 53);
             int gameplayResult = 0;
             ConsoleKey key;
             do
@@ -1183,7 +1186,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                             colorValue = 1; //zmiana koloru na niebieski
                         else
                             colorValue = 4; //zmiana koloru na czerwony
-                        Draw.drawSubtitle(symbolValue.ToString(), Draw.adjustToCenterText(0, 150, 44) + 37, 3, colorValue);
+                        Draw.drawSubtitle(symbolValue.ToString(), Draw.adjustToCenterText(0, resolutionWidth, 44) + 37, 3, colorValue);
                     }
                 }
                 else if ((key == ConsoleKey.LeftArrow || key == ConsoleKey.A || key == ConsoleKey.NumPad4) && Check.availableMove(ref currentPositionRow, ref currentPositionColumn, chessSize, key.ToString()))
@@ -1205,8 +1208,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             } while (key != ConsoleKey.Escape); //escpae klikniety w trakcie gry
             do
             {
-                Draw.drawContinuedMenu();
-                gameplayResult = Draw.chooseOptionContinuedMenu();
+                Draw.drawContinuedMenu(0, startColumnToDraw, 100, resolutionWidth);
+                gameplayResult = Draw.chooseOptionContinuedMenu(startColumnToDraw);
                 if(gameplayResult == 2)
                 {
                     saveGame();
@@ -1220,7 +1223,25 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
     {
         static void setResolution(ref int resolutionWidth, ref int resolutionHeight)
         {
-            try
+            resolutionWidth = Console.WindowWidth = Console.LargestWindowWidth;
+            resolutionHeight = Console.WindowHeight = Console.LargestWindowHeight;
+            if (resolutionWidth < 160 || resolutionHeight < 65)
+            {
+                Console.WriteLine(resolutionWidth + " " + resolutionHeight);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 7, Console.LargestWindowHeight / 2 - 2);
+                Console.WriteLine("-- Warning --");
+                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 40, Console.LargestWindowHeight / 2 - 1);
+                Console.WriteLine("Your screen isn't big enough to match the game's desired width and hight.");
+                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 45, Console.LargestWindowHeight / 2);
+                Console.WriteLine("Things may not look quite right, unless you adjust the text size in your console window.");
+                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 33, Console.LargestWindowHeight / 2 + 1);
+                Console.WriteLine($"Required min. resolution 160x65, your actual resolution is " + Console.LargestWindowWidth + "x" + Console.LargestWindowHeight);
+                Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 10, Console.LargestWindowHeight / 2 + 2);
+                waitForKey(ConsoleKey.Enter);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            /*try
             {
                 Console.WindowWidth = resolutionWidth; //160
                 Console.WindowHeight = resolutionHeight; //65
@@ -1235,13 +1256,13 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 45, Console.LargestWindowHeight / 2);
                 Console.WriteLine("Things may not look quite right, unless you adjust the text size in your console window.");
                 Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 33, Console.LargestWindowHeight / 2 + 1);
-                Console.WriteLine($"Required min. resolution {resolutionWidth}x{resolutionHeight}, your actual resolution is "+Console.LargestWindowWidth+"x"+Console.LargestWindowHeight);
+                Console.WriteLine($"Required min. resolution {resolutionWidth}x{resolutionHeight}, your actual resolution is " + Console.LargestWindowWidth + "x" + Console.LargestWindowHeight);
                 Console.SetCursorPosition(Console.LargestWindowWidth / 2 - 10, Console.LargestWindowHeight / 2 + 2);
                 waitForKey(ConsoleKey.Enter);
                 Console.ForegroundColor = ConsoleColor.White;
-                resolutionWidth = Console.WindowHeight = Console.LargestWindowHeight;
-                resolutionHeight = Console.WindowWidth = Console.LargestWindowWidth;
-            }
+                resolutionWidth = Console.WindowWidth = Console.LargestWindowWidth;
+                resolutionHeight = Console.WindowHeight = Console.LargestWindowHeight;
+            }*/
         }
         static void waitForKey(ConsoleKey expectedKey = ConsoleKey.Home)
         {
@@ -1356,7 +1377,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     path = Environment.CurrentDirectory + "\\" + path;
                 Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 17 + path.Length), resolutionHeight / 2 + 15);
                 Console.WriteLine("Wczytano grę z: " + path);
-                c = new CircleAndCross(fileData.board, fileData.poption, resolutionWidth, resolutionHeight, fileData.pstartArenaColumn, fileData.pstartArenaRow, fileData.psymbolValue, fileData.pcolorValue, fileData.pmoveCount);
+                c = new CircleAndCross(fileData.board, fileData.poption, resolutionWidth, resolutionHeight, fileData.psymbolValue, fileData.pcolorValue, fileData.pmoveCount);
             }
             else
             {
@@ -1379,8 +1400,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Console.CursorVisible = false;
             int resolutionWidth = 160, resolutionHeight = 65;
             setResolution(ref resolutionWidth, ref resolutionHeight);
-            Draw.drawFirstMenu();
-            int chosenOption = chooseOptionFirstMenu();
+            int startColumnToDraw = (resolutionWidth - 100) / 2;
+            Draw.drawFirstMenu(0, startColumnToDraw, 100, resolutionWidth);
+            int chosenOption = chooseOptionFirstMenu(startColumnToDraw);
             int optionGame = 1;
             do
             {
@@ -1407,7 +1429,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                         return;
                 }
                 CircleAndCross c = (chosenOption != 3)? new CircleAndCross(optionGame, resolutionWidth, resolutionHeight) : c = loadCircleAndCross(resolutionWidth, resolutionHeight);
-                if(c != null)
+                if (c != null)
                     chosenOption = c.gameplay();
                 while (chosenOption == 1)
                 {
@@ -1415,8 +1437,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 }
                 if (chosenOption == 3)
                 {
-                    Draw.drawFirstMenu();
-                    chosenOption = chooseOptionFirstMenu();
+                    Draw.drawFirstMenu(0, startColumnToDraw, 100, resolutionWidth);
+                    chosenOption = chooseOptionFirstMenu(startColumnToDraw);
                 }
                 if (chosenOption == 100)
                     chosenOption = 2;
