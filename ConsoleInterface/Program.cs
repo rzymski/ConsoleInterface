@@ -989,7 +989,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32), resolutionHeight / 2+3);
             Console.WriteLine("Wybrana ścieżka zapisu: ");
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32)+25, resolutionHeight / 2 + 3);
+            Console.CursorVisible = true;
             string input = Console.ReadLine();
+            Console.CursorVisible = false;
             //Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 113), resolutionHeight / 2 + 13); // na wypadek wyjatku o braku pliku
             if (input != "")
             {
@@ -1364,7 +1366,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 18), resolutionHeight / 2 + 3);
             Console.WriteLine("Wybrana ścieżka: ");
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32) + 25, resolutionHeight / 2 + 3);
+            Console.CursorVisible = true;
             string input = Console.ReadLine();
+            Console.CursorVisible = false;
             if (input != "")
             {
                 path = input;
