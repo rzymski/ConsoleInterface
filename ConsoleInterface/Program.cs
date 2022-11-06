@@ -976,7 +976,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         {
             Console.Clear();
 
-            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\szybkiZapis";
+            //string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\szybkiZapis";
+            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + "\\szybkiZapis";
 
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 105), resolutionHeight/2-5);
             Console.WriteLine($"Jeśli chcesz zapisać grę z ścieżką {path} - kliknij Enter");
@@ -1353,8 +1354,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         private static CircleAndCross loadCircleAndCross(int resolutionWidth, int resolutionHeight)
         {
             Console.Clear();
-
-            string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\szybkiZapis";
+            //string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\szybkiZapis";
+            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + "\\szybkiZapis";
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 105), resolutionHeight / 2 - 5);
             Console.WriteLine($"Jeśli chcesz wczytać grę z ścieżki {path} - kliknij Enter");
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 77 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 3);
@@ -1432,7 +1433,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                         Environment.Exit(0);
                         return;
                 }
-                CircleAndCross c = (chosenOption != 3)? new CircleAndCross(optionGame, resolutionWidth, resolutionHeight) : c = loadCircleAndCross(resolutionWidth, resolutionHeight);
+                CircleAndCross c = (chosenOption != 3) ? new CircleAndCross(optionGame, resolutionWidth, resolutionHeight) : c = loadCircleAndCross(resolutionWidth, resolutionHeight);
                 if (c != null)
                     chosenOption = c.gameplay();
                 while (chosenOption == 1)
@@ -1450,7 +1451,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     chosenOption = 1;
                 if (chosenOption == 102)
                     chosenOption = 0;
-            } while(true);
+            } while (true);
         }
     }
 }
