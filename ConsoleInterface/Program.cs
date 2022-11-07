@@ -979,17 +979,28 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             //string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\szybkiZapis";
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + "\\szybkiZapis";
 
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 105), resolutionHeight/2-5);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 105), resolutionHeight/2-7);
             Console.WriteLine($"Jeśli chcesz zapisać grę z ścieżką {path} - kliknij Enter");
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 76 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 3);
-            Console.WriteLine($"Jeśli chcesz zapisać grę w folderze {Environment.CurrentDirectory}, Podaj tylko nazwę pliku i kliknij Enter");
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 76 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 4);
+            if(Environment.CurrentDirectory.Length <= 82)
+            {
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 76 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 4);
+                Console.WriteLine($"Jeśli chcesz zapisać grę w folderze {Environment.CurrentDirectory}, Podaj tylko nazwę pliku i kliknij Enter");
+            }
+            else
+            {
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 35 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 4);
+                Console.WriteLine($"Jeśli chcesz zapisać grę w folderze {Environment.CurrentDirectory}");
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 41), resolutionHeight / 2 - 3);
+                Console.WriteLine($"-Podaj tylko nazwę pliku i kliknij Enter");
+            }
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 113), resolutionHeight / 2-1);
             Console.WriteLine("Jeśli chcesz zapisać grę w sprecyzowanym folderze, podaj pełną ścieżkę gdzie chcesz zapisać plik i kliknij Enter");
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 71), resolutionHeight / 2 + 1);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 71), resolutionHeight / 2 + 2);
             Console.WriteLine("Prawidłowa ścieżka zapisu to np. C:\\NazwaFolderu\\NazwaFolderu\\NazwaPliku");
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32), resolutionHeight / 2+3);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32), resolutionHeight / 2+5);
             Console.WriteLine("Wybrana ścieżka zapisu: ");
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32)+25, resolutionHeight / 2 + 3);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32)+25, resolutionHeight / 2 + 5);
             Console.CursorVisible = true;
             string input = Console.ReadLine();
             Console.CursorVisible = false;
@@ -1356,17 +1367,27 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Console.Clear();
             //string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\szybkiZapis";
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + "\\szybkiZapis";
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 105), resolutionHeight / 2 - 5);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 105), resolutionHeight / 2 - 7);
             Console.WriteLine($"Jeśli chcesz wczytać grę z ścieżki {path} - kliknij Enter");
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 77 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 3);
-            Console.WriteLine($"Jeśli chcesz wczytaćć grę z folderu {Environment.CurrentDirectory}, Podaj tylko nazwę pliku i kliknij Enter");
+            if (Environment.CurrentDirectory.Length <= 82)
+            {
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 77 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 4);
+                Console.WriteLine($"Jeśli chcesz wczytaćć grę z folderu {Environment.CurrentDirectory}, Podaj tylko nazwę pliku i kliknij Enter");
+            }
+            else
+            {
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 35 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 4);
+                Console.WriteLine($"Jeśli chcesz wczytać grę z folderu {Environment.CurrentDirectory}");
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 41), resolutionHeight / 2 - 3);
+                Console.WriteLine($"-Podaj tylko nazwę pliku i kliknij Enter");
+            }
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 113), resolutionHeight / 2 - 1);
             Console.WriteLine("Jeśli chcesz wczytać grę z sprecyzowanego folderu, podaj pełną ścieżkę skąd chcesz wczytać plik i kliknij Enter");
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 65), resolutionHeight / 2 + 1);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 65), resolutionHeight / 2 + 2);
             Console.WriteLine("Prawidłowa ścieżka to np. C:\\NazwaFolderu\\NazwaFolderu\\NazwaPliku");
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 18), resolutionHeight / 2 + 3);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 18), resolutionHeight / 2 + 5);
             Console.WriteLine("Wybrana ścieżka: ");
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32) + 25, resolutionHeight / 2 + 3);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32) + 25, resolutionHeight / 2 + 5);
             Console.CursorVisible = true;
             string input = Console.ReadLine();
             Console.CursorVisible = false;
