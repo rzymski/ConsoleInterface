@@ -27,9 +27,9 @@ namespace ConsoleInterface
     {
         public static int adjustToCenterText(int startRow, int endColumn, int length)
         {
-            return ((endColumn+startRow-length)/2 > 0) ? ((endColumn+startRow-length)/2) : 0;
+            return ((endColumn + startRow - length) / 2 > 0) ? ((endColumn + startRow - length) / 2) : 0;
         }
-        public static void drawSubtitle(string text, int startColumn, int startRow, int colorText=15, int colorBackground=0)
+        public static void drawSubtitle(string text, int startColumn, int startRow, int colorText = 15, int colorBackground = 0)
         {
             text = text.ToLower();
             if (text == "title")
@@ -86,7 +86,7 @@ namespace ConsoleInterface
 | |\  || (_) |\ V  V /| (_| | | |_\ \| |  | (_| |  .___/ /  >  <  .___/ /
 |_| \_| \___/  \_/\_/  \__,_|  \____/|_|   \__,_|  \____/  /_/\_\ \____/ ";
             }
-            if(text == "nowa gra 5x5")
+            if (text == "nowa gra 5x5")
             {
                 text = @" _   _                         _____                _____          _____ 
 | \ | |                       |  __ \              |  ___|        |  ___|
@@ -95,7 +95,7 @@ namespace ConsoleInterface
 | |\  || (_) |\ V  V /| (_| | | |_\ \| |  | (_| |  /\__/ /  >  <  /\__/ /
 |_| \_| \___/  \_/\_/  \__,_|  \____/|_|   \__,_|  \____/  /_/\_\ \____/ ";
             }
-            if(text == "nowa gra 13x13")
+            if (text == "nowa gra 13x13")
             {
                 text = @" _   _                         _____                __   ______         __   ______ 
 | \ | |                       |  __ \              /  | |____  |       /  | |____  |
@@ -104,7 +104,7 @@ namespace ConsoleInterface
 | |\  || (_) |\ V  V /| (_| | | |_\ \| |  | (_| |   | | .___/ /  >  <  _| |_.___/ /
 |_| \_| \___/  \_/\_/  \__,_|  \____/|_|   \__,_|   |_| \____/  /_/\_\ \___/\____/ ";
             }
-            if(text == "wczytaj gre")
+            if (text == "wczytaj gre")
             {
                 text = @" _    _                    _          _                    
 | |  | |                  | |        (_)                   
@@ -115,7 +115,7 @@ namespace ConsoleInterface
                      __/ |          _/ |   __/ |       (_( 
                     |___/          |__/   |___/          ";
             }
-            if(text == "wyjdz z gry")
+            if (text == "wyjdz z gry")
             {
                 text = @" _    _           _      _                                   
 | |  | |         (_)    | |    _                             
@@ -198,10 +198,10 @@ namespace ConsoleInterface
             {
                 text = @"";
             }*/
-            if(text == "czysc")
+            if (text == "czysc")
             {
                 text = "";
-                for(int i=0; i< 10; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     for (int j = 0; j < 150; j++)
                         text += " ";
@@ -306,15 +306,15 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 return;
 
             Console.SetCursorPosition(startColumn, startRow);
-            Console.BackgroundColor = (ConsoleColor) colorBackground;
-            Console.ForegroundColor = (ConsoleColor) colorText;
+            Console.BackgroundColor = (ConsoleColor)colorBackground;
+            Console.ForegroundColor = (ConsoleColor)colorText;
             int counter = 0;
-            for(int i = 0; i < text.Length; i++)
+            for (int i = 0; i < text.Length; i++)
             {
                 Console.Write(text[i]);
                 if (text[i] == '\n')
                 {
-                    Console.SetCursorPosition(startColumn, startRow+(++counter));
+                    Console.SetCursorPosition(startColumn, startRow + (++counter));
                 }
             }
             Console.BackgroundColor = ConsoleColor.Black;
@@ -520,26 +520,26 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             }
             Console.BackgroundColor = ConsoleColor.Black;
         }
-        public static void drawWinningSquares(List<int> squares, int startColumn, int startRow, int squareSize, int option, int symbolValue, int colorSymbolValue = 6, int colorSquareValue=6)
+        public static void drawWinningSquares(List<int> squares, int startColumn, int startRow, int squareSize, int option, int symbolValue, int colorSymbolValue = 14, int colorSquareValue = 14)
         {
-            for(int i=0; i<squares.Count; i+=2)
+            for (int i = 0; i < squares.Count; i += 2)
             {
-                drawSquare(startColumn + squares[i+1]*squareSize, startRow + squares[i] * squareSize, squareSize, colorSquareValue);
+                drawSquare(startColumn + squares[i + 1] * squareSize, startRow + squares[i] * squareSize, squareSize, colorSquareValue);
                 drawSymbol(option, startColumn + squares[i + 1] * squareSize + 1, startRow + squares[i] * squareSize + 1, symbolValue, colorSymbolValue);
             }
         }
-        public static void drawFirstMenu(int startRow = 0, int startColumn = 30, int rectangleLength = 100, int resolutionWidth = 160, int colorNumber=15)
+        public static void drawFirstMenu(int startRow = 0, int startColumn = 30, int rectangleLength = 100, int resolutionWidth = 160, int colorNumber = 15)
         {
             int littleHight = 10;
             int actualRow = startRow;
-            int firstColumnToSubtitleCrossAndCircle = (resolutionWidth-144)/2;
+            int firstColumnToSubtitleCrossAndCircle = (resolutionWidth - 144) / 2;
             //Main menu
-            Draw.drawSubtitle("kolko", firstColumnToSubtitleCrossAndCircle, actualRow + 1, 1); //start column 8 in laptop
-            Draw.drawSubtitle("i", firstColumnToSubtitleCrossAndCircle+57, actualRow, 6); //start column 65 in laptop
-            Draw.drawSubtitle("krzyzyk", firstColumnToSubtitleCrossAndCircle+68, actualRow, 4); //start column 76 in laptop
+            Draw.drawSubtitle("kolko", firstColumnToSubtitleCrossAndCircle, actualRow + 1, 9); //start column 8 in laptop
+            Draw.drawSubtitle("i", firstColumnToSubtitleCrossAndCircle + 57, actualRow, 14); //start column 65 in laptop
+            Draw.drawSubtitle("krzyzyk", firstColumnToSubtitleCrossAndCircle + 68, actualRow, 12); //start column 76 in laptop
             actualRow += 10;
             Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, colorNumber);
-            Draw.drawSubtitle("Nowa gra 3x3", Draw.adjustToCenterText(startColumn, startColumn+rectangleLength, 74), actualRow + 2);
+            Draw.drawSubtitle("Nowa gra 3x3", Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 74), actualRow + 2);
             actualRow += littleHight;
             Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, colorNumber);
             Draw.drawSubtitle("Nowa gra 5x5", Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 74), actualRow + 2);
@@ -557,19 +557,19 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Console.SetCursorPosition(0, 0);
         }
 
-        public static void drawContinuedMenu(int startRow = 0, int startColumn = 30 ,int rectangleLength = 100, int resolutionWidth=160)
+        public static void drawContinuedMenu(int startRow = 0, int startColumn = 30, int rectangleLength = 100, int resolutionWidth = 160)
         {
             Console.Clear();
             int littleHight = 10;
             int actualRow = startRow;
             int firstColumnToSubtitleCrossAndCircle = (resolutionWidth - 144) / 2;
             //Continued menu
-            Draw.drawSubtitle("kolko", firstColumnToSubtitleCrossAndCircle, actualRow + 1, 1); //start column 8 in laptop
-            Draw.drawSubtitle("i", firstColumnToSubtitleCrossAndCircle + 57, actualRow, 6); //start column 65 in laptop
-            Draw.drawSubtitle("krzyzyk", firstColumnToSubtitleCrossAndCircle + 68, actualRow, 4); //start column 76 in laptop
+            Draw.drawSubtitle("kolko", firstColumnToSubtitleCrossAndCircle, actualRow + 1, 9); //start column 8 in laptop
+            Draw.drawSubtitle("i", firstColumnToSubtitleCrossAndCircle + 57, actualRow, 14); //start column 65 in laptop
+            Draw.drawSubtitle("krzyzyk", firstColumnToSubtitleCrossAndCircle + 68, actualRow, 12); //start column 76 in laptop
             actualRow += 10;
             Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, 15);
-            Draw.drawSubtitle("kontynuuj gre", Draw.adjustToCenterText(startColumn, startColumn+rectangleLength, 79), actualRow + 2);
+            Draw.drawSubtitle("kontynuuj gre", Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 79), actualRow + 2);
             actualRow += littleHight;
             Draw.drawRectangle(startColumn, actualRow, littleHight, rectangleLength, 15);
             Draw.drawSubtitle("zapisz gre", Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 53), actualRow + 2);
@@ -584,7 +584,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             Console.SetCursorPosition(0, 0);
         }
 
-        public static int chooseOptionContinuedMenu(int startColumn = 30, int rectangleLength = 100,int option = 0)
+        public static int chooseOptionContinuedMenu(int startColumn = 30, int rectangleLength = 100, int option = 0)
         {
             int startRow = 0, startColumnSubtitle = 0, startRowSubtitle = 0;
             string text = "";
@@ -596,7 +596,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     switch (option)
                     {
                         case 0:
-                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn+rectangleLength, 79);//38;
+                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 79);//38;
                             startRowSubtitle = 12;
                             startRow = startRowSubtitle - 2;
                             text = "kontynuuj gre";
@@ -620,8 +620,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                             text = "wyjdz z gry";
                             break;
                     }
-                    Draw.drawRectangle(startColumn, startRow, 10, rectangleLength, 4); //4 = red
-                    Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 4);
+                    Draw.drawRectangle(startColumn, startRow, 10, rectangleLength, 12); //4 = red
+                    Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 12);
                     System.Threading.Thread.Sleep(500);
                     Draw.drawRectangle(startColumn, startRow, 10, rectangleLength, 15); //15 = white
                     Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 15);
@@ -656,9 +656,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 for (int j = 0; j < chessSize; j++)
                 {
                     if (board2D[i, j] == 1)
-                        drawSymbol(option, tempStartColumn, tempStartRow, board2D[i, j], 4);
+                        drawSymbol(option, tempStartColumn, tempStartRow, board2D[i, j], 12);
                     if (board2D[i, j] == 0)
-                        drawSymbol(option, tempStartColumn, tempStartRow, board2D[i, j], 1);
+                        drawSymbol(option, tempStartColumn, tempStartRow, board2D[i, j], 9);
                     tempStartColumn += squareSize;
                 }
                 tempStartColumn = startColumn;
@@ -673,7 +673,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         {
             List<int> result = new List<int>();
             int right = 0, left = 0, positionColumn = currentPositionColumn;
-            while(positionColumn + 1 < chessSize && board2D[currentPositionRow, positionColumn] == board2D[currentPositionRow, positionColumn + 1])
+            while (positionColumn + 1 < chessSize && board2D[currentPositionRow, positionColumn] == board2D[currentPositionRow, positionColumn + 1])
             {
                 right++;
                 positionColumn++;
@@ -877,14 +877,14 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             }
             catch (SerializationException e)
             {
-                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, 32+e.Message.Length), 65 / 2 + 13);
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, 32 + e.Message.Length), 65 / 2 + 13);
                 Console.WriteLine("Failed to serialize. Reason: " + e.Message);
                 //throw;
                 return -1;
             }
             catch (DirectoryNotFoundException dirEx)
             {
-                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, 21 + dirEx.Message.Length), 65/2 + 13);
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, 21 + dirEx.Message.Length), 65 / 2 + 13);
                 Console.WriteLine("Directory not found: " + dirEx.Message);
                 return 1;
             }
@@ -919,7 +919,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             }
             catch (SerializationException e)
             {
-                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, 30+e.Message.Length), 65 / 2 + 13);
+                Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, 30 + e.Message.Length), 65 / 2 + 13);
                 Console.WriteLine("Failed to deserialize. Reason: " + e.Message);
                 obj = default(T);
                 //throw;
@@ -929,7 +929,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 Console.SetCursorPosition(Draw.adjustToCenterText(0, 160, e.Message.Length), 65 / 2 + 13);
                 Console.WriteLine(e.Message);
                 //throw;
-                obj = default (T);
+                obj = default(T);
             }
             finally
             {
@@ -979,10 +979,10 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             //string path = "D:\\Zapisy_programow_C#\\ConsoleInterface\\szybkiZapis";
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + "\\szybkiZapis";
 
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 105), resolutionHeight/2-7);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 105), resolutionHeight / 2 - 7);
             Console.WriteLine($"Jeśli chcesz zapisać grę z ścieżką {path} - kliknij Enter");
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 76 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 4);
-            if(Environment.CurrentDirectory.Length <= 82)
+            if (Environment.CurrentDirectory.Length <= 82)
             {
                 Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 76 + Environment.CurrentDirectory.Length), resolutionHeight / 2 - 4);
                 Console.WriteLine($"Jeśli chcesz zapisać grę w folderze {Environment.CurrentDirectory}, Podaj tylko nazwę pliku i kliknij Enter");
@@ -994,13 +994,13 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 41), resolutionHeight / 2 - 3);
                 Console.WriteLine($"-Podaj tylko nazwę pliku i kliknij Enter");
             }
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 113), resolutionHeight / 2-1);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 113), resolutionHeight / 2 - 1);
             Console.WriteLine("Jeśli chcesz zapisać grę w sprecyzowanym folderze, podaj pełną ścieżkę gdzie chcesz zapisać plik i kliknij Enter");
             Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 71), resolutionHeight / 2 + 2);
             Console.WriteLine("Prawidłowa ścieżka zapisu to np. C:\\NazwaFolderu\\NazwaFolderu\\NazwaPliku");
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32), resolutionHeight / 2+5);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32), resolutionHeight / 2 + 5);
             Console.WriteLine("Wybrana ścieżka zapisu: ");
-            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32)+25, resolutionHeight / 2 + 5);
+            Console.SetCursorPosition(Draw.adjustToCenterText(0, resolutionWidth, 32) + 25, resolutionHeight / 2 + 5);
             Console.CursorVisible = true;
             string input = Console.ReadLine();
             Console.CursorVisible = false;
@@ -1042,7 +1042,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             this.resolutionHeight = resolutionHeightParametr;
             this.option = option;
             symbolValue = 1; //0-kolko 1-krzyz
-            colorValue = 4; //1-niebieski 4-czerwony
+            colorValue = 12; //1-niebieski 4-czerwony
             startArenaRow = 10;
             switch (option)
             {
@@ -1101,16 +1101,16 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             moveCount = pmoveCount;
         }
 
-        private int endOfGame(int winner, int color=15)
+        private int endOfGame(int winner, int color = 15)
         {
             Draw.drawSubtitle("czysc", 0, 0);
             //Console.Clear();
             if (winner == 0)
             {
                 Draw.drawSubtitle("Wygrały", Draw.adjustToCenterText(0, resolutionWidth, 60), 3, color); //wczesniej kolumna = 40
-                Draw.drawSubtitle("0", Draw.adjustToCenterText(0, resolutionWidth, 60)+60, 3, color); //wczesniej kolumna = 100
+                Draw.drawSubtitle("0", Draw.adjustToCenterText(0, resolutionWidth, 60) + 60, 3, color); //wczesniej kolumna = 100
             }
-            else if(winner == 1)
+            else if (winner == 1)
             {
                 Draw.drawSubtitle("Wygrały", Draw.adjustToCenterText(0, resolutionWidth, 60), 3, color);
                 Draw.drawSubtitle("1", Draw.adjustToCenterText(0, resolutionWidth, 60) + 60, 3, color);
@@ -1127,8 +1127,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             {
                 while (!Console.KeyAvailable)
                 {
-                    Draw.drawSubtitle("nowa gra - wcisnij Enter", Draw.adjustToCenterText(0, resolutionWidth, 131), 50, 5 + changeColor);
-                    Draw.drawSubtitle("menu - wcisnij Escape", Draw.adjustToCenterText(0, resolutionWidth, 116), 58, 7 + changeColor);
+                    Draw.drawSubtitle("nowa gra - wcisnij Enter", Draw.adjustToCenterText(0, resolutionWidth, 131), 50, 13 + changeColor);
+                    Draw.drawSubtitle("menu - wcisnij Escape", Draw.adjustToCenterText(0, resolutionWidth, 116), 58, 9 + changeColor);
                     Console.SetCursorPosition(0, 0);
                     changeColor = (changeColor + 1) % 2;
                     System.Threading.Thread.Sleep(250);
@@ -1149,7 +1149,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     Draw.drawSubtitle("start", Draw.adjustToCenterText(0, resolutionWidth, 119), Draw.adjustToCenterText(0, resolutionHeight, 16), 1);
                     System.Threading.Thread.Sleep(300);
                     Console.Clear();
-                    return 100+option;
+                    return 100 + option;
                 }
             } while (key != ConsoleKey.Escape);
             Console.Clear();
@@ -1160,7 +1160,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
         {
             int startColumnToDraw = (resolutionWidth - 100) / 2;
             Draw.redrawBoardWithSymbols(board2D, option, chessSize, squareSize, startArenaColumn, startArenaRow, startArenaColumn + 1, startArenaRow + 1);
-            Draw.drawSubtitle("Ruch", Draw.adjustToCenterText(0, resolutionWidth, 44), 3, 6); //wczesniej kolumna 40
+            Draw.drawSubtitle("Ruch", Draw.adjustToCenterText(0, resolutionWidth, 44), 3, 14); //wczesniej kolumna 40
             Draw.drawSubtitle(symbolValue.ToString(), Draw.adjustToCenterText(0, resolutionWidth, 44) + 37, 3, colorValue); //wczesniej kolumna 77
             Draw.printInstructionInGame(howMuchToWin, startColumnToDraw, 53);
             int gameplayResult = 0;
@@ -1178,7 +1178,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.Enter || key == ConsoleKey.Spacebar)
                 {
-                    if(Check.availableDrawSymbol(board2D, currentPositionColumn, currentPositionRow, chessSize, symbolValue))
+                    if (Check.availableDrawSymbol(board2D, currentPositionColumn, currentPositionRow, chessSize, symbolValue))
                     {
                         Draw.drawSymbol(option, startColumn + 1, startRow + 1, symbolValue, colorValue);
                         moveCount++;
@@ -1197,9 +1197,9 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                         }
                         symbolValue = (symbolValue + 1) % 2; //zmiana symbolu
                         if (symbolValue == 0)
-                            colorValue = 1; //zmiana koloru na niebieski
+                            colorValue = 9; //zmiana koloru na niebieski
                         else
-                            colorValue = 4; //zmiana koloru na czerwony
+                            colorValue = 12; //zmiana koloru na czerwony
                         Draw.drawSubtitle(symbolValue.ToString(), Draw.adjustToCenterText(0, resolutionWidth, 44) + 37, 3, colorValue);
                     }
                 }
@@ -1224,7 +1224,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             {
                 Draw.drawContinuedMenu(0, startColumnToDraw, 100, resolutionWidth);
                 gameplayResult = Draw.chooseOptionContinuedMenu(startColumnToDraw);
-                if(gameplayResult == 2)
+                if (gameplayResult == 2)
                 {
                     saveGame();
                 }
@@ -1283,7 +1283,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             if (expectedKey != ConsoleKey.Home)
             {
                 Console.WriteLine($"Press {expectedKey} key to continue.");
-                while (Console.ReadKey().Key != expectedKey){}
+                while (Console.ReadKey().Key != expectedKey) { }
             }
             else
             {
@@ -1292,7 +1292,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             }
             Console.Clear();
         }
-        static int chooseOptionFirstMenu(int startColumn = 30, int option = 0, int rectangleLength=100)
+        static int chooseOptionFirstMenu(int startColumn = 30, int option = 0, int rectangleLength = 100)
         {
             int startRow = 0, startColumnSubtitle = 0, startRowSubtitle = 0;
             string text = "";
@@ -1304,7 +1304,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                     switch (option)
                     {
                         case 0:
-                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn+rectangleLength, 74);//38;
+                            startColumnSubtitle = Draw.adjustToCenterText(startColumn, startColumn + rectangleLength, 74);//38;
                             startRowSubtitle = 12;
                             startRow = startRowSubtitle - 2;
                             text = "Nowa gra 3x3";
@@ -1334,8 +1334,8 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                             text = "Wyjdz z gry";
                             break;
                     }
-                    Draw.drawRectangle(startColumn, startRow, 10, rectangleLength, 4); //4 = red
-                    Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 4);
+                    Draw.drawRectangle(startColumn, startRow, 10, rectangleLength, 12); //4 = red
+                    Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 12);
                     System.Threading.Thread.Sleep(500);
                     Draw.drawRectangle(startColumn, startRow, 10, rectangleLength, 15); //15 = white
                     Draw.drawSubtitle(text, startColumnSubtitle, startRowSubtitle, 15);
@@ -1357,7 +1357,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
                 }
                 else if (key == ConsoleKey.DownArrow || key == ConsoleKey.S)
                 {
-                    option = (option+1)%5;
+                    option = (option + 1) % 5;
                 }
             } while (true);
         }
@@ -1397,7 +1397,7 @@ S:::::::::::::::SS       T:::::::::T       A:::::A                 A:::::A R::::
             }
             CircleAndCross c = null;
             NecessaryData fileData = FileWithData.Load<NecessaryData>(path);
-            if(fileData != default(NecessaryData))
+            if (fileData != default(NecessaryData))
             {
                 if (!path.Contains(':'))
                     path = Environment.CurrentDirectory + "\\" + path;
